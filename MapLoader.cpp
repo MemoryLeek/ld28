@@ -23,20 +23,22 @@ Map *MapLoader::load(const sf::String &fileName)
 
 	Map *map = new Map();
 
-	const int width = tiledMap.GetTileWidth();
-	const int height = tiledMap.GetTileHeight();
+	const int width = tiledMap.GetWidth();
+	const int height = tiledMap.GetHeight();
+	const int tileWidth = tiledMap.GetTileWidth();
+	const int tileHeight = tiledMap.GetTileHeight();
 
 	for(int x = 0 ; x < width; x++)
 	{
 		for(int y = 0; y < height; y++)
 		{
 			sf::RenderTexture *renderTexture = new sf::RenderTexture();
-			renderTexture->create(width, height);
+			renderTexture->create(tileWidth, tileHeight);
 
 			for(int i = 0; i < tiledMap.GetNumLayers(); i++)
 			{
 				const Tmx::Layer *layer = tiledMap.GetLayer(i);
-				const Tmx::MapTile &mapTile = layer->GetTile(0, 0);
+				const Tmx::MapTile &mapTile = layer->GetTile(x, y);
 				const Tmx::Tileset *tileset = tiledMap.GetTileset(mapTile.tilesetId);
 				const Tmx::Image *image = tileset->GetImage();
 
@@ -49,7 +51,7 @@ Map *MapLoader::load(const sf::String &fileName)
 				sf::String source = image->GetSource();
 				sf::String path = sf::StringEx::format("resources/%1", source);
 
-				sf::Rect<int> rect(x * width, y * height, width, height);
+				sf::Rect<int> rect(tx * tileWidth, ty * tileHeight, tileWidth, tileHeight);
 				sf::Texture texture;
 				texture.loadFromFile(path, rect);
 
@@ -63,7 +65,7 @@ Map *MapLoader::load(const sf::String &fileName)
 			renderTexture->display();
 
 			const sf::Texture &composited = renderTexture->getTexture();
-			const DrawableObject *mapObject = new DrawableObject(composited);
+			const DrawableObject *mapObject = new DrawableObject(x * tileWidth, y * tileWidth, composited);
 
 			map->addObject(mapObject);
 		}

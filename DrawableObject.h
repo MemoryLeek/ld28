@@ -8,7 +8,7 @@
 class DrawableObject : public MapObject, public sf::Sprite
 {
 	public:
-		DrawableObject(const sf::Texture &texture);
+		DrawableObject(int x, int y, const sf::Texture &texture);
 
 		void foo() override;
 };
