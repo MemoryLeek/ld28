@@ -1,9 +1,11 @@
 #include "CollidableObject.h"
 
-CollidableObject::CollidableObject(CollidableObject::CollidableObjectType type) :
-	m_type(type),
-	m_body(NULL)
+CollidableObject::CollidableObject(const sf::Texture &texture, CollidableObject::CollidableObjectType type)
+	: DrawableObject(texture)
+	, m_type(type)
+	, m_body(NULL)
 {
+
 }
 
 CollidableObject::CollidableObjectType CollidableObject::type() const

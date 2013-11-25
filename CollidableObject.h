@@ -4,8 +4,9 @@
 #include <Box2D/Dynamics/b2Body.h>
 
 #include "MapObject.h"
+#include "DrawableObject.h"
 
-class CollidableObject : public MapObject
+class CollidableObject : public DrawableObject
 {
 	public:
 		enum CollidableObjectType
@@ -14,7 +15,7 @@ class CollidableObject : public MapObject
 			DynamicCollidable
 		};
 
-		CollidableObject(CollidableObjectType type);
+		CollidableObject(const sf::Texture &texture, CollidableObject::CollidableObjectType type);
 
 		CollidableObjectType type() const;
 
@@ -24,7 +25,7 @@ class CollidableObject : public MapObject
 		CollidableObjectType m_type;
 		b2Body *m_body;
 
-	friend class World;
+		friend class World;
 };
 
 #endif // COLLIDABLEOBJECT_H
