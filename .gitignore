@@ -1,0 +1,4 @@
+bin/ld28
+build/
+*.pro.user
+Makefile

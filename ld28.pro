@@ -1,9 +1,16 @@
+CONFIG -= qt
+
+TARGET = ld28
+DESTDIR = bin
+
+OBJECTS_DIR = build
+
+LIBS += -lsfml-system -lsfml-graphics -lsfml-window
+
 SOURCES += \
     main.cpp \
     MapObject.cpp \
     CollidableObject.cpp
-
-LIBS += -lsfml-system -lsfml-graphics -lsfml-window
 
 HEADERS += \
     MapObject.h \
