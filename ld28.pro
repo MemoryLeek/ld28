@@ -5,13 +5,15 @@ DESTDIR = bin
 
 OBJECTS_DIR = build
 
-LIBS += -lsfml-system -lsfml-graphics -lsfml-window
+LIBS += -lsfml-system -lsfml-graphics -lsfml-window -lBox2D
 
 SOURCES += \
     main.cpp \
     MapObject.cpp \
-    CollidableObject.cpp
+    CollidableObject.cpp \
+    World.cpp
 
 HEADERS += \
     MapObject.h \
-    CollidableObject.h
+    CollidableObject.h \
+    World.h
