@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unordered_map>
 
 #include <TmxParser/Tmx.h>
 
@@ -22,6 +23,7 @@ Map *MapLoader::load(const sf::String &fileName)
 	tiledMap.ParseFile(fileName);
 
 	Map *map = new Map();
+	ImageCache cache;
 
 	const int width = tiledMap.GetWidth();
 	const int height = tiledMap.GetHeight();
@@ -42,20 +44,15 @@ Map *MapLoader::load(const sf::String &fileName)
 				const Tmx::Tileset *tileset = tiledMap.GetTileset(mapTile.tilesetId);
 				const Tmx::Image *image = tileset->GetImage();
 
-				const int w = image->GetWidth() / tileset->GetTileWidth();
+				const int w = image->GetWidth() / tileWidth;
 				const int ty = mapTile.id / w;
 				const int tx = mapTile.id - (ty * w);
 
-				std::cout << tx << "x" << ty << std::endl;
-
-				sf::String source = image->GetSource();
-				sf::String path = sf::StringEx::format("resources/%1", source);
-
+				sf::Image *source = tryGetImage(mapTile.tilesetId, image, cache);
 				sf::Rect<int> rect(tx * tileWidth, ty * tileHeight, tileWidth, tileHeight);
-				sf::Texture texture;
-				texture.loadFromFile(path, rect);
 
-				std::cout << rect.left << ", " << rect.top << " - " << rect.width << "x" << rect.height << std::endl;
+				sf::Texture texture;
+				texture.loadFromImage(*source, rect);
 
 				sf::Sprite sprite(texture);
 
@@ -72,4 +69,29 @@ Map *MapLoader::load(const sf::String &fileName)
 	}
 
 	return map;
+}
+
+sf::Image *MapLoader::tryGetImage(const int id, const Tmx::Image *image, ImageCache &cache)
+{
+	ImageCacheIterator iterator = cache.find(id);
+
+	if(iterator == cache.end())
+	{
+		std::cout << "Loading tileset" << std::endl;
+
+		sf::String source = image->GetSource();
+		sf::String path = sf::StringEx::format("resources/%1", source);
+		sf::Image *image = new sf::Image();
+		image->loadFromFile(path);
+
+		cache[id] = image;
+
+		return image;
+	}
+	else
+	{
+		std::cout << "Tileset already loaded" << std::endl;
+
+		return iterator->second;
+	}
 }
