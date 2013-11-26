@@ -40,6 +40,10 @@ Map *MapLoader::load(const sf::String &fileName)
 			{
 				const Tmx::Layer *layer = tiledMap.GetLayer(i);
 				const Tmx::MapTile &mapTile = layer->GetTile(x, y);
+
+				if(mapTile.id == 0)
+					continue;
+
 				const Tmx::Tileset *tileset = tiledMap.GetTileset(mapTile.tilesetId);
 				const Tmx::Image *image = tileset->GetImage();
 
@@ -55,6 +59,10 @@ Map *MapLoader::load(const sf::String &fileName)
 				sf::Sprite sprite(*source, rect);
 				sprite.setPosition(x * tileWidth, y * tileHeight);
 				tile->setLayer(layerZ, sprite);
+
+				// This is pretty ugly
+				if(layer->GetName().compare("Collision") == 0)
+					tile->setCollidable(true);
 			}
 
 			map->addObject(tile);

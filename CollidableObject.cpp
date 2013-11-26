@@ -1,8 +1,8 @@
 #include "CollidableObject.h"
 
-CollidableObject::CollidableObject(int x, int y, int width, int height, const sf::Texture &texture, CollidableObject::CollidableObjectType type)
+CollidableObject::CollidableObject(int x, int y, int width, int height)
 	: DrawableObject(x, y, width, height)
-	, m_type(type)
+	, m_type(StaticCollidable)
 	, m_body(NULL)
 {
 

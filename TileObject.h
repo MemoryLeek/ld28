@@ -14,10 +14,14 @@ class TileObject : public DrawableObject
 
 		void setLayer(int z, const sf::Sprite &sprite);
 
+		bool isCollidable() const;
+		void setCollidable(bool collidable);
+
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 	private:
 		std::map<const int, sf::Sprite> m_layers;
+		bool m_collidable;
 };
 
 #endif // TILEOBJECT_H

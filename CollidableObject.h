@@ -15,7 +15,7 @@ class CollidableObject : public DrawableObject
 			DynamicCollidable
 		};
 
-		CollidableObject(int x, int y, int width, int height, const sf::Texture &texture, CollidableObject::CollidableObjectType type);
+		CollidableObject(int x, int y, int width, int height);
 
 		CollidableObjectType type() const;
 

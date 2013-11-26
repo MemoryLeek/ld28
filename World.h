@@ -4,6 +4,7 @@
 #include <Box2D/Dynamics/b2World.h>
 
 #include "CollidableObject.h"
+#include "Map.h"
 
 class World : public b2World
 {
@@ -12,8 +13,12 @@ class World : public b2World
 
 		void addCollidable(CollidableObject *collidable);
 
+		void addWalls(const Map &map);
+
+		static float scale();
+
 	private:
-		const float m_worldScale;
+		static float m_worldScale;
 };
 
 #endif // WORLD_H

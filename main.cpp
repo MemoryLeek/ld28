@@ -3,6 +3,8 @@
 
 #include "MapLoader.h"
 #include "Map.h"
+#include "World.h"
+#include "WorldDebug.h"
 
 int main()
 {
@@ -11,6 +13,13 @@ int main()
 
 	MapLoader mapLoader;
 	Map *map = mapLoader.load("resources/room.tmx");
+
+	World world;
+	world.addWalls(*map);
+
+	WorldDebug worldDebugger(&window);
+	worldDebugger.SetFlags(b2Draw::e_shapeBit);
+	world.SetDebugDraw(&worldDebugger);
 
 	while(window.isOpen())
 	{
@@ -26,6 +35,7 @@ int main()
 
 		window.clear();
 		window.draw(*map);
+		world.DrawDebugData();
 		window.display();
 	}
 

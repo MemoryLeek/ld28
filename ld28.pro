@@ -16,7 +16,8 @@ SOURCES += \
     DrawableObject.cpp \
     Map.cpp \
     TileObject.cpp \
-    WorldObject.cpp
+    WorldObject.cpp \
+    WorldDebug.cpp
 
 HEADERS += \
     CollidableObject.h \
@@ -26,4 +27,5 @@ HEADERS += \
     Map.h \
     StringEx.h \
     TileObject.h \
-    WorldObject.h
+    WorldObject.h \
+    WorldDebug.h
