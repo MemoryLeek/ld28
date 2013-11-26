@@ -7,7 +7,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "DrawableObject.h"
+#include "TileObject.h"
 #include "MapLoader.h"
 #include "Map.h"
 #include "StringEx.h"
@@ -23,7 +23,7 @@ Map *MapLoader::load(const sf::String &fileName)
 	tiledMap.ParseFile(fileName);
 
 	Map *map = new Map();
-	ImageCache cache;
+	TextureCache cache;
 
 	const int width = tiledMap.GetWidth();
 	const int height = tiledMap.GetHeight();
@@ -34,8 +34,7 @@ Map *MapLoader::load(const sf::String &fileName)
 	{
 		for(int y = 0; y < height; y++)
 		{
-			sf::RenderTexture *renderTexture = new sf::RenderTexture();
-			renderTexture->create(tileWidth, tileHeight);
+			TileObject *tile = new TileObject(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 
 			for(int i = 0; i < tiledMap.GetNumLayers(); i++)
 			{
@@ -44,36 +43,30 @@ Map *MapLoader::load(const sf::String &fileName)
 				const Tmx::Tileset *tileset = tiledMap.GetTileset(mapTile.tilesetId);
 				const Tmx::Image *image = tileset->GetImage();
 
+				const int layerZ = layer->GetZOrder();
+
 				const int w = image->GetWidth() / tileWidth;
 				const int ty = mapTile.id / w;
 				const int tx = mapTile.id - (ty * w);
 
-				sf::Image *source = tryGetImage(mapTile.tilesetId, image, cache);
+				sf::Texture *source = tryGetTexture(mapTile.tilesetId, image, cache);
 				sf::Rect<int> rect(tx * tileWidth, ty * tileHeight, tileWidth, tileHeight);
 
-				sf::Texture texture;
-				texture.loadFromImage(*source, rect);
-
-				sf::Sprite sprite(texture);
-
-				renderTexture->draw(sprite);
+				sf::Sprite sprite(*source, rect);
+				sprite.setPosition(x * tileWidth, y * tileHeight);
+				tile->setLayer(layerZ, sprite);
 			}
 
-			renderTexture->display();
-
-			const sf::Texture &composited = renderTexture->getTexture();
-			const DrawableObject *mapObject = new DrawableObject(x * tileWidth, y * tileWidth, composited);
-
-			map->addObject(mapObject);
+			map->addObject(tile);
 		}
 	}
 
 	return map;
 }
 
-sf::Image *MapLoader::tryGetImage(const int id, const Tmx::Image *image, ImageCache &cache)
+sf::Texture *MapLoader::tryGetTexture(const int id, const Tmx::Image *image, TextureCache &cache)
 {
-	ImageCacheIterator iterator = cache.find(id);
+	TextureCacheIterator iterator = cache.find(id);
 
 	if(iterator == cache.end())
 	{
@@ -81,12 +74,12 @@ sf::Image *MapLoader::tryGetImage(const int id, const Tmx::Image *image, ImageCa
 
 		sf::String source = image->GetSource();
 		sf::String path = sf::StringEx::format("resources/%1", source);
-		sf::Image *image = new sf::Image();
-		image->loadFromFile(path);
+		sf::Texture *texture = new sf::Texture();
+		texture->loadFromFile(path);
 
-		cache[id] = image;
+		cache[id] = texture;
 
-		return image;
+		return texture;
 	}
 	else
 	{

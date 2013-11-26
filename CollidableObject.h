@@ -3,7 +3,7 @@
 
 #include <Box2D/Dynamics/b2Body.h>
 
-#include "MapObject.h"
+#include "WorldObject.h"
 #include "DrawableObject.h"
 
 class CollidableObject : public DrawableObject
@@ -15,7 +15,7 @@ class CollidableObject : public DrawableObject
 			DynamicCollidable
 		};
 
-		CollidableObject(int x, int y, const sf::Texture &texture, CollidableObject::CollidableObjectType type);
+		CollidableObject(int x, int y, int width, int height, const sf::Texture &texture, CollidableObject::CollidableObjectType type);
 
 		CollidableObjectType type() const;
 

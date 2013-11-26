@@ -6,19 +6,19 @@ Map::Map()
 
 }
 
-std::list<const MapObject *> Map::objects() const
+std::list<const WorldObject *> Map::objects() const
 {
 	return m_objects;
 }
 
-void Map::addObject(const MapObject *object)
+void Map::addObject(const WorldObject *object)
 {
 	m_objects.push_back(object);
 }
 
 void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	for(const MapObject *object : m_objects)
+	for(const WorldObject *object : m_objects)
 	{
 		const DrawableObject *drawable = dynamic_cast<const DrawableObject *>(object);
 

@@ -7,20 +7,20 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
-class MapObject;
+class WorldObject;
 
 class Map : public sf::Drawable
 {
 	public:
 		Map();
 
-		std::list<const MapObject *> objects() const;
-		void addObject(const MapObject *object);
+		std::list<const WorldObject *> objects() const;
+		void addObject(const WorldObject *object);
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 	private:
-		std::list<const MapObject *> m_objects;
+		std::list<const WorldObject *> m_objects;
 };
 
 #endif // MAP_H

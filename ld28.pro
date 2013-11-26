@@ -10,18 +10,20 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    MapObject.cpp \
     CollidableObject.cpp \
 	World.cpp \
     MapLoader.cpp \
     DrawableObject.cpp \
-    Map.cpp
+    Map.cpp \
+    TileObject.cpp \
+    WorldObject.cpp
 
 HEADERS += \
-    MapObject.h \
     CollidableObject.h \
 	World.h \
     MapLoader.h \
     DrawableObject.h \
     Map.h \
-    StringEx.h
+    StringEx.h \
+    TileObject.h \
+    WorldObject.h

@@ -1,16 +1,18 @@
 #ifndef DRAWABLEOBJECT_H
 #define DRAWABLEOBJECT_H
 
-#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 
-#include "MapObject.h"
+#include "WorldObject.h"
 
-class DrawableObject : public MapObject, public sf::Sprite
+class DrawableObject : public WorldObject, public sf::Drawable
 {
 	public:
-		DrawableObject(int x, int y, const sf::Texture &texture);
+		DrawableObject(int x, int y, int width, int height);
 
 		void foo() override;
+
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override = 0;
 };
 
 #endif // DRAWABLEOBJECT_H

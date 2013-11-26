@@ -5,11 +5,11 @@
 
 #include <TmxParser/Tmx.h>
 
-#include <SFML/Graphics/Image.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/String.hpp>
 
-using ImageCache = std::unordered_map<int, sf::Image *>;
-using ImageCacheIterator = ImageCache::iterator;
+using TextureCache = std::unordered_map<int, sf::Texture *>;
+using TextureCacheIterator = TextureCache::iterator;
 
 class Map;
 
@@ -21,7 +21,7 @@ class MapLoader
 		Map *load(const sf::String &fileName);
 
 	private:
-		sf::Image *tryGetImage(const int id, const Tmx::Image *image, ImageCache &cache);
+		sf::Texture *tryGetTexture(const int id, const Tmx::Image *image, TextureCache &cache);
 };
 
 #endif // MAPLOADER_H
