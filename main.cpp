@@ -11,15 +11,14 @@ int main()
 	sf::VideoMode videoMode(800, 600);
 	sf::RenderWindow window(videoMode, "My window");
 
-	MapLoader mapLoader;
-	Map *map = mapLoader.load("resources/room.tmx");
-
 	World world;
-	world.addWalls(*map);
 
 	WorldDebug worldDebugger(&window);
 	worldDebugger.SetFlags(b2Draw::e_shapeBit);
 	world.SetDebugDraw(&worldDebugger);
+
+	MapLoader mapLoader;
+	Map *map = mapLoader.load("resources/room.tmx", world);
 
 	while(window.isOpen())
 	{

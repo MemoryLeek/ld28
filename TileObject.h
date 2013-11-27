@@ -17,18 +17,14 @@ class TileObject : public DrawableObject
 			Foreground
 		};
 
-		TileObject(int x, int y, int width, int height);
+		TileObject(const WorldPosition *position, int width, int height);
 
 		void addLayer(const TileLayer &layer);
-
-		bool isCollidable() const;
-		void setCollidable(bool collidable);
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 	private:
 		std::list<TileLayer> m_layers;
-		bool m_collidable;
 };
 
 #endif // TILEOBJECT_H

@@ -1,6 +1,6 @@
 #include "RenderProxy.h"
 
-RenderProxy::RenderProxy(sf::RenderTarget &subject, const sf::Vector2<int> &target)
+RenderProxy::RenderProxy(sf::RenderTarget &subject, const b2Vec2 &target)
 	: m_subject(subject)
 	, m_target(target)
 {

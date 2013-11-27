@@ -10,14 +10,16 @@
 #include "TileObject.h"
 #include "MapLoader.h"
 #include "Map.h"
+#include "StaticWorldPosition.h"
 #include "StringEx.h"
+#include "World.h"
 
 MapLoader::MapLoader()
 {
 
 }
 
-Map *MapLoader::load(const sf::String &fileName)
+Map *MapLoader::load(const sf::String &fileName, World &world)
 {
 	Tmx::Map tiledMap;
 	tiledMap.ParseFile(fileName);
@@ -34,7 +36,21 @@ Map *MapLoader::load(const sf::String &fileName)
 	{
 		for(int y = 0; y < height; y++)
 		{
-			TileObject *tile = new TileObject(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+			const Tmx::Layer *collisionLayer = tiledMap.GetLayer(TileObject::Collision);
+			const Tmx::MapTile &currentCollisionTile = collisionLayer->GetTile(x, y);
+			bool isWall = (currentCollisionTile.id == 0) ? false : true;
+
+			WorldPosition *worldPosition;
+			if(isWall)
+			{
+				worldPosition = (WorldPosition*)world.createStaticBox(b2Vec2(x * tileWidth, y * tileHeight), tileWidth, tileHeight);
+			}
+			else
+			{
+				worldPosition = new StaticWorldPosition(b2Vec2(x * tileWidth, y * tileHeight));
+			}
+
+			TileObject *tile = new TileObject(worldPosition, tileWidth, tileHeight);
 
 			for(int i = 0; i < tiledMap.GetNumLayers(); i++)
 			{
@@ -56,7 +72,6 @@ Map *MapLoader::load(const sf::String &fileName)
 					TileLayer tileLayer(source, rect);
 
 					tile->addLayer(tileLayer);
-					tile->setCollidable(i == TileObject::Collision);
 				}
 			}
 

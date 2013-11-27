@@ -10,7 +10,6 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    CollidableObject.cpp \
 	World.cpp \
     MapLoader.cpp \
     DrawableObject.cpp \
@@ -19,10 +18,11 @@ SOURCES += \
     WorldObject.cpp \
     WorldDebug.cpp \
     TileLayer.cpp \
-    RenderProxy.cpp
+    RenderProxy.cpp \
+    StaticWorldPosition.cpp \
+    PhysicsWorldPosition.cpp
 
 HEADERS += \
-    CollidableObject.h \
 	World.h \
     MapLoader.h \
     DrawableObject.h \
@@ -32,4 +32,7 @@ HEADERS += \
     WorldObject.h \
     WorldDebug.h \
     TileLayer.h \
-    RenderProxy.h
+    RenderProxy.h \
+    WorldPosition.h \
+    StaticWorldPosition.h \
+    PhysicsWorldPosition.h

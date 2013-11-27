@@ -3,17 +3,16 @@
 
 #include <Box2D/Dynamics/b2World.h>
 
-#include "CollidableObject.h"
 #include "Map.h"
+
+class PhysicsWorldPosition;
 
 class World : public b2World
 {
 	public:
 		World();
 
-		void addCollidable(CollidableObject *collidable);
-
-		void addWalls(const Map &map);
+		PhysicsWorldPosition *createStaticBox(const b2Vec2 &position, int width, int height);
 
 		static float scale();
 

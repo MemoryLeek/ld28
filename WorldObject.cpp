@@ -1,6 +1,11 @@
 #include "WorldObject.h"
 
-WorldObject::WorldObject(int x, int y, int width, int height)
-	: sf::Rect<int>(x, y, width, height)
+WorldObject::WorldObject(const WorldPosition *position, int width, int height)
+	: m_worldPosition(position)
 {
+}
+
+const WorldPosition *WorldObject::worldPosition() const
+{
+	return m_worldPosition;
 }

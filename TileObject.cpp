@@ -5,9 +5,8 @@
 #include "TileObject.h"
 #include "RenderProxy.h"
 
-TileObject::TileObject(int x, int y, int width, int height)
-	: DrawableObject(x, y, width, height)
-	, m_collidable(false)
+TileObject::TileObject(const WorldPosition *position, int width, int height)
+	: DrawableObject(position, width, height)
 {
 }
 
@@ -16,19 +15,9 @@ void TileObject::addLayer(const TileLayer &layer)
 	m_layers.push_back(layer);
 }
 
-bool TileObject::isCollidable() const
-{
-	return m_collidable;
-}
-
-void TileObject::setCollidable(bool collidable)
-{
-	m_collidable = collidable;
-}
-
 void TileObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	const sf::Vector2<int> vector(left, top);
+	const b2Vec2 &vector = worldPosition()->position();
 
 	for(const TileLayer &layer : m_layers)
 	{

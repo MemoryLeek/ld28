@@ -12,13 +12,14 @@ using TextureCache = std::unordered_map<int, sf::Texture *>;
 using TextureCacheIterator = TextureCache::iterator;
 
 class Map;
+class World;
 
 class MapLoader
 {
 	public:
 		MapLoader();
 
-		Map *load(const sf::String &fileName);
+		Map *load(const sf::String &fileName, World &world);
 
 	private:
 		sf::Texture *tryGetTexture(const int id, const Tmx::Image *image, TextureCache &cache);
