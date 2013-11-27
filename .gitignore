@@ -1,6 +1,7 @@
 bin/ld28
 bin/*callgrind*
-build/
+
+*.o
 *.pro.user
 Makefile
 

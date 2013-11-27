@@ -30,5 +30,6 @@ During development we're using qmake since this integrates better with our IDE (
 
 ### Linux (qmake during development)
 
+    cd src/
     qmake -config release
     make

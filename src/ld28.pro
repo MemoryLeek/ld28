@@ -1,7 +1,7 @@
 CONFIG -= qt
 
 TARGET = ld28
-DESTDIR = bin
+DESTDIR = ../bin
 
 OBJECTS_DIR = build
 
