@@ -17,7 +17,9 @@ SOURCES += \
     Map.cpp \
     TileObject.cpp \
     WorldObject.cpp \
-    WorldDebug.cpp
+    WorldDebug.cpp \
+    TileLayer.cpp \
+    RenderProxy.cpp
 
 HEADERS += \
     CollidableObject.h \
@@ -28,4 +30,6 @@ HEADERS += \
     StringEx.h \
     TileObject.h \
     WorldObject.h \
-    WorldDebug.h
+    WorldDebug.h \
+    TileLayer.h \
+    RenderProxy.h

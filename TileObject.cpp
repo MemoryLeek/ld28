@@ -1,6 +1,9 @@
+#include <iostream>
+
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "TileObject.h"
+#include "RenderProxy.h"
 
 TileObject::TileObject(int x, int y, int width, int height)
 	: DrawableObject(x, y, width, height)
@@ -8,9 +11,9 @@ TileObject::TileObject(int x, int y, int width, int height)
 {
 }
 
-void TileObject::setLayer(int z, const sf::Sprite &sprite)
+void TileObject::addLayer(const TileLayer &layer)
 {
-	m_layers[z] = sprite;
+	m_layers.push_back(layer);
 }
 
 bool TileObject::isCollidable() const
@@ -25,8 +28,11 @@ void TileObject::setCollidable(bool collidable)
 
 void TileObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	for(const std::pair<const int, sf::Sprite> &sprite : m_layers)
+	const sf::Vector2<int> vector(left, top);
+
+	for(const TileLayer &layer : m_layers)
 	{
-		target.draw(sprite.second, states);
+		RenderProxy proxy(target, vector);
+		proxy.draw(layer, states);
 	}
 }

@@ -41,28 +41,23 @@ Map *MapLoader::load(const sf::String &fileName)
 				const Tmx::Layer *layer = tiledMap.GetLayer(i);
 				const Tmx::MapTile &mapTile = layer->GetTile(x, y);
 
-				if(mapTile.id == 0)
-					continue;
+				if(mapTile.id > 0)
+				{
+					const Tmx::Tileset *tileset = tiledMap.GetTileset(mapTile.tilesetId);
+					const Tmx::Image *image = tileset->GetImage();
 
-				const Tmx::Tileset *tileset = tiledMap.GetTileset(mapTile.tilesetId);
-				const Tmx::Image *image = tileset->GetImage();
+					const int tw = image->GetWidth() / tileWidth;
+					const int ty = mapTile.id / tw;
+					const int tx = mapTile.id - (ty * tw);
 
-				const int layerZ = layer->GetZOrder();
+					const sf::Texture *source = tryGetTexture(mapTile.tilesetId, image, cache);
+					const sf::Rect<int> rect(tx * tileWidth, ty * tileHeight, tileWidth, tileHeight);
 
-				const int w = image->GetWidth() / tileWidth;
-				const int ty = mapTile.id / w;
-				const int tx = mapTile.id - (ty * w);
+					TileLayer tileLayer(source, rect);
 
-				sf::Texture *source = tryGetTexture(mapTile.tilesetId, image, cache);
-				sf::Rect<int> rect(tx * tileWidth, ty * tileHeight, tileWidth, tileHeight);
-
-				sf::Sprite sprite(*source, rect);
-				sprite.setPosition(x * tileWidth, y * tileHeight);
-				tile->setLayer(layerZ, sprite);
-
-				// This is pretty ugly
-				if(layer->GetName().compare("Collision") == 0)
-					tile->setCollidable(true);
+					tile->addLayer(tileLayer);
+					tile->setCollidable(i == TileObject::Collision);
+				}
 			}
 
 			map->addObject(tile);
