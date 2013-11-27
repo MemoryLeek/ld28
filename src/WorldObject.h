@@ -6,14 +6,14 @@
 class WorldObject
 {
 	public:
-		WorldObject(const WorldPosition *position, int width, int height);
+		WorldObject(WorldPosition *position, int width, int height);
 
-		const WorldPosition *worldPosition() const;
+		WorldPosition *worldPosition() const;
 
 		virtual void foo() = 0;
 
 	private:
-		const WorldPosition *m_worldPosition;
+		WorldPosition *m_worldPosition;
 };
 
 #endif // WORLDOBJECT_H

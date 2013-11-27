@@ -8,7 +8,7 @@
 class DrawableObject : public WorldObject, public sf::Drawable
 {
 	public:
-		DrawableObject(const WorldPosition *position, int width, int height);
+		DrawableObject(WorldPosition *position, int width, int height);
 
 		void foo() override;
 

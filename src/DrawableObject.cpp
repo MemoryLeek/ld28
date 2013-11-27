@@ -1,6 +1,6 @@
 #include "DrawableObject.h"
 
-DrawableObject::DrawableObject(const WorldPosition *position, int width, int height)
+DrawableObject::DrawableObject(WorldPosition *position, int width, int height)
 	: WorldObject(position, width, height)
 {
 }

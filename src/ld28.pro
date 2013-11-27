@@ -20,7 +20,8 @@ SOURCES += \
     TileLayer.cpp \
     RenderProxy.cpp \
     StaticWorldPosition.cpp \
-    PhysicsWorldPosition.cpp
+    PhysicsWorldPosition.cpp \
+    Player.cpp
 
 HEADERS += \
 	World.h \
@@ -35,4 +36,5 @@ HEADERS += \
     RenderProxy.h \
     WorldPosition.h \
     StaticWorldPosition.h \
-    PhysicsWorldPosition.h
+    PhysicsWorldPosition.h \
+    Player.h

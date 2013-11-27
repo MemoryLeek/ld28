@@ -10,6 +10,7 @@
 #include "TileObject.h"
 #include "MapLoader.h"
 #include "Map.h"
+#include "PhysicsWorldPosition.h"
 #include "StaticWorldPosition.h"
 #include "StringEx.h"
 #include "World.h"
@@ -43,7 +44,7 @@ Map *MapLoader::load(const sf::String &fileName, World &world)
 			WorldPosition *worldPosition;
 			if(isWall)
 			{
-				worldPosition = (WorldPosition*)world.createStaticBox(b2Vec2(x * tileWidth, y * tileHeight), tileWidth, tileHeight);
+				worldPosition = world.createBox(b2Vec2(x * tileWidth, y * tileHeight), tileWidth, tileHeight);
 			}
 			else
 			{

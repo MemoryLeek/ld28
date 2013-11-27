@@ -30,3 +30,8 @@ void PhysicsWorldPosition::setRotation(float rotation)
 {
 	m_body->SetTransform(m_body->GetPosition(), rotation * M_PI / 180);
 }
+
+b2Body *PhysicsWorldPosition::body() const
+{
+	return m_body;
+}

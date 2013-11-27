@@ -15,6 +15,8 @@ class PhysicsWorldPosition : public WorldPosition
 		float rotation() const override;
 		void setRotation(float rotation) override;
 
+		b2Body *body() const;
+
 	private:
 		PhysicsWorldPosition(b2Body *body);
 

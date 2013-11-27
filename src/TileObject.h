@@ -17,7 +17,7 @@ class TileObject : public DrawableObject
 			Foreground
 		};
 
-		TileObject(const WorldPosition *position, int width, int height);
+		TileObject(WorldPosition *position, int width, int height);
 
 		void addLayer(const TileLayer &layer);
 

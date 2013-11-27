@@ -5,7 +5,7 @@
 #include "TileObject.h"
 #include "RenderProxy.h"
 
-TileObject::TileObject(const WorldPosition *position, int width, int height)
+TileObject::TileObject(WorldPosition *position, int width, int height)
 	: DrawableObject(position, width, height)
 {
 }

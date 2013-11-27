@@ -1,3 +1,6 @@
+#include <chrono>
+#include <thread>
+
 #include <Box2D/Box2D.h>
 
 #include "PhysicsWorldPosition.h"
@@ -11,7 +14,30 @@ World::World() :
 {
 }
 
-PhysicsWorldPosition *World::createStaticBox(const b2Vec2 &position, int width, int height)
+void World::physicsLoop()
+{
+	const float timeStep = 1.f / 120.f; // Step @ 120Hz
+
+	std::chrono::time_point<std::chrono::system_clock> nextRunTime;
+	while(true)
+	{
+		nextRunTime = std::chrono::system_clock::now();
+		nextRunTime += std::chrono::microseconds((int)(timeStep * 1000 * 1000));
+
+		m_mutex.lock();
+		Step(timeStep, 6, 2);
+		m_mutex.unlock();
+
+		std::this_thread::sleep_until(nextRunTime);
+	}
+}
+
+std::mutex &World::mutex()
+{
+	return m_mutex;
+}
+
+PhysicsWorldPosition *World::createBox(const b2Vec2 &position, int width, int height, b2BodyType type)
 {
 	float scaledWidth = width / m_worldScale;
 	float scaledheight = height / m_worldScale;
@@ -20,6 +46,7 @@ PhysicsWorldPosition *World::createStaticBox(const b2Vec2 &position, int width, 
 
 	b2BodyDef bodyDefinition;
 	bodyDefinition.position = scaledPosition;
+	bodyDefinition.type = type;
 
 	b2Body *body = CreateBody(&bodyDefinition);
 
