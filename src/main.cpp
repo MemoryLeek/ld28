@@ -1,4 +1,3 @@
-#include <thread>
 #include <cmath>
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -29,7 +28,9 @@ int main()
 	MapLoader mapLoader(&world);
 	Map *map = mapLoader.load("resources/room.tmx");
 
-	std::thread physicsThread(&World::physicsLoop, &world);
+	const float timestep = 1.f / 120.f; // 120Hz physics
+	sf::Clock clock;
+	int lastPhysicsStepTime;
 
 	while(window.isOpen())
 	{
@@ -49,21 +50,24 @@ int main()
 				float faceDirection = atan2(mousePosition.y - playerPosition.y,
 											mousePosition.x - playerPosition.x);
 
-				world.mutex().lock();
 				playerWorldPosition->setRotation(faceDirection * 180 / M_PI);
-				world.mutex().unlock();
 			}
 
 			if(event.type == sf::Event::KeyPressed)
 			{
 				if(event.key.code == sf::Keyboard::W)
 				{
-					world.mutex().lock();
 					player.setLinearVelocity(b2Vec2(1, 0));
-					world.mutex().unlock();
 				}
 			}
 		}
+
+		while(clock.getElapsedTime().asMilliseconds() > lastPhysicsStepTime + timestep * 1000)
+		{
+			lastPhysicsStepTime += timestep * 1000;
+			world.Step(timestep, 6, 2);
+		}
+		world.ClearForces();
 
 		window.clear();
 		window.draw(*map);

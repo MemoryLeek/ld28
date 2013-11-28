@@ -45,7 +45,7 @@ Map *MapLoader::load(const sf::String &fileName)
 			const b2Vec2 position(x * tileWidth, y * tileHeight);
 			const PositionFactory factory(m_world);
 
-			WorldPosition *worldPosition = factory.create(collisionTile.id > 0, position, tileWidth, tileHeight);
+			WorldPosition *worldPosition = factory.create(collisionTile.tilesetId >= 0, position, tileWidth, tileHeight);
 			TileObject *tile = new TileObject(worldPosition, tileWidth, tileHeight);
 
 			for(int i = 0; i < tiledMap.GetNumLayers(); i++)
@@ -53,7 +53,7 @@ Map *MapLoader::load(const sf::String &fileName)
 				const Tmx::Layer *layer = tiledMap.GetLayer(i);
 				const Tmx::MapTile &mapTile = layer->GetTile(x, y);
 
-				if(mapTile.id > 0)
+				if(mapTile.tilesetId >= 0)
 				{
 					const Tmx::Tileset *tileset = tiledMap.GetTileset(mapTile.tilesetId);
 					const Tmx::Image *image = tileset->GetImage();

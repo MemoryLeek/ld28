@@ -12,29 +12,7 @@ float World::m_worldScale = 32 / 0.5f; // Scale world as 32 px tiles and 1 tile 
 World::World() :
 	b2World(b2Vec2(0, 0))
 {
-}
-
-void World::physicsLoop()
-{
-	const float timeStep = 1.f / 120.f; // Step @ 120Hz
-
-	std::chrono::time_point<std::chrono::system_clock> nextRunTime;
-	while(true)
-	{
-		nextRunTime = std::chrono::system_clock::now();
-		nextRunTime += std::chrono::microseconds((int)(timeStep * 1000 * 1000));
-
-		m_mutex.lock();
-		Step(timeStep, 6, 2);
-		m_mutex.unlock();
-
-		std::this_thread::sleep_until(nextRunTime);
-	}
-}
-
-std::mutex &World::mutex()
-{
-	return m_mutex;
+	SetAutoClearForces(false);
 }
 
 PhysicsWorldPosition *World::createBox(const b2Vec2 &position, int width, int height, b2BodyType type)
