@@ -17,7 +17,7 @@ void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 }
 
-void Player::setLinearVelocity(const b2Vec2 &velocity)
+void Player::setMovement(const b2Vec2 &velocity)
 {
 	const b2Vec2 &targetVelocity = m_body->GetWorldVector(velocity);
 	const b2Vec2 &currentVelocity = m_body->GetLinearVelocity();
@@ -26,9 +26,4 @@ void Player::setLinearVelocity(const b2Vec2 &velocity)
 	float xImpulse = mass * (targetVelocity.x - currentVelocity.x);
 	float yImpulse = mass * (targetVelocity.y - currentVelocity.y);
 	m_body->ApplyLinearImpulse(b2Vec2(xImpulse, yImpulse), m_body->GetWorldCenter(), true);
-}
-
-void Player::setDirection(float angle)
-{
-
 }

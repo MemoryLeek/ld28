@@ -15,6 +15,7 @@ int main()
 {
 	sf::VideoMode videoMode(800, 600);
 	sf::RenderWindow window(videoMode, "My window");
+	sf::View camera(sf::Rect<float>(0, 0, 800, 600));
 
 	World world;
 
@@ -46,7 +47,7 @@ int main()
 			if(event.type == sf::Event::MouseMoved)
 			{
 				const b2Vec2 &playerPosition = playerWorldPosition->position();
-				b2Vec2 mousePosition(event.mouseMove.x, event.mouseMove.y);
+				const sf::Vector2<float> &mousePosition = window.mapPixelToCoords(sf::Vector2<int>(event.mouseMove.x, event.mouseMove.y));
 				float faceDirection = atan2(mousePosition.y - playerPosition.y,
 											mousePosition.x - playerPosition.x);
 
@@ -57,23 +58,24 @@ int main()
 			{
 				if(event.key.code == sf::Keyboard::W)
 				{
-					player.setLinearVelocity(b2Vec2(2, 0));
+					player.setMovement(b2Vec2(2, 0));
 				}
 				else if(event.key.code == sf::Keyboard::S)
 				{
-					player.setLinearVelocity(b2Vec2(-2, 0));
+					player.setMovement(b2Vec2(-2, 0));
 				}
 				else if(event.key.code == sf::Keyboard::A)
 				{
-					player.setLinearVelocity(b2Vec2(0, -2));
+					player.setMovement(b2Vec2(0, -2));
 				}
 				else if(event.key.code == sf::Keyboard::D)
 				{
-					player.setLinearVelocity(b2Vec2(0, 2));
+					player.setMovement(b2Vec2(0, 2));
 				}
 			}
 		}
 
+		// Update physics
 		while(clock.getElapsedTime().asMilliseconds() > lastPhysicsStepTime + timestep * 1000)
 		{
 			lastPhysicsStepTime += timestep * 1000;
@@ -81,6 +83,12 @@ int main()
 		}
 		world.ClearForces();
 
+		// Update camera position
+		const b2Vec2 &playerPosition = playerWorldPosition->position();
+		camera.setCenter(playerPosition.x, playerPosition.y);
+		window.setView(camera);
+
+		// Draw world
 		window.clear();
 		window.draw(*map);
 		world.DrawDebugData();

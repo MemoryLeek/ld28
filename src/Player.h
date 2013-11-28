@@ -12,8 +12,7 @@ class Player : public DrawableObject
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-		void setLinearVelocity(const b2Vec2 &velocity);
-		void setDirection(float angle);
+		void setMovement(const b2Vec2 &velocity);
 
 	private:
 		b2Body *m_body;
