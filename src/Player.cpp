@@ -17,13 +17,55 @@ void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 }
 
-void Player::setMovement(const b2Vec2 &velocity)
+void Player::update()
 {
-	const b2Vec2 &targetVelocity = m_body->GetWorldVector(velocity);
-	const b2Vec2 &currentVelocity = m_body->GetLinearVelocity();
-	const float mass = m_body->GetMass();
+	const b2Vec2 &currentVelocity = m_body->GetLocalVector(m_body->GetLinearVelocity());
 
-	float xImpulse = mass * (targetVelocity.x - currentVelocity.x);
-	float yImpulse = mass * (targetVelocity.y - currentVelocity.y);
-	m_body->ApplyLinearImpulse(b2Vec2(xImpulse, yImpulse), m_body->GetWorldCenter(), true);
+	b2Vec2 impulse(0, 0);
+
+	// Forward/back
+	if(m_movement.x == 0)
+	{
+		impulse.x = (currentVelocity.x < 0) ? 2 : -2;
+	}
+	else
+	{
+		if(m_movement.x > 0 && currentVelocity.x < 2)
+		{
+			impulse.x = 4;
+		}
+		if(m_movement.x < 0 && currentVelocity.x > -2)
+		{
+			impulse.x = -4;
+		}
+	}
+
+	// Left/right
+	if(m_movement.y == 0)
+	{
+		impulse.y = (currentVelocity.y < 0) ? 2 : -2;
+	}
+	else
+	{
+		if(m_movement.y > 0 && currentVelocity.y < 1)
+		{
+			impulse.y = 4;
+		}
+		if(m_movement.y < 0 && currentVelocity.y > -1)
+		{
+			impulse.y = -4;
+		}
+	}
+
+	m_body->ApplyForce(m_body->GetWorldVector(impulse), m_body->GetWorldCenter(), true);
+}
+
+b2Vec2 Player::movement() const
+{
+	return m_movement;
+}
+
+void Player::setMovement(const b2Vec2 &movement)
+{
+	m_movement = movement;
 }

@@ -56,26 +56,51 @@ int main()
 
 			if(event.type == sf::Event::KeyPressed)
 			{
+				const b2Vec2 &movement = player.movement();
+
 				if(event.key.code == sf::Keyboard::W)
 				{
-					player.setMovement(b2Vec2(2, 0));
+					player.setMovement(b2Vec2(2, movement.y));
 				}
 				else if(event.key.code == sf::Keyboard::S)
 				{
-					player.setMovement(b2Vec2(-2, 0));
+					player.setMovement(b2Vec2(-2, movement.y));
 				}
 				else if(event.key.code == sf::Keyboard::A)
 				{
-					player.setMovement(b2Vec2(0, -2));
+					player.setMovement(b2Vec2(movement.x, -2));
 				}
 				else if(event.key.code == sf::Keyboard::D)
 				{
-					player.setMovement(b2Vec2(0, 2));
+					player.setMovement(b2Vec2(movement.x, 2));
+				}
+			}
+
+			if(event.type == sf::Event::KeyReleased)
+			{
+				const b2Vec2 &movement = player.movement();
+
+				if(event.key.code == sf::Keyboard::W)
+				{
+					player.setMovement(b2Vec2(0, movement.y));
+				}
+				else if(event.key.code == sf::Keyboard::S)
+				{
+					player.setMovement(b2Vec2(0, movement.y));
+				}
+				else if(event.key.code == sf::Keyboard::A)
+				{
+					player.setMovement(b2Vec2(movement.x, 0));
+				}
+				else if(event.key.code == sf::Keyboard::D)
+				{
+					player.setMovement(b2Vec2(movement.x, 0));
 				}
 			}
 		}
 
 		// Update physics
+		player.update();
 		while(clock.getElapsedTime().asMilliseconds() > lastPhysicsStepTime + timestep * 1000)
 		{
 			lastPhysicsStepTime += timestep * 1000;

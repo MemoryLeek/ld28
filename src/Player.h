@@ -12,10 +12,15 @@ class Player : public DrawableObject
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-		void setMovement(const b2Vec2 &velocity);
+		void update();
+
+		b2Vec2 movement() const;
+		void setMovement(const b2Vec2 &movement);
 
 	private:
 		b2Body *m_body;
+
+		b2Vec2 m_movement;
 };
 
 #endif // PLAYER_H
