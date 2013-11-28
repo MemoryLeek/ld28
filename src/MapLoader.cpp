@@ -97,8 +97,6 @@ sf::Texture *MapLoader::tryGetTexture(const int id, const Tmx::Image *image, Tex
 	}
 	else
 	{
-		std::cout << "Tileset already loaded" << std::endl;
-
 		return iterator->second;
 	}
 }

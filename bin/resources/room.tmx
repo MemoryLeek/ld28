@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="5" height="5" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="plowed_soil" tilewidth="32" tileheight="32">
-  <image source="plowed_soil.png" width="96" height="192"/>
+<map version="1.0" orientation="orthogonal" width="32" height="32" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="placeholder" tilewidth="32" tileheight="32">
+  <image source="placeholder.png" width="64" height="32"/>
  </tileset>
- <layer name="Background" width="5" height="5">
+ <layer name="Background" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJxjYMAOuJEwqWLoAAAUgABk
+   eJztwwEJAAAMBKHj+4dej6HgqqmqqqqvHyPACAE=
   </data>
  </layer>
- <layer name="Collision" width="5" height="5">
+ <layer name="Collision" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJxjZ2Bg4EDCnEDMxYAKeEgQ4wViPiTMD8QAHyQAsQ==
+   eJzt1MEJADAIBMGz/6ZTQYLkHvtZ4Z46iOAkGTi/9erdzNXv/dst6f23/e0Mfc6n70//v7b09fX19fX19fUZn8wBXsMAmw==
   </data>
  </layer>
 </map>
