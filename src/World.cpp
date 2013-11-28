@@ -7,24 +7,25 @@
 #include "TileObject.h"
 #include "World.h"
 
-float World::m_worldScale = 32 / 0.5f; // Scale world as 32 px tiles and 1 tile is 0.5m
+const float World::SCALE = 32 / 0.5f; // Scale world as 32 px tiles and 1 tile is 0.5m
 
-World::World() :
-	b2World(b2Vec2(0, 0))
+World::World()
+	: b2World(b2Vec2(0, 0))
 {
 	SetAutoClearForces(false);
 }
 
 PhysicsWorldPosition *World::createBox(const b2Vec2 &position, int width, int height, b2BodyType type)
 {
-	float scaledWidth = width / m_worldScale;
-	float scaledheight = height / m_worldScale;
-	b2Vec2 scaledPosition(position.x / m_worldScale,
-						  position.y / m_worldScale);
+	float scaledWidth = width / SCALE;
+	float scaledheight = height / SCALE;
+	b2Vec2 scaledPosition(position.x / SCALE,
+						  position.y / SCALE);
 
 	b2BodyDef bodyDefinition;
 	bodyDefinition.position = scaledPosition;
 	bodyDefinition.type = type;
+	bodyDefinition.linearDamping = 1;
 
 	b2Body *body = CreateBody(&bodyDefinition);
 
@@ -33,9 +34,4 @@ PhysicsWorldPosition *World::createBox(const b2Vec2 &position, int width, int he
 	body->CreateFixture(&shape, 1.0f);
 
 	return new PhysicsWorldPosition(body);
-}
-
-float World::scale()
-{
-	return m_worldScale;
 }

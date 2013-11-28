@@ -57,7 +57,19 @@ int main()
 			{
 				if(event.key.code == sf::Keyboard::W)
 				{
-					player.setLinearVelocity(b2Vec2(1, 0));
+					player.setLinearVelocity(b2Vec2(2, 0));
+				}
+				else if(event.key.code == sf::Keyboard::S)
+				{
+					player.setLinearVelocity(b2Vec2(-2, 0));
+				}
+				else if(event.key.code == sf::Keyboard::A)
+				{
+					player.setLinearVelocity(b2Vec2(0, -2));
+				}
+				else if(event.key.code == sf::Keyboard::D)
+				{
+					player.setLinearVelocity(b2Vec2(0, 2));
 				}
 			}
 		}

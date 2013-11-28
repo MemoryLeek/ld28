@@ -16,7 +16,7 @@ void WorldDebug::DrawPolygon(const b2Vec2 *vertices, int32 vertexCount, const b2
 	sf::ConvexShape polygon(vertexCount);
 	for(int i = 0; i < vertexCount; i++)
 	{
-		polygon.setPoint(i, sf::Vector2f(vertices[i].x * World::scale(), vertices[i].y * World::scale()));
+		polygon.setPoint(i, sf::Vector2f(vertices[i].x * World::SCALE, vertices[i].y * World::SCALE));
 	}
 
 	polygon.setOutlineColor(sf::Color(color.r, color.g, color.b, 127));
@@ -29,7 +29,7 @@ void WorldDebug::DrawSolidPolygon(const b2Vec2 *vertices, int32 vertexCount, con
 	sf::ConvexShape polygon(vertexCount);
 	for(int i = 0; i < vertexCount; i++)
 	{
-		polygon.setPoint(i, sf::Vector2f(vertices[i].x * World::scale(), vertices[i].y * World::scale()));
+		polygon.setPoint(i, sf::Vector2f(vertices[i].x * World::SCALE, vertices[i].y * World::SCALE));
 	}
 
 	polygon.setFillColor(sf::Color(color.r, color.g, color.b, 127));
@@ -39,7 +39,7 @@ void WorldDebug::DrawSolidPolygon(const b2Vec2 *vertices, int32 vertexCount, con
 void WorldDebug::DrawCircle(const b2Vec2 &center, float32 radius, const b2Color &color)
 {
 	sf::CircleShape circle;
-	circle.setPosition(center.x * World::scale(), center.y * World::scale());
+	circle.setPosition(center.x * World::SCALE, center.y * World::SCALE);
 	circle.setRadius(radius);
 	circle.setOutlineColor(sf::Color(color.r, color.g, color.b, 127));
 	circle.setOutlineThickness(1);
@@ -49,7 +49,7 @@ void WorldDebug::DrawCircle(const b2Vec2 &center, float32 radius, const b2Color 
 void WorldDebug::DrawSolidCircle(const b2Vec2 &center, float32 radius, const b2Vec2 &axis, const b2Color &color)
 {
 	sf::CircleShape circle;
-	circle.setPosition(center.x * World::scale(), center.y * World::scale());
+	circle.setPosition(center.x * World::SCALE, center.y * World::SCALE);
 	circle.setRadius(radius);
 	circle.setFillColor(sf::Color(color.r, color.g, color.b, 127));
 	m_renderTarget->draw(circle);
@@ -57,8 +57,8 @@ void WorldDebug::DrawSolidCircle(const b2Vec2 &center, float32 radius, const b2V
 
 void WorldDebug::DrawSegment(const b2Vec2 &p1, const b2Vec2 &p2, const b2Color &color)
 {
-	sf::Vertex line[] =	{sf::Vertex(sf::Vector2f(p1.x * World::scale(), p1.y * World::scale())),
-						 sf::Vertex(sf::Vector2f(p2.x * World::scale(), p2.y * World::scale()))};
+	sf::Vertex line[] =	{sf::Vertex(sf::Vector2f(p1.x * World::SCALE, p1.y * World::SCALE)),
+						 sf::Vertex(sf::Vector2f(p2.x * World::SCALE, p2.y * World::SCALE))};
 	m_renderTarget->draw(line, 2, sf::Lines);
 }
 

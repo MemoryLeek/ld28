@@ -9,16 +9,17 @@ PhysicsWorldPosition::PhysicsWorldPosition(b2Body *body)
 b2Vec2 PhysicsWorldPosition::position() const
 {
 	b2Vec2 position = m_body->GetPosition();
-	position *= World::scale();
+	position *= World::SCALE;
 	return position;
 }
 
 void PhysicsWorldPosition::setPosition(const b2Vec2 &position)
 {
-	b2Vec2 newPosition(position.x / World::scale(),
-					   position.y / World::scale());
+	b2Vec2 newPosition(position.x / World::SCALE,
+					   position.y / World::SCALE);
 
 	m_body->SetTransform(newPosition, m_body->GetAngle());
+	m_body->SetAwake(true);
 }
 
 float PhysicsWorldPosition::rotation() const

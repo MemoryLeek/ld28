@@ -15,10 +15,7 @@ class World : public b2World
 
 		PhysicsWorldPosition *createBox(const b2Vec2 &position, int width, int height, b2BodyType type = b2_staticBody);
 
-		static float scale();
-
-	private:
-		static float m_worldScale;
+		static const float SCALE;
 };
 
 #endif // WORLD_H
