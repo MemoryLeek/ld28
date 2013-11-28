@@ -14,13 +14,15 @@
 #include "StaticWorldPosition.h"
 #include "StringEx.h"
 #include "World.h"
+#include "PositionFactory.h"
 
-MapLoader::MapLoader()
+MapLoader::MapLoader(World *world)
+	: m_world(world)
 {
 
 }
 
-Map *MapLoader::load(const sf::String &fileName, World &world)
+Map *MapLoader::load(const sf::String &fileName)
 {
 	Tmx::Map tiledMap;
 	tiledMap.ParseFile(fileName);
@@ -38,19 +40,12 @@ Map *MapLoader::load(const sf::String &fileName, World &world)
 		for(int y = 0; y < height; y++)
 		{
 			const Tmx::Layer *collisionLayer = tiledMap.GetLayer(TileObject::Collision);
-			const Tmx::MapTile &currentCollisionTile = collisionLayer->GetTile(x, y);
-			bool isWall = (currentCollisionTile.id == 0) ? false : true;
+			const Tmx::MapTile &collisionTile = collisionLayer->GetTile(x, y);
 
-			WorldPosition *worldPosition;
-			if(isWall)
-			{
-				worldPosition = world.createBox(b2Vec2(x * tileWidth, y * tileHeight), tileWidth, tileHeight);
-			}
-			else
-			{
-				worldPosition = new StaticWorldPosition(b2Vec2(x * tileWidth, y * tileHeight));
-			}
+			const b2Vec2 position(x * tileWidth, y * tileHeight);
+			const PositionFactory factory(m_world);
 
+			WorldPosition *worldPosition = factory.create(collisionTile.id > 0, position, tileWidth, tileHeight);
 			TileObject *tile = new TileObject(worldPosition, tileWidth, tileHeight);
 
 			for(int i = 0; i < tiledMap.GetNumLayers(); i++)

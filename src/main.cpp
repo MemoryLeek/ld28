@@ -26,8 +26,8 @@ int main()
 	WorldPosition *playerWorldPosition = world.createBox(b2Vec2(64, 64), 32, 32, b2_dynamicBody);
 	Player player(playerWorldPosition);
 
-	MapLoader mapLoader;
-	Map *map = mapLoader.load("resources/room.tmx", world);
+	MapLoader mapLoader(&world);
+	Map *map = mapLoader.load("resources/room.tmx");
 
 	std::thread physicsThread(&World::physicsLoop, &world);
 

@@ -17,12 +17,14 @@ class World;
 class MapLoader
 {
 	public:
-		MapLoader();
+		MapLoader(World *world);
 
-		Map *load(const sf::String &fileName, World &world);
+		Map *load(const sf::String &fileName);
 
 	private:
 		sf::Texture *tryGetTexture(const int id, const Tmx::Image *image, TextureCache &cache);
+
+		World *m_world;
 };
 
 #endif // MAPLOADER_H

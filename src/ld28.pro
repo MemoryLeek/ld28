@@ -21,7 +21,8 @@ SOURCES += \
     RenderProxy.cpp \
     StaticWorldPosition.cpp \
     PhysicsWorldPosition.cpp \
-    Player.cpp
+    Player.cpp \
+    PositionFactory.cpp
 
 HEADERS += \
 	World.h \
@@ -37,4 +38,5 @@ HEADERS += \
     WorldPosition.h \
     StaticWorldPosition.h \
     PhysicsWorldPosition.h \
-    Player.h
+    Player.h \
+    PositionFactory.h
