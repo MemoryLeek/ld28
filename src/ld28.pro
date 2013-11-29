@@ -22,7 +22,10 @@ SOURCES += \
     StaticWorldPosition.cpp \
     PhysicsWorldPosition.cpp \
     Player.cpp \
-    PositionFactory.cpp
+    PositionFactory.cpp \
+    ai/Bot.cpp \
+    ai/Pathfinder.cpp \
+    RayCastResult.cpp
 
 HEADERS += \
 	World.h \
@@ -39,4 +42,7 @@ HEADERS += \
     StaticWorldPosition.h \
     PhysicsWorldPosition.h \
     Player.h \
-    PositionFactory.h
+    PositionFactory.h \
+    ai/Bot.h \
+    ai/Pathfinder.h \
+    RayCastResult.h

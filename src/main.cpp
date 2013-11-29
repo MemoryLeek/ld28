@@ -3,6 +3,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "ai/Bot.h"
 #include "MapLoader.h"
 #include "Map.h"
 #include "PhysicsWorldPosition.h"
@@ -25,6 +26,11 @@ int main()
 
 	WorldPosition *playerWorldPosition = world.createBox(b2Vec2(64, 64), 32, 32, b2_dynamicBody);
 	Player player(playerWorldPosition);
+
+	std::list<const WorldObject *> botEnemies = {&player};
+
+	WorldPosition *botWorldPosition = world.createBox(b2Vec2(576, 64), 32, 32, b2_dynamicBody);
+	Bot bot(botWorldPosition, &botEnemies);
 
 	MapLoader mapLoader(&world);
 	Map *map = mapLoader.load("resources/room.tmx");
@@ -101,6 +107,7 @@ int main()
 
 		// Update physics
 		player.update();
+		bot.update();
 		while(clock.getElapsedTime().asMilliseconds() > lastPhysicsStepTime + timestep * 1000)
 		{
 			lastPhysicsStepTime += timestep * 1000;
