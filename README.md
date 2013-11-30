@@ -6,7 +6,7 @@ We have already defined some key features that we would like in our finished gam
 
 ### Planned
 - Pseudo-random level creation using rooms created in Tiled
-- AI with pathfinding (probably A*)
+- AI with pathfinding (probably using A*)
 - Local 2-player co-op (using kbd/mouse and gamepad)
 - Physics engine so that we can do fancy stuff like explosions with pushback effect
 - Gamepad support
@@ -17,7 +17,9 @@ We have already defined some key features that we would like in our finished gam
 
 ## Why we have started before the compo
 
-We have already decided that we're doing a tile-based top-down game this compo, since we usually do side-scrollers. This allows us to start working before the theme is announced, the artwork and gameplay will most likely be created/defined during the actual compo. All code in this repo is licensed under GPLv2 so that others are allowed to use/fork our code if they want to for some reason, we will also link to this repo in the ludumdare.com blog post that we'll post before the compo starts.
+We have already decided that we're doing a tile-based top-down game this compo, since we usually do side-scrollers. So we thought that we should start ahead to get the engine up and running. We've planned to have most of the features listed above finished before the compo starts, which would allow us to work 100% on game design and implementation during the actual compo. This will hopefully lead to a more polished and less buggy game than our previous entries where we would pretty much write the entire engine during the compo.
+
+This code is licensed under GPLv2 and anyone is free to fork this and use for their own games if they like. We will also announce that we're using this as a base in our pre-compo blog post at ludumdare.com a few days before the compo starts.
 
 ## Compiling the source
 
