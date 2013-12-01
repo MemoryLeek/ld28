@@ -25,7 +25,16 @@ SOURCES += \
     PositionFactory.cpp \
     ai/Bot.cpp \
     ai/Pathfinder.cpp \
-    RayCastResult.cpp
+	RayCastResult.cpp \
+    WorldGenerator.cpp \
+    InputHandler.cpp \
+    SettingsHandler.cpp \
+    Settings.cpp \
+    KeyMapping.cpp \
+    InputMapping.cpp \
+    GameState.cpp \
+    AnalogMapping.cpp \
+    PlayerInputProxy.cpp
 
 HEADERS += \
 	World.h \
@@ -45,4 +54,15 @@ HEADERS += \
     PositionFactory.h \
     ai/Bot.h \
     ai/Pathfinder.h \
-    RayCastResult.h
+	RayCastResult.h \
+    WorldGenerator.h \
+    InputHandler.h \
+    SettingsHandler.h \
+    Settings.h \
+    KeyMapping.h \
+    StreamingOperators.h \
+    InputMapping.h \
+    State.h \
+    GameState.h \
+    AnalogMapping.h \
+    PlayerInputProxy.h

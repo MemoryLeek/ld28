@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iostream>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
@@ -11,6 +12,8 @@
 #include "World.h"
 #include "WorldDebug.h"
 #include "WorldPosition.h"
+#include "SettingsHandler.h"
+#include "InputHandler.h"
 
 int main()
 {
@@ -34,6 +37,9 @@ int main()
 
 	MapLoader mapLoader(&world);
 	Map *map = mapLoader.load("resources/room.tmx");
+	
+	SettingsHandler settingsHandler("settings.dat");
+	InputHandler inputHandler(&settingsHandler, &window);
 
 	const float timestep = 1.f / 120.f; // 120Hz physics
 	sf::Clock clock;
@@ -45,15 +51,37 @@ int main()
 
 		while(window.pollEvent(event))
 		{
-			if(event.type == sf::Event::Closed)
+			switch(event.type)
 			{
-				window.close();
+				case sf::Event::Closed:
+				{
+					window.close();
+
+					break;
+				}
+
+				case sf::Event::MouseMoved:
+				case sf::Event::KeyPressed:
+				case sf::Event::JoystickButtonPressed:
+				case sf::Event::JoystickButtonReleased:
+				case sf::Event::JoystickMoved:
+				{
+					inputHandler.handle(event);
+
+					break;
+				}
+
+				default:
+				{
+					break;
+				}
 			}
 
 			if(event.type == sf::Event::MouseMoved)
 			{
 				const b2Vec2 &playerPosition = playerWorldPosition->position();
 				const sf::Vector2<float> &mousePosition = window.mapPixelToCoords(sf::Vector2<int>(event.mouseMove.x, event.mouseMove.y));
+
 				float faceDirection = atan2(mousePosition.y - playerPosition.y,
 											mousePosition.x - playerPosition.x);
 
