@@ -147,10 +147,16 @@ int main()
 		}
 
 		// Update physics
-		player.update();
-		bot.update();
+		bool firstPhysicsStep = true;
 		while(clock.getElapsedTime().asMilliseconds() > lastPhysicsStepTime + timestep * 1000)
 		{
+			if(firstPhysicsStep)
+			{
+				player.update();
+				bot.update();
+				firstPhysicsStep = false;
+			}
+
 			lastPhysicsStepTime += timestep * 1000;
 			world.Step(timestep, 6, 2);
 		}
@@ -165,8 +171,8 @@ int main()
 		fpsCount++;
 		if(fpsTimer.getElapsedTime().asMilliseconds() > 500)
 		{
-			fpsText.setString(sf::StringEx::format("%1 FPS", std::to_string(fpsCount * 2)));
 			fpsTimer.restart();
+			fpsText.setString(sf::StringEx::format("%1 FPS", std::to_string(fpsCount * 2)));
 			fpsCount = 0;
 		}
 
