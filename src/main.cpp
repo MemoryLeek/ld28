@@ -1,7 +1,10 @@
 #include <cmath>
 #include <iostream>
+#include <string>
 
+#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
 
 #include "ai/Bot.h"
@@ -13,6 +16,7 @@
 #include "WorldDebug.h"
 #include "WorldPosition.h"
 #include "SettingsHandler.h"
+#include "StringEx.h"
 #include "InputHandler.h"
 
 int main()
@@ -20,6 +24,12 @@ int main()
 	sf::VideoMode videoMode(800, 600);
 	sf::RenderWindow window(videoMode, "My window");
 	sf::View camera(sf::Rect<float>(0, 0, 800, 600));
+
+	sf::Font font;
+	font.loadFromFile("resources/Oxygen-Regular.ttf");
+
+	sf::Text fpsText("", font, 10);
+	//fpsText.setFont(font);
 
 	World world;
 
@@ -44,6 +54,9 @@ int main()
 	const float timestep = 1.f / 120.f; // 120Hz physics
 	sf::Clock clock;
 	int lastPhysicsStepTime;
+
+	sf::Clock fpsTimer;
+	int fpsCount;
 
 	while(window.isOpen())
 	{
@@ -148,10 +161,25 @@ int main()
 		camera.setCenter(playerPosition.x, playerPosition.y);
 		window.setView(camera);
 
+		// Update FPS counter
+		fpsCount++;
+		if(fpsTimer.getElapsedTime().asMilliseconds() > 500)
+		{
+			fpsText.setString(sf::StringEx::format("%1 FPS", std::to_string(fpsCount * 2)));
+			fpsTimer.restart();
+			fpsCount = 0;
+		}
+
 		// Draw world
 		window.clear();
 		window.draw(*map);
 		world.DrawDebugData();
+
+		// Draw HUD stuff, reset camera after
+		window.setView(window.getDefaultView());
+		window.draw(fpsText);
+		window.setView(camera);
+
 		window.display();
 	}
 
