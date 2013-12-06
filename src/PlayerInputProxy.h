@@ -13,8 +13,8 @@ class PlayerInputProxy
 
 		void moveLeft();
 		void moveRight();
-		void moveUp();
-		void moveDown();
+		void moveForward();
+		void moveBackwards();
 
 		void stopHorizontally();
 		void stopVertically();

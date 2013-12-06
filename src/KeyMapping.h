@@ -24,7 +24,10 @@ class KeyMappingBase
 		virtual EventType type() const = 0;
 
 		int key() const;
+		void setKey(const int key);
+
 		int button() const;
+		void setButton(const int button);
 
 		void onKeyDown() const;
 		void onKeyUp() const;

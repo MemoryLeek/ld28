@@ -22,9 +22,19 @@ int KeyMappingBase::key() const
 	return m_key;
 }
 
+void KeyMappingBase::setKey(const int key)
+{
+	m_key = key;
+}
+
 int KeyMappingBase::button() const
 {
 	return m_button;
+}
+
+void KeyMappingBase::setButton(const int button)
+{
+	m_button = button;
 }
 
 void KeyMappingBase::onKeyDown() const

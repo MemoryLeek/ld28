@@ -13,7 +13,7 @@
 class Bot : public DrawableObject
 {
 	public:
-		Bot(WorldPosition *position, const std::list<const WorldObject *> *enemies);
+		Bot(WorldPosition *position, const std::list<const WorldObject *> enemies);
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
@@ -26,7 +26,7 @@ class Bot : public DrawableObject
 
 		static const float RAYCAST_INTERVAL;
 
-		const std::list<const WorldObject *> *m_enemies;
+		const std::list<const WorldObject *> m_enemies;
 		const float m_maxVisionDistance;
 		b2Body *m_body;
 

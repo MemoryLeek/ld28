@@ -10,6 +10,19 @@
 
 namespace sf
 {
+	class StringToken
+	{
+		public:
+			StringToken(const std::string &value);
+			StringToken(const sf::String &value);
+			StringToken(const int value);
+
+			operator std::string() const;
+
+		private:
+			std::string m_value;
+	};
+
 	class StringEx
 	{
 		public:
@@ -17,8 +30,8 @@ namespace sf
 			static sf::String format(const sf::String &format, TArguments ...arguments)
 			{
 				std::string target = format;
-				std::list<std::string> strings = { arguments... };
-				std::list<std::string>::const_iterator iterator = strings.begin();
+				std::list<StringToken> strings = { arguments... };
+				std::list<StringToken>::const_iterator iterator = strings.begin();
 
 				for(int i = 1; iterator != strings.end(); iterator++, i++)
 				{
@@ -27,7 +40,7 @@ namespace sf
 					stream << i;
 
 					const std::string &placeholder = stream.str();
-					const std::string &current = *iterator;
+					const std::string current = *iterator;
 
 					const int position = target.find(placeholder);
 					const int length = placeholder.length();

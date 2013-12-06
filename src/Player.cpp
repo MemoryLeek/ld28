@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -6,8 +8,10 @@
 
 Player::Player(WorldPosition *position)
 	: DrawableObject(position, 32, 32)
+	, m_movement(0, 0)
 {
 	const PhysicsWorldPosition *physicsWorldPosition = static_cast<PhysicsWorldPosition*>(worldPosition());
+
 	m_body = physicsWorldPosition->body();
 	m_body->SetFixedRotation(true);
 }

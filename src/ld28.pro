@@ -34,7 +34,8 @@ SOURCES += \
     InputMapping.cpp \
     GameState.cpp \
     AnalogMapping.cpp \
-    PlayerInputProxy.cpp
+    PlayerInputProxy.cpp \
+    StringEx.cpp
 
 HEADERS += \
 	World.h \

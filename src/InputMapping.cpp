@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "InputMapping.h"
 
 InputMapping::InputMapping()
@@ -50,6 +52,8 @@ const KeyMappingBase *InputMapping::find(const sf::Event &event) const
 			case sf::Event::JoystickButtonPressed:
 			case sf::Event::JoystickButtonReleased:
 			{
+				std::cout << (int)event.joystickButton.button << std::endl;
+
 				if(button == (int)event.joystickButton.button)
 				{
 					return mapping;

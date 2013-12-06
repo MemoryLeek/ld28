@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "PlayerInputProxy.h"
 #include "Player.h"
 
@@ -28,7 +30,7 @@ void PlayerInputProxy::relativeInput(const float x, const float y)
 void PlayerInputProxy::moveLeft()
 {
 	const b2Vec2 &movement = m_player->movement();
-	const b2Vec2 value(-2, movement.y);
+	const b2Vec2 value(movement.x, 2);
 
 	m_player->setMovement(value);
 }
@@ -36,39 +38,43 @@ void PlayerInputProxy::moveLeft()
 void PlayerInputProxy::moveRight()
 {
 	const b2Vec2 &movement = m_player->movement();
+	const b2Vec2 value(movement.x, -2);
+
+	m_player->setMovement(value);
+}
+
+void PlayerInputProxy::moveForward()
+{
+	const b2Vec2 &movement = m_player->movement();
 	const b2Vec2 value(2, movement.y);
 
 	m_player->setMovement(value);
 }
 
-void PlayerInputProxy::moveUp()
+void PlayerInputProxy::moveBackwards()
 {
 	const b2Vec2 &movement = m_player->movement();
-	const b2Vec2 value(movement.x, 2);
-
-	m_player->setMovement(value);
-}
-
-void PlayerInputProxy::moveDown()
-{
-	const b2Vec2 &movement = m_player->movement();
-	const b2Vec2 value(movement.x, -2);
+	const b2Vec2 value(-2, movement.y);
 
 	m_player->setMovement(value);
 }
 
 void PlayerInputProxy::stopHorizontally()
 {
+	std::cout << "void PlayerInputProxy::stopHorizontally()" << std::endl;
+
 	const b2Vec2 &movement = m_player->movement();
-	const b2Vec2 value(0, movement.y);
+	const b2Vec2 value(movement.x, 0);
 
 	m_player->setMovement(value);
 }
 
 void PlayerInputProxy::stopVertically()
 {
+	std::cout << "void PlayerInputProxy::stopVertically()" << std::endl;
+
 	const b2Vec2 &movement = m_player->movement();
-	const b2Vec2 value(movement.x, 0);
+	const b2Vec2 value(0, movement.y);
 
 	m_player->setMovement(value);
 }

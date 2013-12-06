@@ -7,7 +7,7 @@
 
 const float Bot::RAYCAST_INTERVAL = 1.f / 2.f;
 
-Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> *enemies)
+Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> enemies)
 	: DrawableObject(position, 32, 32)
 	, m_enemies(enemies)
 	, m_maxVisionDistance(10)
@@ -52,7 +52,7 @@ const WorldObject *Bot::findTarget()
 {
 	const WorldObject *target = NULL;
 
-	for(const WorldObject *enemyObject : *m_enemies)
+	for(const WorldObject *enemyObject : m_enemies)
 	{
 		const PhysicsWorldPosition *enemyWorldPosition = dynamic_cast<PhysicsWorldPosition*>(enemyObject->worldPosition());
 		assert(enemyWorldPosition); // Only physics objects are allowed in the enemy list
