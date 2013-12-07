@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "ai/Pathfinder.h"
 #include "TileObject.h"
 #include "MapLoader.h"
 #include "Map.h"
@@ -16,8 +17,9 @@
 #include "World.h"
 #include "PositionFactory.h"
 
-MapLoader::MapLoader(World *world)
+MapLoader::MapLoader(World *world, Pathfinder *pathfinder)
 	: m_world(world)
+	, m_pathfinder(pathfinder)
 {
 
 }
@@ -44,6 +46,8 @@ Map *MapLoader::load(const sf::String &fileName)
 
 			const b2Vec2 position(x * tileWidth, y * tileHeight);
 			const PositionFactory factory(m_world);
+
+			m_pathfinder->setWalkable(x, y, collisionTile.tilesetId < 0);
 
 			WorldPosition *worldPosition = factory.create(collisionTile.tilesetId >= 0, position, tileWidth, tileHeight);
 			TileObject *tile = new TileObject(worldPosition, tileWidth, tileHeight);

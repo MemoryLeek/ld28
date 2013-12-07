@@ -8,6 +8,7 @@
 #include <SFML/Window/Event.hpp>
 
 #include "ai/Bot.h"
+#include "ai/Pathfinder.h"
 
 #include "MapLoader.h"
 #include "Map.h"

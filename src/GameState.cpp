@@ -11,6 +11,7 @@
 #include "StringEx.h"
 
 #include "ai/Bot.h"
+#include "ai/Pathfinder.h"
 
 GameState::GameState(sf::RenderWindow *window)
 	: m_window(window)
@@ -29,13 +30,15 @@ GameState::GameState(sf::RenderWindow *window)
 	WorldPosition *playerWorldPosition = world->createBox(playerPosition, 32, 32, b2_dynamicBody);
 	WorldPosition *botWorldPosition = world->createBox(botPosition, 32, 32, b2_dynamicBody);
 
-	MapLoader mapLoader(world);
+	Pathfinder *pathfinder = new Pathfinder();
+	MapLoader mapLoader(world, pathfinder);
 
 	m_map = mapLoader.load("resources/room.tmx");
 	m_player = new Player(playerWorldPosition);
-	m_bot = new Bot(botWorldPosition, { m_player });
+	m_bot = new Bot(botWorldPosition, { m_player }, pathfinder);
 	m_proxy = new PlayerInputProxy(m_player);
 	m_world = world;
+	m_pathfinder = pathfinder;
 
 	// UI Initialization
 	m_font.loadFromFile("resources/Oxygen-Regular.ttf");
@@ -111,6 +114,7 @@ void GameState::update()
 	m_window->draw(*m_map);
 
 	m_world->DrawDebugData();
+	m_window->draw(*m_bot);
 
 	m_window->setView(defaultView);
 	m_window->draw(m_fpsText);

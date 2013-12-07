@@ -35,7 +35,8 @@ SOURCES += \
     GameState.cpp \
     AnalogMapping.cpp \
     PlayerInputProxy.cpp \
-    StringEx.cpp
+    StringEx.cpp \
+    ai/PathNode.cpp
 
 HEADERS += \
 	World.h \
@@ -66,4 +67,7 @@ HEADERS += \
     State.h \
     GameState.h \
     AnalogMapping.h \
-    PlayerInputProxy.h
+    PlayerInputProxy.h \
+    ai/PathNode.h \
+    DereferencedEqual.h \
+    DereferencedLess.h

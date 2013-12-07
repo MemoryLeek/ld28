@@ -1,15 +1,19 @@
-#include <iostream>
+#include <SFML/Graphics/VertexArray.hpp>
 
 #include "Bot.h"
+#include "Pathfinder.h"
 #include "PhysicsWorldPosition.h"
 #include "RayCastResult.h"
 #include "WorldObject.h"
 
+#include "PathNode.h"
+
 const float Bot::RAYCAST_INTERVAL = 1.f / 2.f;
 
-Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> enemies)
+Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder)
 	: DrawableObject(position, 32, 32)
 	, m_enemies(enemies)
+	, m_pathfinder(pathfinder)
 	, m_maxVisionDistance(10)
 	, m_target(NULL)
 {
@@ -19,6 +23,20 @@ Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> enemies)
 
 void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+	if(m_target)
+	{
+		std::stack<b2Vec2> path = m_pathfinder->find(worldPosition()->position(), m_target->worldPosition()->position());
+
+		sf::VertexArray debugpath(sf::LinesStrip, path.size());
+		for(int i = 0; !path.empty(); i++)
+		{
+			const b2Vec2 &point = path.top();
+			debugpath[i] = sf::Vector2f(point.x, point.y);
+			debugpath[i].color = sf::Color::White;
+			path.pop();
+		}
+		target.draw(debugpath);
+	}
 }
 
 void Bot::update()
@@ -26,21 +44,35 @@ void Bot::update()
 	if(m_rayCastTimer.getElapsedTime().asSeconds() > RAYCAST_INTERVAL)
 	{
 		m_target = findTarget();
+		if(m_target)
+		{
+			m_path = m_pathfinder->find(worldPosition()->position(), m_target->worldPosition()->position());
+		}
+
 		m_rayCastTimer.restart();
 	}
 
 	PhysicsWorldPosition *myWorldPosition = static_cast<PhysicsWorldPosition*>(worldPosition());
 	if(m_target)
 	{
-
 		b2Vec2 myPosition = myWorldPosition->position();
-		b2Vec2 targetPosition = m_target->worldPosition()->position();
 
-		float angleToTarget = atan2(myPosition.y - targetPosition.y,
-									myPosition.x - targetPosition.x);
-		myWorldPosition->setRotation(angleToTarget * 180 / M_PI);
+		// If we have a path to follow
+		if(!m_path.empty())
+		{
+			b2Vec2 nodePosition = m_path.top();
+			while(b2Distance(myPosition, nodePosition) < 16 && !m_path.empty())
+			{
+				m_path.pop();
+				nodePosition = m_path.top();
+			}
 
-		m_body->SetLinearVelocity(m_body->GetWorldVector(b2Vec2(-1, 0)));
+			float angleToNextNode = atan2(myPosition.y - nodePosition.y,
+										  myPosition.x - nodePosition.x);
+			myWorldPosition->setRotation(angleToNextNode * 180 / M_PI);
+
+			m_body->SetLinearVelocity(m_body->GetWorldVector(b2Vec2(-1, 0)));
+		}
 	}
 	else
 	{
@@ -56,6 +88,11 @@ const WorldObject *Bot::findTarget()
 	{
 		const PhysicsWorldPosition *enemyWorldPosition = dynamic_cast<PhysicsWorldPosition*>(enemyObject->worldPosition());
 		assert(enemyWorldPosition); // Only physics objects are allowed in the enemy list
+
+		///
+		#warning Bot raycasting disabled, full map X-ray vision active
+		return enemyObject;
+		///
 
 		// Only bother raycasting if the enemy is within range
 		if(distanceTo(enemyObject) < m_maxVisionDistance)
