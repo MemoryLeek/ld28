@@ -28,7 +28,7 @@ GameState::GameState(sf::RenderWindow *window)
 	world->SetDebugDraw(worldDebugger);
 
 	WorldPosition *playerWorldPosition = world->createBox(playerPosition, 32, 32, b2_dynamicBody);
-	WorldPosition *botWorldPosition = world->createBox(botPosition, 32, 32, b2_dynamicBody);
+	WorldPosition *botWorldPosition = world->createCircle(botPosition, 16, b2_dynamicBody);
 
 	Pathfinder *pathfinder = new Pathfinder();
 	MapLoader mapLoader(world, pathfinder);

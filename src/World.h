@@ -13,6 +13,7 @@ class World : public b2World
 	public:
 		World();
 
+		PhysicsWorldPosition *createCircle(const b2Vec2 &position, int radius, b2BodyType type = b2_staticBody);
 		PhysicsWorldPosition *createBox(const b2Vec2 &position, int width, int height, b2BodyType type = b2_staticBody);
 
 		static const float SCALE;

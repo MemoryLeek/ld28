@@ -39,8 +39,8 @@ void WorldDebug::DrawSolidPolygon(const b2Vec2 *vertices, int32 vertexCount, con
 void WorldDebug::DrawCircle(const b2Vec2 &center, float32 radius, const b2Color &color)
 {
 	sf::CircleShape circle;
-	circle.setPosition(center.x * World::SCALE, center.y * World::SCALE);
-	circle.setRadius(radius);
+	circle.setPosition((center.x - radius) * World::SCALE, (center.y - radius) * World::SCALE);
+	circle.setRadius(radius * World::SCALE);
 	circle.setOutlineColor(sf::Color(color.r, color.g, color.b, 127));
 	circle.setOutlineThickness(1);
 	m_renderTarget->draw(circle);
@@ -49,8 +49,8 @@ void WorldDebug::DrawCircle(const b2Vec2 &center, float32 radius, const b2Color 
 void WorldDebug::DrawSolidCircle(const b2Vec2 &center, float32 radius, const b2Vec2 &axis, const b2Color &color)
 {
 	sf::CircleShape circle;
-	circle.setPosition(center.x * World::SCALE, center.y * World::SCALE);
-	circle.setRadius(radius);
+	circle.setPosition((center.x - radius) * World::SCALE, (center.y - radius) * World::SCALE);
+	circle.setRadius(radius * World::SCALE);
 	circle.setFillColor(sf::Color(color.r, color.g, color.b, 127));
 	m_renderTarget->draw(circle);
 }
