@@ -118,6 +118,7 @@ void GameState::update()
 
 	m_window->setView(defaultView);
 	m_window->draw(m_fpsText);
+	m_window->setView(cameraView);
 	m_window->display();
 
 	m_fpsCount++;
