@@ -5,6 +5,7 @@
 
 #include "KeyMapping.h"
 #include "AnalogMapping.h"
+#include "BinaryStream.h"
 
 class InputMapping
 {
@@ -21,6 +22,9 @@ class InputMapping
 		const KeyMappingBase *find(const sf::Event &event) const;
 
 	private:
+		friend BinaryStream &operator >>(BinaryStream &stream, InputMapping &mapping);
+		friend BinaryStream &operator <<(BinaryStream &stream, const InputMapping &mapping);
+
 		AnalogMapping m_analog;
 
 		KeyMapping<Left> m_left;

@@ -21,15 +21,21 @@
 #include "StringEx.h"
 #include "InputHandler.h"
 #include "GameState.h"
+#include "SettingsProvider.h"
+#include "DefaultSettingsProvider.h"
 
 int main()
 {
 	sf::VideoMode videoMode(800, 600);
 	sf::RenderWindow window(videoMode, "My window");
 	
-	SettingsHandler settingsHandler("settings.dat");
+	DefaultSettingsProvider fallbackProvider;
+	SettingsProvider settingsProvider("settings.dat", &fallbackProvider);
+	SettingsHandler settingsHandler(&settingsProvider);
 	InputHandler inputHandler(&settingsHandler, &window);
-	InputMapping &mapping = settingsHandler.mapping();
+
+	Settings &settings = settingsHandler.settings();
+	InputMapping &mapping = settings.mapping();
 
 	GameState state(&window);
 	state.setupInput(&mapping);
@@ -70,6 +76,8 @@ int main()
 
 		state.update();
 	}
+
+	settingsHandler.save();
 
 	return 0;
 }

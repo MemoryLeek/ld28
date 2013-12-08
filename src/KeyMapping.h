@@ -7,6 +7,8 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Joystick.hpp>
 
+#include "BinaryStream.h"
+
 enum EventType
 {
 	Left,
@@ -21,6 +23,8 @@ using Function = void (TInstance::*)();
 class KeyMappingBase
 {
 	public:
+		KeyMappingBase();
+
 		virtual EventType type() const = 0;
 
 		int key() const;
@@ -44,8 +48,8 @@ class KeyMappingBase
 		int m_button;
 
 	private:
-		friend std::ifstream &operator >>(std::ifstream &stream, KeyMappingBase &mapping);
-		friend std::ofstream &operator <<(std::ofstream &stream, KeyMappingBase &mapping);
+		friend BinaryStream &operator >>(BinaryStream &stream, KeyMappingBase &mapping);
+		friend BinaryStream &operator <<(BinaryStream &stream, const KeyMappingBase &mapping);
 
 		std::function<void()> m_keyDown;
 		std::function<void()> m_keyUp;

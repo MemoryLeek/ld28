@@ -88,7 +88,7 @@ sf::Texture *MapLoader::tryGetTexture(const int id, const Tmx::Image *image, Tex
 
 	if(iterator == cache.end())
 	{
-		std::cout << "Loading tileset" << std::endl;
+		std::cout << "DEBUG: Loading tileset" << std::endl;
 
 		sf::String source = image->GetSource();
 		sf::String path = sf::StringEx::format("resources/%1", source);

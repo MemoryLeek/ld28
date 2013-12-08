@@ -36,7 +36,10 @@ SOURCES += \
     AnalogMapping.cpp \
     PlayerInputProxy.cpp \
     StringEx.cpp \
-    ai/PathNode.cpp
+    ai/PathNode.cpp \
+    SettingsProvider.cpp \
+    DefaultSettingsProvider.cpp \
+    BinaryStream.cpp
 
 HEADERS += \
 	World.h \
@@ -70,4 +73,8 @@ HEADERS += \
     PlayerInputProxy.h \
     ai/PathNode.h \
     DereferencedEqual.h \
-    DereferencedLess.h
+    DereferencedLess.h \
+    ISettingsProvider.h \
+    SettingsProvider.h \
+    DefaultSettingsProvider.h \
+    BinaryStream.h

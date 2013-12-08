@@ -14,7 +14,8 @@ InputHandler::InputHandler(SettingsHandler *settingsHandler, sf::RenderWindow *w
 
 void InputHandler::handle(const sf::Event &event)
 {
-	InputMapping &inputMapping = m_settingsHandler->mapping();
+	Settings &settings = m_settingsHandler->settings();
+	InputMapping &inputMapping = settings.mapping();
 
 	switch(event.type)
 	{

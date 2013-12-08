@@ -1,5 +1,6 @@
 bin/ld28
 bin/*callgrind*
+bin/settings.dat
 
 *.o
 *.pro.user

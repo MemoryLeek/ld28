@@ -57,18 +57,10 @@ void GameState::setupInput(InputMapping *mapping)
 	KeyMappingBase &backwards = mapping->backwards();
 
 	analog.connect(m_proxy, &PlayerInputProxy::absoluteInput, &PlayerInputProxy::relativeInput);
-
 	left.connect(m_proxy, &PlayerInputProxy::moveLeft, &PlayerInputProxy::stopHorizontally);
-	left.setKey(sf::Keyboard::A);
-
 	right.connect(m_proxy, &PlayerInputProxy::moveRight, &PlayerInputProxy::stopHorizontally);
-	right.setKey(sf::Keyboard::D);
-
 	forward.connect(m_proxy, &PlayerInputProxy::moveForward, &PlayerInputProxy::stopVertically);
-	forward.setKey(sf::Keyboard::W);
-
 	backwards.connect(m_proxy, &PlayerInputProxy::moveBackwards, &PlayerInputProxy::stopVertically);
-	backwards.setKey(sf::Keyboard::S);
 }
 
 void GameState::update()
@@ -118,6 +110,7 @@ void GameState::update()
 
 	m_window->setView(defaultView);
 	m_window->draw(m_fpsText);
+
 	m_window->setView(cameraView);
 	m_window->display();
 

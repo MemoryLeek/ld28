@@ -61,8 +61,6 @@ void PlayerInputProxy::moveBackwards()
 
 void PlayerInputProxy::stopHorizontally()
 {
-	std::cout << "void PlayerInputProxy::stopHorizontally()" << std::endl;
-
 	const b2Vec2 &movement = m_player->movement();
 	const b2Vec2 value(movement.x, 0);
 
@@ -71,8 +69,6 @@ void PlayerInputProxy::stopHorizontally()
 
 void PlayerInputProxy::stopVertically()
 {
-	std::cout << "void PlayerInputProxy::stopVertically()" << std::endl;
-
 	const b2Vec2 &movement = m_player->movement();
 	const b2Vec2 value(0, movement.y);
 

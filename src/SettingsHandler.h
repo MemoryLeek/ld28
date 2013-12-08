@@ -4,16 +4,22 @@
 #include <SFML/System/String.hpp>
 
 #include "InputMapping.h"
+#include "Settings.h"
+
+class ISettingsProvider;
 
 class SettingsHandler
 {
 	public:
-		SettingsHandler(const sf::String &fileName);
+		SettingsHandler(ISettingsProvider *settingsProvider);
 
-		InputMapping &mapping();
+		Settings &settings();
+
+		void save();
 
 	private:
-		InputMapping m_mapping;
+		Settings m_settings;
+		ISettingsProvider *m_settingsProvider;
 };
 
 #endif // SETTINGSHANDLER_H

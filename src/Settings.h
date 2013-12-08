@@ -5,17 +5,19 @@
 #include <list>
 
 #include "KeyMapping.h"
+#include "InputMapping.h"
+#include "BinaryStream.h"
 
 class Settings
 {
 	public:
-		Settings();
+		InputMapping &mapping();
 
 	private:
-		friend std::ifstream &operator >>(std::ifstream &stream, Settings &settings);
-		friend std::ofstream &operator <<(std::ofstream &stream, Settings &settings);
+		friend BinaryStream &operator >>(BinaryStream &stream, Settings &settings);
+		friend BinaryStream &operator <<(BinaryStream &stream, const Settings &settings);
 
-//		std::list<KeyMapping> m_mappings;
+		InputMapping m_mapping;
 };
 
 #endif // SETTINGS_H

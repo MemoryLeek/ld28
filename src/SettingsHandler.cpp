@@ -2,14 +2,20 @@
 
 #include "SettingsHandler.h"
 #include "Settings.h"
+#include "SettingsProvider.h"
 
-SettingsHandler::SettingsHandler(const sf::String &fileName)
+SettingsHandler::SettingsHandler(ISettingsProvider *settingsProvider)
+	: m_settingsProvider(settingsProvider)
 {
-	Settings settings;
-	std::ifstream stream(fileName, std::ifstream::binary | std::ios_base::in);
+	m_settings = settingsProvider->load();
 }
 
-InputMapping &SettingsHandler::mapping()
+Settings &SettingsHandler::settings()
 {
-	return m_mapping;
+	return m_settings;
+}
+
+void SettingsHandler::save()
+{
+	m_settingsProvider->save(m_settings);
 }

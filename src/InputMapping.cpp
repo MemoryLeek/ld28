@@ -82,3 +82,23 @@ const KeyMappingBase *InputMapping::find(const sf::Event &event) const
 
 	return 0;
 }
+
+BinaryStream &operator >>(BinaryStream &stream, InputMapping &mapping)
+{
+	stream >> mapping.m_left;
+	stream >> mapping.m_right;
+	stream >> mapping.m_backwards;
+	stream >> mapping.m_forward;
+
+	return stream;
+}
+
+BinaryStream &operator <<(BinaryStream &stream, const InputMapping &mapping)
+{
+	stream << mapping.m_left;
+	stream << mapping.m_right;
+	stream << mapping.m_backwards;
+	stream << mapping.m_forward;
+
+	return stream;
+}

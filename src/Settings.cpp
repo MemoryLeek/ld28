@@ -1,21 +1,21 @@
 #include "Settings.h"
 #include "StreamingOperators.h"
 
-Settings::Settings()
+InputMapping &Settings::mapping()
 {
-
+	return m_mapping;
 }
 
-std::ifstream &operator >>(std::ifstream &stream, Settings &settings)
+BinaryStream &operator >>(BinaryStream &stream, Settings &settings)
 {
-//	stream >> settings.m_mappings;
+	stream >> settings.m_mapping;
 
 	return stream;
 }
 
-std::ofstream &operator <<(std::ofstream &stream, Settings &settings)
+BinaryStream &operator <<(BinaryStream &stream, const Settings &settings)
 {
-//	stream << settings.m_mappings;
+	stream << settings.m_mapping;
 
 	return stream;
 }

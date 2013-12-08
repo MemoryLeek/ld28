@@ -1,21 +1,11 @@
 #include "KeyMapping.h"
 
-std::ifstream &operator >>(std::ifstream &stream, KeyMappingBase &mapping)
+KeyMappingBase::KeyMappingBase()
+	: m_key(0)
+	, m_button(0)
 {
-	stream >> mapping.m_key;
-	stream >> mapping.m_button;
 
-	return stream;
 }
-
-std::ofstream &operator <<(std::ofstream &stream, KeyMappingBase &mapping)
-{
-	stream << mapping.m_key;
-	stream << mapping.m_button;
-
-	return stream;
-}
-
 
 int KeyMappingBase::key() const
 {
@@ -51,4 +41,20 @@ void KeyMappingBase::onKeyUp() const
 	{
 		m_keyUp();
 	}
+}
+
+BinaryStream &operator >>(BinaryStream &stream, KeyMappingBase &mapping)
+{
+	stream >> mapping.m_key;
+	stream >> mapping.m_button;
+
+	return stream;
+}
+
+BinaryStream &operator <<(BinaryStream &stream, const KeyMappingBase &mapping)
+{
+	stream << mapping.m_key;
+	stream << mapping.m_button;
+
+	return stream;
 }
