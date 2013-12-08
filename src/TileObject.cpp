@@ -18,7 +18,8 @@ void TileObject::addLayer(const TileLayer &layer)
 void TileObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 	const WorldPosition *position = worldPosition();
-	const b2Vec2 &vector = position->position();
+	b2Vec2 vector = position->position();
+	vector -= b2Vec2(width() / 2, height() / 2);
 
 	for(const TileLayer &layer : m_layers)
 	{
