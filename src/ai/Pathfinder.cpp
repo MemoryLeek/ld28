@@ -82,9 +82,8 @@ std::stack<b2Vec2> Pathfinder::find(const b2Vec2 &from, const b2Vec2 &to) const
 	{
 		for(const PathNode *traceback = current; traceback != nullptr; traceback = traceback->parent())
 		{
-			// Add 16 to get coords to tile center
-			path.push(b2Vec2(traceback->x() * 32 + 16,
-							 traceback->y() * 32 + 16));
+			path.push(b2Vec2(traceback->x() * 32,
+							 traceback->y() * 32));
 		}
 	}
 
