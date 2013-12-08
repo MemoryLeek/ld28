@@ -29,13 +29,15 @@ class Bot : public DrawableObject
 
 		static const float RAYCAST_INTERVAL;
 
-		const std::list<const WorldObject *> m_enemies;
-		const Pathfinder *m_pathfinder;
-		const float m_maxVisionDistance;
 		b2Body *m_body;
+		const std::list<const WorldObject *> m_enemies;
+
+		const Pathfinder *m_pathfinder;
+		b2Vec2 m_lastPathfindingDestination;
 
 		RayCastResult m_rayCast;
 		sf::Clock m_rayCastTimer;
+		const float m_maxVisionDistance;
 
 		const WorldObject *m_target;
 

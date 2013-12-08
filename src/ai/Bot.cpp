@@ -14,6 +14,7 @@ Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> &enemies,
 	: DrawableObject(position, 32, 32)
 	, m_enemies(enemies)
 	, m_pathfinder(pathfinder)
+	, m_lastPathfindingDestination(0, 0)
 	, m_maxVisionDistance(10)
 	, m_target(NULL)
 {
@@ -25,7 +26,7 @@ void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 	if(m_target)
 	{
-		std::stack<b2Vec2> path = m_pathfinder->find(worldPosition()->position(), m_target->worldPosition()->position());
+		std::stack<b2Vec2> path = std::stack<b2Vec2>(m_path);
 
 		sf::VertexArray debugpath(sf::LinesStrip, path.size());
 		for(int i = 0; !path.empty(); i++)
@@ -46,7 +47,12 @@ void Bot::update()
 		m_target = findTarget();
 		if(m_target)
 		{
-			m_path = m_pathfinder->find(worldPosition()->position(), m_target->worldPosition()->position());
+			b2Vec2 targetPosition = m_target->worldPosition()->position();
+			if(b2Distance(m_lastPathfindingDestination, targetPosition) > 64)
+			{
+				m_path = m_pathfinder->find(worldPosition()->position(), targetPosition);
+				m_lastPathfindingDestination = targetPosition;
+			}
 		}
 
 		m_rayCastTimer.restart();
@@ -61,7 +67,7 @@ void Bot::update()
 		if(!m_path.empty())
 		{
 			b2Vec2 nodePosition = m_path.top();
-			while(b2Distance(myPosition, nodePosition) < 16 && !m_path.empty())
+			while(b2Distance(myPosition, nodePosition) < 16 && m_path.size() > 1)
 			{
 				m_path.pop();
 				nodePosition = m_path.top();
