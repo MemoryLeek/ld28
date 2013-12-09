@@ -10,6 +10,8 @@
 #include "ai/Bot.h"
 #include "ai/Pathfinder.h"
 
+#include "states/GameState.h"
+
 #include "MapLoader.h"
 #include "Map.h"
 #include "PhysicsWorldPosition.h"
@@ -20,7 +22,6 @@
 #include "SettingsHandler.h"
 #include "StringEx.h"
 #include "InputHandler.h"
-#include "GameState.h"
 #include "SettingsProvider.h"
 #include "DefaultSettingsProvider.h"
 

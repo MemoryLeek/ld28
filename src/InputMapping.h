@@ -14,12 +14,16 @@ class InputMapping
 
 		AnalogMapping &analog();
 
-		KeyMapping<Left> &left();
-		KeyMapping<Right> &right();
-		KeyMapping<Down> &backwards();
-		KeyMapping<Up> &forward();
+		KeyMapping &left();
+		KeyMapping &right();
+		KeyMapping &backwards();
+		KeyMapping &forward();
 
-		const KeyMappingBase *find(const sf::Event &event) const;
+		KeyMapping &menuUp();
+		KeyMapping &menuDown();
+		KeyMapping &menuAccept();
+
+		const KeyMapping *find(const sf::Event &event) const;
 
 	private:
 		friend BinaryStream &operator >>(BinaryStream &stream, InputMapping &mapping);
@@ -27,10 +31,14 @@ class InputMapping
 
 		AnalogMapping m_analog;
 
-		KeyMapping<Left> m_left;
-		KeyMapping<Right> m_right;
-		KeyMapping<Down> m_backwards;
-		KeyMapping<Up> m_forward;
+		KeyMapping m_left;
+		KeyMapping m_right;
+		KeyMapping m_backwards;
+		KeyMapping m_forward;
+
+		KeyMapping m_menuUp;
+		KeyMapping m_menuDown;
+		KeyMapping m_menuAccept;
 };
 
 #endif // INPUTMAPPING_H

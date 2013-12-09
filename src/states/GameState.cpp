@@ -51,10 +51,10 @@ void GameState::setupInput(InputMapping *mapping)
 {
 	AnalogMapping &analog = mapping->analog();
 
-	KeyMappingBase &left = mapping->left();
-	KeyMappingBase &right = mapping->right();
-	KeyMappingBase &forward = mapping->forward();
-	KeyMappingBase &backwards = mapping->backwards();
+	KeyMapping &left = mapping->left();
+	KeyMapping &right = mapping->right();
+	KeyMapping &forward = mapping->forward();
+	KeyMapping &backwards = mapping->backwards();
 
 	analog.connect(m_proxy, &PlayerInputProxy::absoluteInput, &PlayerInputProxy::relativeInput);
 	left.connect(m_proxy, &PlayerInputProxy::moveLeft, &PlayerInputProxy::stopHorizontally);

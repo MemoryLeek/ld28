@@ -1,9 +1,9 @@
 #include "WorldObject.h"
 
 WorldObject::WorldObject(WorldPosition *position, int width, int height)
-	: m_worldPosition(position)
-	, m_width(width)
+	: m_width(width)
 	, m_height(height)
+	, m_worldPosition(position)
 {
 }
 

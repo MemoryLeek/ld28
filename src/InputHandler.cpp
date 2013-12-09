@@ -88,7 +88,7 @@ void InputHandler::handle(const sf::Event &event)
 		case sf::Event::KeyPressed:
 		case sf::Event::JoystickButtonPressed:
 		{
-			const KeyMappingBase *mapping = inputMapping.find(event);
+			const KeyMapping *mapping = inputMapping.find(event);
 
 			if(mapping)
 			{
@@ -101,7 +101,7 @@ void InputHandler::handle(const sf::Event &event)
 		case sf::Event::KeyReleased:
 		case sf::Event::JoystickButtonReleased:
 		{
-			const KeyMappingBase *mapping = inputMapping.find(event);
+			const KeyMapping *mapping = inputMapping.find(event);
 
 			if(mapping)
 			{

@@ -12,29 +12,44 @@ AnalogMapping &InputMapping::analog()
 	return m_analog;
 }
 
-KeyMapping<Left> &InputMapping::left()
+KeyMapping &InputMapping::left()
 {
 	return m_left;
 }
 
-KeyMapping<Right> &InputMapping::right()
+KeyMapping &InputMapping::right()
 {
 	return m_right;
 }
 
-KeyMapping<Down> &InputMapping::backwards()
+KeyMapping &InputMapping::backwards()
 {
 	return m_backwards;
 }
 
-KeyMapping<Up> &InputMapping::forward()
+KeyMapping &InputMapping::forward()
 {
 	return m_forward;
 }
 
-const KeyMappingBase *InputMapping::find(const sf::Event &event) const
+KeyMapping &InputMapping::menuUp()
 {
-	const KeyMappingBase *mappings[]
+	return m_menuUp;
+}
+
+KeyMapping &InputMapping::menuDown()
+{
+	return m_menuDown;
+}
+
+KeyMapping &InputMapping::menuAccept()
+{
+	return m_menuAccept;
+}
+
+const KeyMapping *InputMapping::find(const sf::Event &event) const
+{
+	const KeyMapping *mappings[]
 	{
 		&m_left,
 		&m_right,
@@ -42,7 +57,7 @@ const KeyMappingBase *InputMapping::find(const sf::Event &event) const
 		&m_forward
 	};
 
-	for(const KeyMappingBase *mapping : mappings)
+	for(const KeyMapping *mapping : mappings)
 	{
 		const int button = mapping->button();
 		const int key = mapping->key();

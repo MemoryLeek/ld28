@@ -9,23 +9,13 @@
 
 #include "BinaryStream.h"
 
-enum EventType
-{
-	Left,
-	Right,
-	Up,
-	Down
-};
-
 template<class TInstance, class ...TArguments>
 using Function = void (TInstance::*)();
 
-class KeyMappingBase
+class KeyMapping
 {
 	public:
-		KeyMappingBase();
-
-		virtual EventType type() const = 0;
+		KeyMapping();
 
 		int key() const;
 		void setKey(const int key);
@@ -48,22 +38,11 @@ class KeyMappingBase
 		int m_button;
 
 	private:
-		friend BinaryStream &operator >>(BinaryStream &stream, KeyMappingBase &mapping);
-		friend BinaryStream &operator <<(BinaryStream &stream, const KeyMappingBase &mapping);
+		friend BinaryStream &operator >>(BinaryStream &stream, KeyMapping &mapping);
+		friend BinaryStream &operator <<(BinaryStream &stream, const KeyMapping &mapping);
 
 		std::function<void()> m_keyDown;
 		std::function<void()> m_keyUp;
-};
-
-template<EventType TType>
-class KeyMapping : public KeyMappingBase
-{
-	public:
-		EventType type() const
-		{
-			return TType;
-		}
-
 };
 
 #endif // KEYMAPPING_H

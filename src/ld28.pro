@@ -32,14 +32,15 @@ SOURCES += \
     Settings.cpp \
     KeyMapping.cpp \
     InputMapping.cpp \
-    GameState.cpp \
+	states/GameState.cpp \
     AnalogMapping.cpp \
     PlayerInputProxy.cpp \
     StringEx.cpp \
     ai/PathNode.cpp \
     SettingsProvider.cpp \
     DefaultSettingsProvider.cpp \
-    BinaryStream.cpp
+	BinaryStream.cpp \
+    states/MenuState.cpp
 
 HEADERS += \
 	World.h \
@@ -68,7 +69,7 @@ HEADERS += \
     StreamingOperators.h \
     InputMapping.h \
     State.h \
-    GameState.h \
+	states/GameState.h \
     AnalogMapping.h \
     PlayerInputProxy.h \
     ai/PathNode.h \
@@ -77,4 +78,5 @@ HEADERS += \
     ISettingsProvider.h \
     SettingsProvider.h \
     DefaultSettingsProvider.h \
-    BinaryStream.h
+    BinaryStream.h \
+    states/MenuState.h
