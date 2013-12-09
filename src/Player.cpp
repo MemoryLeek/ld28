@@ -10,9 +10,9 @@ Player::Player(WorldPosition *position)
 	: DrawableObject(position, 32, 32)
 	, m_movement(0, 0)
 {
-	const PhysicsWorldPosition *physicsWorldPosition = static_cast<PhysicsWorldPosition*>(worldPosition());
+	const PhysicsWorldPosition &physicsWorldPosition = (PhysicsWorldPosition &)worldPosition();
 
-	m_body = physicsWorldPosition->body();
+	m_body = physicsWorldPosition.body();
 	m_body->SetFixedRotation(true);
 }
 

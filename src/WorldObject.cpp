@@ -17,7 +17,7 @@ int WorldObject::height() const
 	return m_height;
 }
 
-WorldPosition *WorldObject::worldPosition() const
+WorldPosition &WorldObject::worldPosition() const
 {
-	return m_worldPosition;
+	return *m_worldPosition;
 }

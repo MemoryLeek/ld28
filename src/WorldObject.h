@@ -11,14 +11,16 @@ class WorldObject
 		int width() const;
 		int height() const;
 
-		WorldPosition *worldPosition() const;
+		WorldPosition &worldPosition() const;
 
 		virtual void foo() = 0;
 
-	private:
-		WorldPosition *m_worldPosition;
+	protected:
 		int m_width;
 		int m_height;
+
+	private:
+		WorldPosition *m_worldPosition;
 };
 
 #endif // WORLDOBJECT_H

@@ -92,9 +92,9 @@ void GameState::update()
 		m_fpsCount = 0;
 	}
 
-	const b2Vec2 &playerPosition = m_player
-		->worldPosition()
-		->position();
+	const b2Vec2 &playerPosition = (*m_player)
+		.worldPosition()
+		.position();
 
 	const sf::Vector2<unsigned int> &size = m_window->getSize();
 	const sf::Rect<float> cameraRect(playerPosition.x - size.x / 2, playerPosition.y - size.y / 2, size.x, size.y);

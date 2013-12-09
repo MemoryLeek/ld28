@@ -18,7 +18,9 @@ Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> &enemies,
 	, m_maxVisionDistance(10)
 	, m_target(NULL)
 {
-	m_body = static_cast<PhysicsWorldPosition*>(worldPosition())->body();
+	const PhysicsWorldPosition &physicsWorldPosition = (PhysicsWorldPosition &)worldPosition();
+
+	m_body = physicsWorldPosition.body();
 	m_body->SetFixedRotation(true);
 }
 
@@ -47,10 +49,10 @@ void Bot::update()
 		m_target = findTarget();
 		if(m_target)
 		{
-			b2Vec2 targetPosition = m_target->worldPosition()->position();
+			b2Vec2 targetPosition = m_target->worldPosition().position();
 			if(b2Distance(m_lastPathfindingDestination, targetPosition) > 64)
 			{
-				m_path = m_pathfinder->find(worldPosition()->position(), targetPosition);
+				m_path = m_pathfinder->find(worldPosition().position(), targetPosition);
 				m_lastPathfindingDestination = targetPosition;
 			}
 		}
@@ -58,10 +60,10 @@ void Bot::update()
 		m_rayCastTimer.restart();
 	}
 
-	PhysicsWorldPosition *myWorldPosition = static_cast<PhysicsWorldPosition*>(worldPosition());
+	PhysicsWorldPosition &myWorldPosition = static_cast<PhysicsWorldPosition &>(worldPosition());
 	if(m_target)
 	{
-		b2Vec2 myPosition = myWorldPosition->position();
+		b2Vec2 myPosition = myWorldPosition.position();
 
 		// If we have a path to follow
 		if(!m_path.empty())
@@ -75,7 +77,7 @@ void Bot::update()
 
 			float angleToNextNode = atan2(myPosition.y - nodePosition.y,
 										  myPosition.x - nodePosition.x);
-			myWorldPosition->setRotation(angleToNextNode * 180 / M_PI);
+			myWorldPosition.setRotation(angleToNextNode * 180 / M_PI);
 
 			m_body->SetLinearVelocity(m_body->GetWorldVector(b2Vec2(-1, 0)));
 		}
@@ -92,7 +94,7 @@ const WorldObject *Bot::findTarget()
 
 	for(const WorldObject *enemyObject : m_enemies)
 	{
-		const PhysicsWorldPosition *enemyWorldPosition = dynamic_cast<PhysicsWorldPosition*>(enemyObject->worldPosition());
+		const PhysicsWorldPosition *enemyWorldPosition = dynamic_cast<PhysicsWorldPosition*>(&enemyObject->worldPosition());
 		assert(enemyWorldPosition); // Only physics objects are allowed in the enemy list
 
 		///
@@ -103,7 +105,7 @@ const WorldObject *Bot::findTarget()
 		// Only bother raycasting if the enemy is within range
 		if(distanceTo(enemyObject) < m_maxVisionDistance)
 		{
-			const PhysicsWorldPosition *myWorldPosition = static_cast<PhysicsWorldPosition*>(worldPosition());
+			const PhysicsWorldPosition &myWorldPosition = static_cast<PhysicsWorldPosition &>(worldPosition());
 			const b2World *world = m_body->GetWorld();
 
 			const b2Body *enemyBody = enemyWorldPosition->body();
@@ -126,8 +128,8 @@ const WorldObject *Bot::findTarget()
 
 float Bot::distanceTo(const WorldObject *object) const
 {
-	b2Vec2 myPosition = worldPosition()->position();
-	b2Vec2 objectPosition = object->worldPosition()->position();
+	b2Vec2 myPosition = worldPosition().position();
+	b2Vec2 objectPosition = object->worldPosition().position();
 
 	return b2Distance(myPosition, objectPosition) / World::SCALE;
 }
