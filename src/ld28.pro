@@ -91,3 +91,7 @@ HEADERS += \
 
 win32:DEFINES += M_PI=3.14159265358979323846
 win32:LIBS += -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\lib -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\bin
+
+# Needed for our OS X build bot
+unix:LIBS += -L/usr/local/lib
+unix:INCLUDEPATH += /usr/local/include
