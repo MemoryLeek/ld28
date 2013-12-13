@@ -6,6 +6,7 @@
 class WorldObject
 {
 	public:
+		WorldObject();
 		WorldObject(WorldPosition *position, int width, int height);
 
 		int width() const;

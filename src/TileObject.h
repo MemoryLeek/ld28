@@ -1,30 +1,19 @@
 #ifndef TILEOBJECT_H
 #define TILEOBJECT_H
 
-#include <map>
-#include <list>
+#include <SFML/Graphics/Texture.hpp>
 
 #include "DrawableObject.h"
-#include "TileLayer.h"
 
 class TileObject : public DrawableObject
 {
 	public:
-		enum Layer
-		{
-			Background,
-			Collision,
-			Foreground
-		};
-
-		TileObject(WorldPosition *position, int width, int height);
-
-		void addLayer(const TileLayer &layer);
+		TileObject(WorldPosition *position, const sf::Texture &texture);
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 	private:
-		std::list<TileLayer> m_layers;
+		sf::Texture m_texture;
 };
 
 #endif // TILEOBJECT_H

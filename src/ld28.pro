@@ -14,7 +14,6 @@ SOURCES += \
     MapLoader.cpp \
     DrawableObject.cpp \
     Map.cpp \
-    TileObject.cpp \
     WorldObject.cpp \
     WorldDebug.cpp \
     TileLayer.cpp \
@@ -40,7 +39,12 @@ SOURCES += \
     SettingsProvider.cpp \
     DefaultSettingsProvider.cpp \
 	BinaryStream.cpp \
-    states/MenuState.cpp
+    states/MenuState.cpp \
+    RoomLookupLoader.cpp \
+    RoomLookup.cpp \
+    RoomObject.cpp \
+    Tile.cpp \
+    TileObject.cpp
 
 HEADERS += \
 	World.h \
@@ -48,7 +52,6 @@ HEADERS += \
     DrawableObject.h \
     Map.h \
     StringEx.h \
-    TileObject.h \
     WorldObject.h \
     WorldDebug.h \
     TileLayer.h \
@@ -79,7 +82,12 @@ HEADERS += \
     SettingsProvider.h \
     DefaultSettingsProvider.h \
     BinaryStream.h \
-    states/MenuState.h
+	states/MenuState.h \
+	RoomLookupLoader.h \
+	RoomLookup.h \
+	RoomObject.h \
+	Tile.h \
+	TileObject.h
 
 win32:DEFINES += M_PI=3.14159265358979323846
 win32:LIBS += -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\lib -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\bin

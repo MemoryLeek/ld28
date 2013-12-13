@@ -5,13 +5,19 @@
 
 class BinaryStream
 {
+	friend BinaryStream &operator >>(BinaryStream &stream, int &value);
+	friend BinaryStream &operator <<(BinaryStream &stream, const int &value);
+	friend BinaryStream &operator >>(BinaryStream &stream, unsigned int &value);
+	friend BinaryStream &operator <<(BinaryStream &stream, const unsigned int &value);
+	friend BinaryStream &operator >>(BinaryStream &stream, bool &value);
+	friend BinaryStream &operator <<(BinaryStream &stream, const bool &value);
+
 	public:
 		BinaryStream(std::fstream &subject);
 
-	private:
-		friend BinaryStream &operator >>(BinaryStream &stream, int &value);
-		friend BinaryStream &operator <<(BinaryStream &stream, const int &value);
+		char *read(const unsigned int length);
 
+	private:
 		std::fstream &m_subject;
 };
 

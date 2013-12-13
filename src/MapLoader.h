@@ -23,8 +23,6 @@ class MapLoader
 		Map *load(const sf::String &fileName);
 
 	private:
-		sf::Texture *tryGetTexture(const int id, const Tmx::Image *image, TextureCache &cache);
-
 		World *m_world;
 		Pathfinder *m_pathfinder;
 };

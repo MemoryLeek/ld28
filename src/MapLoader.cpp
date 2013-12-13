@@ -8,7 +8,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "ai/Pathfinder.h"
-#include "TileObject.h"
+#include "Tile.h"
 #include "MapLoader.h"
 #include "Map.h"
 #include "PhysicsWorldPosition.h"
@@ -16,6 +16,8 @@
 #include "StringEx.h"
 #include "World.h"
 #include "PositionFactory.h"
+#include "RoomLookupLoader.h"
+#include "TileObject.h"
 
 MapLoader::MapLoader(World *world, Pathfinder *pathfinder)
 	: m_world(world)
@@ -26,84 +28,43 @@ MapLoader::MapLoader(World *world, Pathfinder *pathfinder)
 
 Map *MapLoader::load(const sf::String &fileName)
 {
-	Tmx::Map tiledMap;
-	tiledMap.ParseFile(fileName);
-
+	RoomLookupLoader loader(fileName);
+	RoomLookup *lookup = loader.load();
 	Map *map = new Map();
-	TextureCache cache;
 
-	const int width = tiledMap.GetWidth();
-	const int height = tiledMap.GetHeight();
-	const int tileWidth = tiledMap.GetTileWidth();
-	const int tileHeight = tiledMap.GetTileHeight();
-
-	for(int x = 0 ; x < width; x++)
+	for(const RoomObject &room : lookup->rooms())
 	{
-		for(int y = 0; y < height; y++)
+		std::map<Coordinate, Tile> tiles = room.tiles();
+		std::map<Coordinate, Tile>::const_iterator iterator = tiles.begin();
+
+		for(; iterator != tiles.end(); iterator++)
 		{
-			const Tmx::Layer *collisionLayer = tiledMap.GetLayer(TileObject::Collision);
-			const Tmx::MapTile &collisionTile = collisionLayer->GetTile(x, y);
-
-			const b2Vec2 position(x * tileWidth, y * tileHeight);
+			const Coordinate &coordinate = iterator->first;
+			const Tile &tile = iterator->second;
 			const PositionFactory factory(m_world);
+			const b2Vec2 position(coordinate.first * TILE_SIZE, coordinate.second * TILE_SIZE);
 
-			if(collisionTile.tilesetId < 0)
+			const bool collidable = tile.isCollidable();
+
+			sf::Image image = tile.texture();
+			sf::Texture texture;
+			texture.loadFromImage(image);
+
+			WorldPosition *worldPosition = factory.create(collidable, position, TILE_SIZE, TILE_SIZE);
+			TileObject *tileObject = new TileObject(worldPosition, texture);
+
+			map->addObject(tileObject);
+
+			if(!collidable)
 			{
-				m_pathfinder->setWalkable(x, y);
+				m_pathfinder->setWalkable(coordinate.first, coordinate.second);
 			}
-
-			WorldPosition *worldPosition = factory.create(collisionTile.tilesetId >= 0, position, tileWidth, tileHeight);
-			TileObject *tile = new TileObject(worldPosition, tileWidth, tileHeight);
-
-			for(int i = 0; i < tiledMap.GetNumLayers(); i++)
-			{
-				const Tmx::Layer *layer = tiledMap.GetLayer(i);
-				const Tmx::MapTile &mapTile = layer->GetTile(x, y);
-
-				if(mapTile.tilesetId >= 0)
-				{
-					const Tmx::Tileset *tileset = tiledMap.GetTileset(mapTile.tilesetId);
-					const Tmx::Image *image = tileset->GetImage();
-
-					const int tw = image->GetWidth() / tileWidth;
-					const int ty = mapTile.id / tw;
-					const int tx = mapTile.id - (ty * tw);
-
-					const sf::Texture *source = tryGetTexture(mapTile.tilesetId, image, cache);
-					const sf::Rect<int> rect(tx * tileWidth, ty * tileHeight, tileWidth, tileHeight);
-
-					TileLayer tileLayer(source, rect);
-
-					tile->addLayer(tileLayer);
-				}
-			}
-
-			map->addObject(tile);
 		}
+
+		// For now, to retain old behavior
+
+		break;
 	}
 
 	return map;
-}
-
-sf::Texture *MapLoader::tryGetTexture(const int id, const Tmx::Image *image, TextureCache &cache)
-{
-	TextureCacheIterator iterator = cache.find(id);
-
-	if(iterator == cache.end())
-	{
-		std::cout << "DEBUG: Loading tileset" << std::endl;
-
-		sf::String source = image->GetSource();
-		sf::String path = sf::StringEx::format("resources/%1", source);
-		sf::Texture *texture = new sf::Texture();
-		texture->loadFromFile(path);
-
-		cache[id] = texture;
-
-		return texture;
-	}
-	else
-	{
-		return iterator->second;
-	}
 }

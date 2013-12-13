@@ -5,6 +5,7 @@ WorldObject::WorldObject(WorldPosition *position, int width, int height)
 	, m_height(height)
 	, m_worldPosition(position)
 {
+
 }
 
 int WorldObject::width() const

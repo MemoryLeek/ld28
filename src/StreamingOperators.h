@@ -1,13 +1,19 @@
 #ifndef STREAMINGOPERATORS_H
 #define STREAMINGOPERATORS_H
 
+#include <iostream>
 #include <fstream>
+#include <utility>
 #include <list>
+#include <map>
+
+#include "BinaryStream.h"
 
 template<class T>
-std::ofstream &operator <<(std::ofstream &stream, std::list<T> &list)
+BinaryStream &operator <<(BinaryStream &stream, std::list<T> &list)
 {
-	stream << list.size();
+	unsigned int size = list.size();
+	stream << size;
 
 	for(T &t : list)
 	{
@@ -18,18 +24,47 @@ std::ofstream &operator <<(std::ofstream &stream, std::list<T> &list)
 }
 
 template<class T>
-std::ifstream &operator >>(std::ifstream &stream, std::list<T> &list)
+BinaryStream &operator >>(BinaryStream &stream, std::list<T> &list)
 {
-	size_t size;
+	unsigned int size = 0;
 	stream >> size;
 
-	for(size_t i = 0; i < size; i++)
+	for(unsigned int i = 0; i < size; i++)
 	{
 		T t;
 		stream >> t;
 
 		list.push_back(t);
 	}
+
+	return stream;
+}
+
+template<class TKey, class TValue>
+BinaryStream &operator >>(BinaryStream &stream, std::map<TKey, TValue> &map)
+{
+	unsigned int size = 0;
+	stream >> size;
+
+	for(unsigned int i = 0; i < size; i++)
+	{
+		TKey key;
+		TValue value;
+
+		stream >> key;
+		stream >> value;
+
+		map[key] = value;
+	}
+
+	return stream;
+}
+
+template<class TFirst, class TSecond>
+BinaryStream &operator >>(BinaryStream &stream, std::pair<TFirst, TSecond> &pair)
+{
+	stream >> pair.first;
+	stream >> pair.second;
 
 	return stream;
 }

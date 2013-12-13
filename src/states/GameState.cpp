@@ -33,7 +33,7 @@ GameState::GameState(sf::RenderWindow *window)
 	Pathfinder *pathfinder = new Pathfinder();
 	MapLoader mapLoader(world, pathfinder);
 
-	m_map = mapLoader.load("resources/room.tmx");
+	m_map = mapLoader.load("resources/world.wld");
 	m_player = new Player(playerWorldPosition);
 	m_bot = new Bot(botWorldPosition, { m_player }, pathfinder);
 	m_proxy = new PlayerInputProxy(m_player);

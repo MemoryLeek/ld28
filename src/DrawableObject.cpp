@@ -3,6 +3,7 @@
 DrawableObject::DrawableObject(WorldPosition *position, int width, int height)
 	: WorldObject(position, width, height)
 {
+
 }
 
 void DrawableObject::foo()

@@ -1,29 +1,49 @@
-#include <iostream>
-
+#include <SFML/Graphics/Transform.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "TileObject.h"
-#include "RenderProxy.h"
+#include "RoomObject.h"
 
-TileObject::TileObject(WorldPosition *position, int width, int height)
-	: DrawableObject(position, width, height)
+TileObject::TileObject(WorldPosition *position, const sf::Texture &texture)
+	: DrawableObject(position, TILE_SIZE, TILE_SIZE)
+	, m_texture(texture)
 {
-}
 
-void TileObject::addLayer(const TileLayer &layer)
-{
-	m_layers.push_back(layer);
 }
 
 void TileObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	const WorldPosition &position = worldPosition();
-	const b2Vec2 offset(m_width / 2, m_height / 2);
-	const b2Vec2 vector = position.position() - offset;
-
-	for(const TileLayer &layer : m_layers)
+	const WorldPosition &wp = worldPosition();
+	const b2Vec2 &p = wp.position();
+	const sf::Vertex vertices[]
 	{
-		RenderProxy proxy(target, vector);
-		proxy.draw(layer, states);
-	}
+		sf::Vertex
+		{
+			sf::Vector2f(p.x, p.y),
+			sf::Vector2f(0, 0)
+		},
+		sf::Vertex
+		{
+			sf::Vector2f(p.x, p.y + TILE_SIZE),
+			sf::Vector2f(0, TILE_SIZE)
+		},
+		sf::Vertex
+		{
+			sf::Vector2f(p.x + TILE_SIZE, p.y + TILE_SIZE),
+			sf::Vector2f(TILE_SIZE, TILE_SIZE)
+		},
+		sf::Vertex
+		{
+			sf::Vector2f(p.x + TILE_SIZE, p.y),
+			sf::Vector2f(TILE_SIZE, 0)
+		}
+	};
+
+	sf::Transform transform;
+	transform.translate(-TILE_SIZE / 2, -TILE_SIZE / 2);
+
+	states.texture = &m_texture;
+	states.transform = transform;
+
+	target.draw(vertices, 4, sf::Quads, states);
 }
