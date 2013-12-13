@@ -47,7 +47,10 @@ Map *MapLoader::load(const sf::String &fileName)
 			const b2Vec2 position(x * tileWidth, y * tileHeight);
 			const PositionFactory factory(m_world);
 
-			m_pathfinder->setWalkable(x, y, collisionTile.tilesetId < 0);
+			if(collisionTile.tilesetId < 0)
+			{
+				m_pathfinder->setWalkable(x, y);
+			}
 
 			WorldPosition *worldPosition = factory.create(collisionTile.tilesetId >= 0, position, tileWidth, tileHeight);
 			TileObject *tile = new TileObject(worldPosition, tileWidth, tileHeight);

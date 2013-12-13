@@ -101,10 +101,10 @@ std::stack<b2Vec2> Pathfinder::find(const b2Vec2 &from, const b2Vec2 &to) const
 	return path;
 }
 
-void Pathfinder::setWalkable(int x, int y, bool walkable)
+void Pathfinder::setWalkable(int x, int y)
 {
 	std::pair<int, int> position(x, y);
-	m_walkables[position] = walkable;
+	m_walkables.insert(position);
 }
 
 bool Pathfinder::isWalkable(const PathNode *node) const
@@ -115,7 +115,7 @@ bool Pathfinder::isWalkable(const PathNode *node) const
 		for(int x = -1; x < 1; x++)
 		{
 			std::pair<int, int> position(node->x() - x, node->y() - y);
-			if(!m_walkables.at(position))
+			if(m_walkables.find(position) == m_walkables.end())
 			{
 				return false;
 			}
