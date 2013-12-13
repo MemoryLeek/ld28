@@ -30,7 +30,7 @@ void PlayerInputProxy::relativeInput(const float x, const float y)
 void PlayerInputProxy::moveLeft()
 {
 	const b2Vec2 &movement = m_player->movement();
-	const b2Vec2 value(movement.x, 2);
+	const b2Vec2 value(movement.x, -2);
 
 	m_player->setMovement(value);
 }
@@ -38,7 +38,7 @@ void PlayerInputProxy::moveLeft()
 void PlayerInputProxy::moveRight()
 {
 	const b2Vec2 &movement = m_player->movement();
-	const b2Vec2 value(movement.x, -2);
+	const b2Vec2 value(movement.x, 2);
 
 	m_player->setMovement(value);
 }
