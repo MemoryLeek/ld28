@@ -1,8 +1,6 @@
 #include <iostream>
 #include <unordered_map>
 
-#include <TmxParser/Tmx.h>
-
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>

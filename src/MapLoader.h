@@ -3,8 +3,6 @@
 
 #include <unordered_map>
 
-#include <TmxParser/Tmx.h>
-
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/String.hpp>
 
