@@ -52,7 +52,9 @@ void Bot::update()
 			b2Vec2 targetPosition = m_target->worldPosition().position();
 			if(b2Distance(m_lastPathfindingDestination, targetPosition) > 64)
 			{
-				m_path = m_pathfinder->find(worldPosition().position(), targetPosition);
+				const b2Vec2 originPoint = (m_path.empty()) ? worldPosition().position() : m_path.top();
+
+				m_path = m_pathfinder->find(originPoint, targetPosition);
 				m_lastPathfindingDestination = targetPosition;
 			}
 		}
