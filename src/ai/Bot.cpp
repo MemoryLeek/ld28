@@ -49,13 +49,18 @@ void Bot::update()
 		m_target = findTarget();
 		if(m_target)
 		{
-			b2Vec2 targetPosition = m_target->worldPosition().position();
+			const b2Vec2 targetPosition = m_target->worldPosition().position();
+
 			if(b2Distance(m_lastPathfindingDestination, targetPosition) > 64)
 			{
 				const b2Vec2 originPoint = (m_path.empty()) ? worldPosition().position() : m_path.top();
 
-				m_path = m_pathfinder->find(originPoint, targetPosition);
-				m_lastPathfindingDestination = targetPosition;
+				const std::stack<b2Vec2> newPath = m_pathfinder->find(originPoint, targetPosition);
+				if(!newPath.empty())
+				{
+					m_path = newPath;
+					m_lastPathfindingDestination = targetPosition;
+				}
 			}
 		}
 
@@ -65,7 +70,7 @@ void Bot::update()
 	PhysicsWorldPosition &myWorldPosition = static_cast<PhysicsWorldPosition &>(worldPosition());
 	if(m_target)
 	{
-		b2Vec2 myPosition = myWorldPosition.position();
+		const b2Vec2 myPosition = myWorldPosition.position();
 
 		// If we have a path to follow
 		if(!m_path.empty())

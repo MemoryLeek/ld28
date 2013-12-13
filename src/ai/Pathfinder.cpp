@@ -82,8 +82,8 @@ std::stack<b2Vec2> Pathfinder::find(const b2Vec2 &from, const b2Vec2 &to) const
 	{
 		for(const PathNode *traceback = current; traceback != nullptr; traceback = traceback->parent())
 		{
-			path.push(b2Vec2(traceback->x() * 32,
-							 traceback->y() * 32));
+			path.push(b2Vec2(traceback->x() * 32 + 16,
+							 traceback->y() * 32 + 16));
 		}
 	}
 
@@ -109,6 +109,18 @@ void Pathfinder::setWalkable(int x, int y, bool walkable)
 
 bool Pathfinder::isWalkable(const PathNode *node) const
 {
-	std::pair<int, int> position(node->x(), node->y());
-	return m_walkables.at(position);
+	// Check all 4 tiles adjacent to the nodew
+	for(int y = -1; y < 1; y++)
+	{
+		for(int x = -1; x < 1; x++)
+		{
+			std::pair<int, int> position(node->x() - x, node->y() - y);
+			if(!m_walkables.at(position))
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
