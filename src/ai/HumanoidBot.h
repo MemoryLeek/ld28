@@ -10,6 +10,8 @@ class HumanoidBot : public Bot
 	public:
 		HumanoidBot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder);
 
+		void onCollision(const WorldObject *other) override;
+
 		void onTargetSpotted() override;
 		void onPathEnd() override;
 

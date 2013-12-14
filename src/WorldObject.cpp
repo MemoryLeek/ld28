@@ -1,3 +1,5 @@
+#include "PhysicsWorldPosition.h"
+
 #include "WorldObject.h"
 
 WorldObject::WorldObject(WorldPosition *position, int width, int height)
@@ -5,7 +7,11 @@ WorldObject::WorldObject(WorldPosition *position, int width, int height)
 	, m_height(height)
 	, m_worldPosition(position)
 {
-
+	PhysicsWorldPosition *physicsPosition = dynamic_cast<PhysicsWorldPosition*>(position);
+	if(physicsPosition)
+	{
+		physicsPosition->body()->SetUserData(this);
+	}
 }
 
 int WorldObject::width() const

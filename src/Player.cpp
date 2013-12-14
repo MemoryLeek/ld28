@@ -16,6 +16,10 @@ Player::Player(WorldPosition *position)
 	m_body->SetFixedRotation(true);
 }
 
+void Player::onCollision(const WorldObject *other)
+{
+	std::cout << "Player collided with another object." << std::endl;
+}
 
 void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {

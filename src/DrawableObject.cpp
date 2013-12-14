@@ -5,8 +5,3 @@ DrawableObject::DrawableObject(WorldPosition *position, int width, int height)
 {
 
 }
-
-void DrawableObject::foo()
-{
-
-}

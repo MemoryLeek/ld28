@@ -45,7 +45,8 @@ SOURCES += \
     Tile.cpp \
     TileObject.cpp \
     ai/Bot.cpp \
-    ai/HumanoidBot.cpp
+    ai/HumanoidBot.cpp \
+    CollisionListener.cpp
 
 HEADERS += \
     World.h \
@@ -90,7 +91,8 @@ HEADERS += \
     Tile.h \
     TileObject.h \
     states/MenuState.h \
-    ai/HumanoidBot.h
+    ai/HumanoidBot.h \
+    CollisionListener.h
 
 win32:DEFINES += M_PI=3.14159265358979323846
 win32:LIBS += -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\lib -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\bin

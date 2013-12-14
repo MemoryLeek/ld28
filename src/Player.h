@@ -10,6 +10,7 @@ class Player : public DrawableObject
 	public:
 		Player(WorldPosition *position);
 
+		void onCollision(const WorldObject *other) override;
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		void update();

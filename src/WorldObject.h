@@ -14,7 +14,7 @@ class WorldObject
 
 		WorldPosition &worldPosition() const;
 
-		virtual void foo() = 0;
+		virtual void onCollision(const WorldObject *other) = 0;
 
 	protected:
 		int m_width;

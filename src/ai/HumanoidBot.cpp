@@ -8,6 +8,11 @@ HumanoidBot::HumanoidBot(WorldPosition *position, const std::list<const WorldObj
 {
 }
 
+void HumanoidBot::onCollision(const WorldObject *other)
+{
+	std::cout << "HumanoidBot collided with another object." << std::endl;
+}
+
 void HumanoidBot::onTargetSpotted()
 {
 	const WorldObject *closestTarget = closestVisibleTarget();

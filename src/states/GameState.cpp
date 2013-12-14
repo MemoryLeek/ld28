@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "WorldDebug.h"
 #include "StringEx.h"
+#include "CollisionListener.h"
 
 #include "ai/HumanoidBot.h"
 #include "ai/Pathfinder.h"
@@ -24,8 +25,11 @@ GameState::GameState(sf::RenderWindow *window)
 	WorldDebug *worldDebugger = new WorldDebug(m_window);
 	worldDebugger->SetFlags(b2Draw::e_shapeBit);
 
+	CollisionListener *collisionListener = new CollisionListener();
+
 	World *world = new World();
 	world->SetDebugDraw(worldDebugger);
+	world->SetContactListener(collisionListener);
 
 	WorldPosition *playerWorldPosition = world->createBox(playerPosition, 32, 32, b2_dynamicBody);
 	WorldPosition *botWorldPosition = world->createCircle(botPosition, 16, b2_dynamicBody);
