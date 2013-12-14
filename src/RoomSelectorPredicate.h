@@ -7,13 +7,14 @@
 class RoomSelectorPredicate
 {
 	public:
-		RoomSelectorPredicate(const Direction::Value direction, const WorldGeneratorContext &context);
+		RoomSelectorPredicate(const Direction::Value direction, const WorldGeneratorContext &context, const Room &room);
 
 		bool predicate(const Room &room) const;
 
 	private:
-		Direction::Value m_direction;
-		WorldGeneratorContext m_context;
+		const Direction::Value m_direction;
+		const WorldGeneratorContext m_context;
+		const Room &m_room;
 };
 
 #endif // ROOMSELECTORPREDICATE_H

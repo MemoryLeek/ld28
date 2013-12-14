@@ -20,7 +20,7 @@ Player::Player(WorldPosition *position)
 
 void Player::onCollision(const WorldObject *other)
 {
-	std::cout << "Player collided with another object." << std::endl;
+
 }
 
 void Player::onSensorEnter(const b2Fixture *sensor, WorldObject *other)

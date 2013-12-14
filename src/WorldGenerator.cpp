@@ -32,6 +32,7 @@ Map *WorldGenerator::generate()
 
 		std::vector<Room> &rooms = lookup->rooms();
 		std::set<int> generatedRooms;
+		std::set<Coordinate> generatedTiles;
 
 		std::random_device device;
 		std::mt19937 generator(device());
@@ -43,7 +44,7 @@ Map *WorldGenerator::generate()
 //		Room &end = *std::find_if(rooms.begin(), rooms.end(), &Room::isEnd);
 
 		RoomPlacementStrategySelector selector;
-		WorldGeneratorContext context(generatedRooms, selector);
+		WorldGeneratorContext context(generatedRooms, generatedTiles, selector);
 		RoomObject *startObject = generate(start, rooms, context, map);
 
 		map->addRoom(startObject);
@@ -70,14 +71,15 @@ RoomObject *WorldGenerator::generate(const Room &room, std::vector<Room> &rooms,
 
 	context.markAsGenerated(room);
 
+	RoomObject *r = m_mapLoader->load(room, context);
+
 	for(; iterator != directions.end(); iterator++)
 	{
 		const Direction::Value direction = *iterator;
 
 		if(context.reverse() != direction)
 		{
-			const Direction::Value reverse = Direction::reverse(direction);
-			const RoomSelectorPredicate predicate(reverse, context);
+			const RoomSelectorPredicate predicate(direction, context, room);
 
 			const std::function<bool(const Room &)> func = std::bind(&RoomSelectorPredicate::predicate, predicate, std::placeholders::_1);
 			const std::vector<Room>::iterator result = std::find_if(rooms.begin(), rooms.end(), func);
@@ -92,5 +94,5 @@ RoomObject *WorldGenerator::generate(const Room &room, std::vector<Room> &rooms,
 		}
 	}
 
-	return m_mapLoader->load(room, context);
+	return r;
 }

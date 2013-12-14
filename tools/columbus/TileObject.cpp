@@ -6,6 +6,7 @@
 TileObject::TileObject()
 	: m_painter(0)
 	, m_collidable(false)
+	, m_hasContent(false)
 {
 
 }
@@ -13,6 +14,7 @@ TileObject::TileObject()
 TileObject::TileObject(const int width, const int height)
 	: m_texture(width, height, QImage::Format_ARGB32)
 	, m_collidable(false)
+	, m_hasContent(false)
 {
 	m_painter = new QPainter(&m_texture);
 }
@@ -32,14 +34,14 @@ QPainter *TileObject::painter()
 	return m_painter;
 }
 
-bool TileObject::collidable() const
-{
-	return m_collidable;
-}
-
 void TileObject::setCollidable(bool collidable)
 {
 	m_collidable = collidable;
+}
+
+void TileObject::setHasContent(const bool hasContent)
+{
+	m_hasContent = hasContent;
 }
 
 QDataStream &operator <<(QDataStream &stream, const TileObject &tile)
@@ -53,6 +55,7 @@ QDataStream &operator <<(QDataStream &stream, const TileObject &tile)
 	QByteArray array = buffer.data();
 
 	stream << tile.m_collidable;
+	stream << tile.m_hasContent;
 	stream << array;
 
 	return stream;

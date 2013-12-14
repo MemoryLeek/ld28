@@ -16,14 +16,15 @@ class TileObject
 
 		QPainter *painter();
 
-		bool collidable() const;
 		void setCollidable(const bool collidable);
+		void setHasContent(const bool hasContent);
 
 	private:
 		QImage m_texture;
 		QPainter *m_painter;
 
 		bool m_collidable;
+		bool m_hasContent;
 };
 
 #endif // TILEOBJECT_H

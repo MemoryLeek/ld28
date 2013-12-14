@@ -26,7 +26,7 @@ MapLoader::MapLoader(World *world, Pathfinder *pathfinder)
 
 }
 
-RoomObject *MapLoader::load(const Room &room, const WorldGeneratorContext &context)
+RoomObject *MapLoader::load(const Room &room, WorldGeneratorContext &context)
 {
 	RoomObject *map = new RoomObject();
 
@@ -38,7 +38,8 @@ RoomObject *MapLoader::load(const Room &room, const WorldGeneratorContext &conte
 		const Coordinate &coordinate = iterator->first;
 		const Tile &tile = iterator->second;
 
-		const bool collidable = tile.isCollidable();
+		const bool isCollidable = tile.isCollidable();
+		const bool isEmpty = tile.isEmpty();
 
 		const int x = coordinate.first + context.x();
 		const int y = coordinate.second + context.y();
@@ -50,14 +51,19 @@ RoomObject *MapLoader::load(const Room &room, const WorldGeneratorContext &conte
 		sf::Texture texture;
 		texture.loadFromImage(image);
 
-		WorldPosition *worldPosition = factory.create(collidable, position, TILE_SIZE, TILE_SIZE);
+		WorldPosition *worldPosition = factory.create(isCollidable, position, TILE_SIZE, TILE_SIZE);
 		TileObject *tileObject = new TileObject(worldPosition, texture);
 
 		map->addObject(tileObject);
 
-		if(!collidable)
+		if(!isCollidable)
 		{
 			m_pathfinder->setWalkable(x, y);
+		}
+
+		if(!isEmpty)
+		{
+			context.markAsGenerated(coordinate);
 		}
 	}
 

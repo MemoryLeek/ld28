@@ -66,6 +66,8 @@ Room *RoomLoader::load(const QString &path) const
 						{
 							target.setCollidable(true);
 						}
+
+						target.setHasContent(true);
 					}
 					else
 					{

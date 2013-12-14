@@ -1,4 +1,4 @@
-#include <Box2D/Collision/Shapes/b2CircleShape.h>C
+#include <Box2D/Collision/Shapes/b2CircleShape.h>
 #include <Box2D/Collision/Shapes/b2PolygonShape.h>
 
 #include "PhysicsWorldPosition.h"

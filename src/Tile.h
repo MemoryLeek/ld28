@@ -16,11 +16,13 @@ class Tile
 		sf::Image texture() const;
 
 		bool isCollidable() const;
+		bool isEmpty() const;
 
 	private:
 		sf::Image m_texture;
 
 		bool m_collidable;
+		bool m_hasContent;
 };
 
 #endif // TILE_H

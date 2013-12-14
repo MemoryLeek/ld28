@@ -54,7 +54,8 @@ SOURCES += \
     WorldGeneratorContext.cpp \
     RoomSelectorPredicate.cpp \
     RoomPlacementStrategySelector.cpp \
-    TreasureContainer.cpp
+	TreasureContainer.cpp \
+    CoordinateRect.cpp
 
 HEADERS += \
     World.h \
@@ -114,7 +115,8 @@ HEADERS += \
     IRoomPlacementStrategy.h \
     RoomPlacementStrategy.h \
     RoomPlacementStrategySelector.h \
-    TreasureContainer.h
+	TreasureContainer.h \
+    CoordinateRect.h
 
 win32:DEFINES += M_PI=3.14159265358979323846
 win32:LIBS += -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\lib -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\bin

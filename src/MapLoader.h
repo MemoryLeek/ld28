@@ -20,7 +20,7 @@ class MapLoader
 	public:
 		MapLoader(World *world, Pathfinder *pathfinder);
 
-		RoomObject *load(const Room &room, const WorldGeneratorContext &context);
+		RoomObject *load(const Room &room, WorldGeneratorContext &context);
 
 	private:
 		World *m_world;

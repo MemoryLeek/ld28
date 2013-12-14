@@ -40,8 +40,6 @@ std::vector<Direction::Value> Room::directions() const
 
 Coordinate Room::entrance(const Direction::Value direction) const
 {
-	std::cout << direction << std::endl;
-
 	return m_entrances.at(direction);
 }
 

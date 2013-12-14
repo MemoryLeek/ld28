@@ -12,11 +12,11 @@
 #include "CollisionListener.h"
 #include "Map.h"
 #include "TreasureContainer.h"
+#include "WorldGeneratorContext.h"
+#include "WorldGenerator.h"
 
 #include "ai/HumanoidBot.h"
 #include "ai/Pathfinder.h"
-
-#include <WorldGenerator.h>
 
 GameState::GameState(sf::RenderWindow *window)
 	: m_window(window)
