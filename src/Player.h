@@ -11,6 +11,8 @@ class Player : public DrawableObject
 		Player(WorldPosition *position);
 
 		void onCollision(const WorldObject *other) override;
+		void onSensorDetection(const b2Fixture *sensor, const WorldObject *other) override;
+
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		void update();

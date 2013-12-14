@@ -13,14 +13,30 @@ CollisionListener::CollisionListener()
 
 void CollisionListener::BeginContact(b2Contact *contact)
 {
-	const b2Body *bodyA = contact->GetFixtureA()->GetBody();
-	const b2Body *bodyB = contact->GetFixtureB()->GetBody();
+	const b2Fixture *fixtureA = contact->GetFixtureA();
+	const b2Fixture *fixtureB = contact->GetFixtureB();
+	const b2Body *bodyA = fixtureA->GetBody();
+	const b2Body *bodyB = fixtureB->GetBody();
 
 	WorldObject *objectA = static_cast<WorldObject*>(bodyA->GetUserData());
 	WorldObject *objectB = static_cast<WorldObject*>(bodyB->GetUserData());
 
-	objectA->onCollision(objectB);
-	objectB->onCollision(objectA);
+	if(!fixtureA->IsSensor() && !fixtureB->IsSensor())
+	{
+		objectA->onCollision(objectB);
+		objectB->onCollision(objectA);
+	}
+	else
+	{
+		if(fixtureA->IsSensor() && !fixtureB->IsSensor())
+		{
+			objectA->onSensorDetection(fixtureA, objectB);
+		}
+		else if(fixtureB->IsSensor() && !fixtureA->IsSensor())
+		{
+			objectB->onSensorDetection(fixtureB, objectA);
+		}
+	}
 }
 
 void CollisionListener::EndContact(b2Contact *contact)

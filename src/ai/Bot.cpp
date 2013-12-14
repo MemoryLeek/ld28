@@ -10,18 +10,46 @@
 
 #include "PathNode.h"
 
-const float Bot::RAYCAST_INTERVAL = 1.f / 2.f;
-
 Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder)
 	: DrawableObject(position, 32, 32)
 	, m_enemies(enemies)
 	, m_pathfinder(pathfinder)
 	, m_maxVisionDistance(10)
 {
-	const PhysicsWorldPosition &physicsWorldPosition = (PhysicsWorldPosition &)worldPosition();
+	PhysicsWorldPosition &physicsWorldPosition = (PhysicsWorldPosition &)worldPosition();
 
 	m_body = physicsWorldPosition.body();
 	m_body->SetFixedRotation(true);
+
+	m_hearingSensor = physicsWorldPosition.createCircularSensor(96);
+	m_visionSensor = physicsWorldPosition.createConeSensor(m_maxVisionDistance * 32, m_maxVisionDistance * 16);
+}
+
+void Bot::onCollision(const WorldObject *other)
+{
+	std::cout << "Bot collided with another object." << std::endl;
+}
+
+void Bot::onSensorDetection(const b2Fixture *sensor, const WorldObject *other)
+{
+	if(std::find(m_enemies.begin(), m_enemies.end(), other) == m_enemies.end())
+	{
+		return;
+	}
+
+	if(sensor == m_hearingSensor)
+	{
+		std::cout << "Bot hearing sensor triggered." << std::endl;
+		onTargetHeard(other);
+	}
+	else if(sensor == m_visionSensor)
+	{
+		std::cout << "Bot vision sensor triggered." << std::endl;
+		if(hasVisionTo(other))
+		{
+			onTargetSpotted(other);
+		}
+	}
 }
 
 void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -44,12 +72,6 @@ void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Bot::update()
 {
-	if(m_rayCastTimer.getElapsedTime().asSeconds() > RAYCAST_INTERVAL)
-	{
-		findTargets();
-		m_rayCastTimer.restart();
-	}
-
 	// If we have a path to follow
 	if(m_path.size() > 1)
 	{
@@ -68,21 +90,16 @@ void Bot::update()
 			}
 		}
 
-		float angleToNextNode = atan2(myPosition.y - nodePosition.y,
-									  myPosition.x - nodePosition.x);
+		float angleToNextNode = atan2(nodePosition.y - myPosition.y,
+									  nodePosition.x - myPosition.x);
 		myWorldPosition.setRotation(angleToNextNode * 180 / M_PI);
 
-		m_body->SetLinearVelocity(m_body->GetWorldVector(b2Vec2(-1, 0)));
+		m_body->SetLinearVelocity(m_body->GetWorldVector(b2Vec2(1, 0)));
 	}
 	else
 	{
 		m_body->SetLinearVelocity(b2Vec2(0, 0));
 	}
-}
-
-const WorldObject *Bot::closestVisibleTarget() const
-{
-	return *(m_visibleTargets.begin());
 }
 
 bool Bot::moveTo(const b2Vec2 &position)
@@ -107,39 +124,26 @@ float Bot::distanceTo(const WorldObject *object) const
 	return b2Distance(myPosition, objectPosition) / World::SCALE;
 }
 
-void Bot::findTargets()
+bool Bot::hasVisionTo(const WorldObject *object) const
 {
-	m_visibleTargets.clear();
+	const PhysicsWorldPosition *enemyWorldPosition = dynamic_cast<PhysicsWorldPosition*>(&object->worldPosition());
+	assert(enemyWorldPosition);
 
-	for(const WorldObject *enemyObject : m_enemies)
+	const b2World *world = m_body->GetWorld();
+	const b2Body *enemyBody = enemyWorldPosition->body();
+
+	const b2Fixture *enemyFixture = enemyBody->GetFixtureList();
+	while(enemyFixture->IsSensor())
 	{
-		const PhysicsWorldPosition *enemyWorldPosition = dynamic_cast<PhysicsWorldPosition*>(&enemyObject->worldPosition());
-		assert(enemyWorldPosition); // Only physics objects are allowed in the enemy list
-
-		// Only bother raycasting if the enemy is within range
-		if(distanceTo(enemyObject) < m_maxVisionDistance)
-		{
-			const b2World *world = m_body->GetWorld();
-
-			const b2Body *enemyBody = enemyWorldPosition->body();
-			const b2Fixture *enemyFixture = enemyBody->GetFixtureList();
-
-			RayCastResult rayCastResult;
-			world->RayCast(&rayCastResult, m_body->GetPosition(), enemyBody->GetPosition());
-			if(rayCastResult.fixture() == enemyFixture)
-			{
-				m_visibleTargets.push_back(enemyObject);
-			}
-		}
+		enemyFixture = enemyFixture->GetNext();
 	}
 
-	if(!m_visibleTargets.empty())
+	RayCastResult rayCastResult;
+	world->RayCast(&rayCastResult, m_body->GetPosition(), enemyBody->GetPosition());
+	if(rayCastResult.fixture() == enemyFixture)
 	{
-		// Sort list by distance to target
-		m_visibleTargets.sort([this](const WorldObject *t1, const WorldObject *t2) {
-			return distanceTo(t1) < distanceTo(t2);
-		});
-
-		onTargetSpotted();
+		return true;
 	}
+
+	return false;
 }

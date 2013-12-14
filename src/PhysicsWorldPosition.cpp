@@ -1,3 +1,6 @@
+#include <Box2D/Collision/Shapes/b2CircleShape.h>C
+#include <Box2D/Collision/Shapes/b2PolygonShape.h>
+
 #include "PhysicsWorldPosition.h"
 
 PhysicsWorldPosition::PhysicsWorldPosition(b2Body *body)
@@ -30,6 +33,55 @@ float PhysicsWorldPosition::rotation() const
 void PhysicsWorldPosition::setRotation(float rotation)
 {
 	m_body->SetTransform(m_body->GetPosition(), rotation * M_PI / 180);
+}
+
+b2Fixture *PhysicsWorldPosition::createRectangularSensor(int width, int height)
+{
+	const float scaledWidth = width / World::SCALE;
+	const float scaledHeight = height / World::SCALE;
+
+	b2PolygonShape shape;
+	shape.SetAsBox(scaledWidth / 2, scaledHeight / 2);
+
+	b2FixtureDef fixtureDefinition;
+	fixtureDefinition.shape = &shape;
+	fixtureDefinition.isSensor = true;
+
+	return m_body->CreateFixture(&fixtureDefinition);
+}
+
+b2Fixture *PhysicsWorldPosition::createCircularSensor(int radius)
+{
+	const float scaledRadius = radius / World::SCALE;
+
+	b2CircleShape shape;
+	shape.m_radius = scaledRadius;
+
+	b2FixtureDef fixtureDefinition;
+	fixtureDefinition.shape = &shape;
+	fixtureDefinition.isSensor = true;
+
+	return m_body->CreateFixture(&fixtureDefinition);
+}
+
+b2Fixture *PhysicsWorldPosition::createConeSensor(int length, int width)
+{
+	const float scaledLength = length / World::SCALE;
+	const float scaledWidth = width / World::SCALE;
+
+	b2Vec2 vertices[3];
+	vertices[0].Set(0, 0);
+	vertices[1].Set(scaledLength, -scaledWidth / 2);
+	vertices[2].Set(scaledLength, scaledWidth / 2);
+
+	b2PolygonShape shape;
+	shape.Set(vertices, 3);
+
+	b2FixtureDef fixtureDefinition;
+	fixtureDefinition.shape = &shape;
+	fixtureDefinition.isSensor = true;
+
+	return m_body->CreateFixture(&fixtureDefinition);
 }
 
 b2Body *PhysicsWorldPosition::body() const

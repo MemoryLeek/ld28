@@ -8,28 +8,26 @@ HumanoidBot::HumanoidBot(WorldPosition *position, const std::list<const WorldObj
 {
 }
 
-void HumanoidBot::onCollision(const WorldObject *other)
+void HumanoidBot::onTargetSpotted(const WorldObject *target)
 {
-	std::cout << "HumanoidBot collided with another object." << std::endl;
-}
-
-void HumanoidBot::onTargetSpotted()
-{
-	const WorldObject *closestTarget = closestVisibleTarget();
-
 	if(!m_target)
 	{
 		std::cout << "HumanoidBot: Target spotted, moving to target." << std::endl;
-		m_target = closestTarget;
+		m_target = target;
 	}
 
 
-	if(closestTarget != m_target)
+	if(target != m_target && distanceTo(target) < distanceTo(m_target))
 	{
 		std::cout << "HumanoidBot: Closer target found, changing." << std::endl;
 	}
 
 	moveTo(m_target->worldPosition().position());
+}
+
+void HumanoidBot::onTargetHeard(const WorldObject *target)
+{
+	onTargetSpotted(target);
 }
 
 void HumanoidBot::onPathEnd()

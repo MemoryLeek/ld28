@@ -16,6 +16,10 @@ void TileObject::onCollision(const WorldObject *other)
 {
 }
 
+void TileObject::onSensorDetection(const b2Fixture *sensor, const WorldObject *other)
+{
+}
+
 void TileObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 	const WorldPosition &wp = worldPosition();

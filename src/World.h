@@ -7,6 +7,7 @@
 #include "RoomObject.h"
 
 class PhysicsWorldPosition;
+class Sensor;
 
 class World : public b2World
 {
