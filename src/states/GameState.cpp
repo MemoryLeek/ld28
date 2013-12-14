@@ -10,7 +10,7 @@
 #include "WorldDebug.h"
 #include "StringEx.h"
 
-#include "ai/Bot.h"
+#include "ai/HumanoidBot.h"
 #include "ai/Pathfinder.h"
 
 GameState::GameState(sf::RenderWindow *window)
@@ -35,7 +35,7 @@ GameState::GameState(sf::RenderWindow *window)
 
 	m_map = mapLoader.load("resources/world.wld");
 	m_player = new Player(playerWorldPosition);
-	m_bot = new Bot(botWorldPosition, { m_player }, pathfinder);
+	m_bot = new HumanoidBot(botWorldPosition, { m_player }, pathfinder);
 	m_proxy = new PlayerInputProxy(m_player);
 	m_world = world;
 	m_pathfinder = pathfinder;

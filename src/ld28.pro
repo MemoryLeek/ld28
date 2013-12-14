@@ -10,7 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-	World.cpp \
+    World.cpp \
     MapLoader.cpp \
     DrawableObject.cpp \
     Map.cpp \
@@ -22,32 +22,33 @@ SOURCES += \
     PhysicsWorldPosition.cpp \
     Player.cpp \
     PositionFactory.cpp \
-    ai/Bot.cpp \
     ai/Pathfinder.cpp \
-	RayCastResult.cpp \
+    RayCastResult.cpp \
     WorldGenerator.cpp \
     InputHandler.cpp \
     SettingsHandler.cpp \
     Settings.cpp \
     KeyMapping.cpp \
     InputMapping.cpp \
-	states/GameState.cpp \
+    states/GameState.cpp \
     AnalogMapping.cpp \
     PlayerInputProxy.cpp \
     StringEx.cpp \
     ai/PathNode.cpp \
     SettingsProvider.cpp \
     DefaultSettingsProvider.cpp \
-	BinaryStream.cpp \
+    BinaryStream.cpp \
     states/MenuState.cpp \
     RoomLookupLoader.cpp \
     RoomLookup.cpp \
     RoomObject.cpp \
     Tile.cpp \
-    TileObject.cpp
+    TileObject.cpp \
+    ai/Bot.cpp \
+    ai/HumanoidBot.cpp
 
 HEADERS += \
-	World.h \
+    World.h \
     MapLoader.h \
     DrawableObject.h \
     Map.h \
@@ -63,7 +64,7 @@ HEADERS += \
     PositionFactory.h \
     ai/Bot.h \
     ai/Pathfinder.h \
-	RayCastResult.h \
+    RayCastResult.h \
     WorldGenerator.h \
     InputHandler.h \
     SettingsHandler.h \
@@ -72,7 +73,7 @@ HEADERS += \
     StreamingOperators.h \
     InputMapping.h \
     State.h \
-	states/GameState.h \
+    states/GameState.h \
     AnalogMapping.h \
     PlayerInputProxy.h \
     ai/PathNode.h \
@@ -82,12 +83,14 @@ HEADERS += \
     SettingsProvider.h \
     DefaultSettingsProvider.h \
     BinaryStream.h \
-	states/MenuState.h \
-	RoomLookupLoader.h \
-	RoomLookup.h \
-	RoomObject.h \
-	Tile.h \
-	TileObject.h
+    states/MenuState.h \
+    RoomLookupLoader.h \
+    RoomLookup.h \
+    RoomObject.h \
+    Tile.h \
+    TileObject.h \
+    states/MenuState.h \
+    ai/HumanoidBot.h
 
 win32:DEFINES += M_PI=3.14159265358979323846
 win32:LIBS += -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\lib -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\bin
