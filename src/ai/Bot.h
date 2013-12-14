@@ -47,6 +47,7 @@ class Bot : public DrawableObject
 		b2Fixture *m_visionSensor;
 
 		std::stack<b2Vec2> m_path;
+		std::list<WorldObject*> m_trackedTargets;
 };
 
 #endif // BOT_H

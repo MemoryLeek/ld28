@@ -36,7 +36,7 @@ GameState::GameState(sf::RenderWindow *window)
 	world->SetDebugDraw(worldDebugger);
 	world->SetContactListener(collisionListener);
 
-	PhysicsWorldPosition *playerWorldPosition = world->createBox(playerPosition, 32, 32, b2_dynamicBody);
+	PhysicsWorldPosition *playerWorldPosition = world->createCircle(playerPosition, 16, b2_dynamicBody);
 	PhysicsWorldPosition *treasureWorldPosition = world->createBox(treasurePosition, 32, 32, b2_staticBody);
 	WorldPosition *botWorldPosition = world->createCircle(botPosition, 16, b2_dynamicBody);
 	//TreasureContainer *treasureContainer = TreasureContainer
@@ -53,7 +53,7 @@ GameState::GameState(sf::RenderWindow *window)
 	m_pathfinder = pathfinder;
 
 	TreasureContainer *treasureContainer = new TreasureContainer(treasureWorldPosition);
-	playerWorldPosition->createRectangularSensor(64, 64);
+	playerWorldPosition->createCircularSensor(32);
 
 	// UI Initialization
 	m_font.loadFromFile("resources/Oxygen-Regular.ttf");

@@ -14,7 +14,7 @@ Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> &enemies,
 	: DrawableObject(position, 32, 32)
 	, m_enemies(enemies)
 	, m_pathfinder(pathfinder)
-	, m_maxVisionDistance(10)
+	, m_maxVisionDistance(20)
 {
 	PhysicsWorldPosition &physicsWorldPosition = (PhysicsWorldPosition &)worldPosition();
 
@@ -22,7 +22,7 @@ Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> &enemies,
 	m_body->SetFixedRotation(true);
 
 	m_hearingSensor = physicsWorldPosition.createCircularSensor(96);
-	m_visionSensor = physicsWorldPosition.createConeSensor(m_maxVisionDistance * 32, m_maxVisionDistance * 16);
+	m_visionSensor = physicsWorldPosition.createConeSensor(m_maxVisionDistance * 32, m_maxVisionDistance * 24);
 }
 
 void Bot::onCollision(const WorldObject *other)
@@ -40,6 +40,7 @@ void Bot::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
 	if(sensor == m_hearingSensor)
 	{
 		std::cout << "Bot hearing sensor triggered." << std::endl;
+		m_trackedTargets.push_back(other);
 		onTargetHeard(other);
 	}
 	else if(sensor == m_visionSensor)
@@ -47,6 +48,7 @@ void Bot::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
 		std::cout << "Bot vision sensor triggered." << std::endl;
 		if(hasVisionTo(other))
 		{
+			m_trackedTargets.push_back(other);
 			onTargetSpotted(other);
 		}
 	}
@@ -54,6 +56,12 @@ void Bot::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
 
 void Bot::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 {
+	onSensorEnter(sensor, other);
+
+	if(std::find(m_trackedTargets.begin(), m_trackedTargets.end(), other) != m_trackedTargets.end())
+	{
+		m_trackedTargets.remove(other);
+	}
 }
 
 void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -76,6 +84,17 @@ void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Bot::update()
 {
+	if(m_trackedTargets.size() > 0)
+	{
+		for(WorldObject *target : m_trackedTargets)
+		{
+			if(hasVisionTo(target))
+			{
+				onTargetSpotted(target);
+			}
+		}
+	}
+
 	// If we have a path to follow
 	if(m_path.size() > 1)
 	{
