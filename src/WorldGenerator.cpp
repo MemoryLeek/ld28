@@ -11,30 +11,7 @@
 #include "Map.h"
 #include "StringEx.h"
 #include "WorldGeneratorContext.h"
-
-class Foo
-{
-	public:
-		Foo(const Direction::Value direction, const WorldGeneratorContext &context)
-			: m_direction(direction)
-			, m_context(context)
-		{
-
-		}
-
-		bool bar(const Room &room) const
-		{
-			std::map<Direction::Value, Coordinate> entrances = room.entrances();
-			std::map<Direction::Value, Coordinate>::iterator iterator = entrances.find(m_direction);
-
-			return !m_context.isRoomGenerated(room) &&
-				iterator != entrances.end();
-		}
-
-	private:
-		Direction::Value m_direction;
-		WorldGeneratorContext m_context;
-};
+#include "RoomSelectorPredicate.h"
 
 WorldGenerator::WorldGenerator(MapLoader *mapLoader, const sf::String &fileName)
 	: m_mapLoader(mapLoader)
@@ -62,10 +39,12 @@ Map *WorldGenerator::generate()
 		std::cout << "Shuffled rooms" << std::endl;
 
 		Room &start = *std::find_if(rooms.begin(), rooms.end(), &Room::isStart);
-		WorldGeneratorContext context(generatedRooms);
-		RoomObject *roomObject = generate(start, rooms, context, map);
+//		Room &end = *std::find_if(rooms.begin(), rooms.end(), &Room::isEnd);
 
-		map->addRoom(roomObject);
+		WorldGeneratorContext context(generatedRooms);
+		RoomObject *startObject = generate(start, rooms, context, map);
+
+		map->addRoom(startObject);
 
 		return map;
 	}
@@ -88,16 +67,15 @@ RoomObject *WorldGenerator::generate(const Room &room, std::vector<Room> &rooms,
 	for(; iterator != entrances.end(); iterator++)
 	{
 		const Direction::Value direction = iterator->first;
-		const Foo predicate(direction, context);
+		const Direction::Value reverse = Direction::reverse(direction);
+		const RoomSelectorPredicate predicate(reverse, context);
 
-		const std::function<bool(const Room &)> func = std::bind(&Foo::bar, predicate, std::placeholders::_1);
+		const std::function<bool(const Room &)> func = std::bind(&RoomSelectorPredicate::predicate, predicate, std::placeholders::_1);
 		const std::vector<Room>::iterator result = std::find_if(rooms.begin(), rooms.end(), func);
-
-		std::cout << "foo" << std::endl;
 
 		if(result != rooms.end())
 		{
-			WorldGeneratorContext forked = context.fork(room, *result);
+			WorldGeneratorContext forked = context.fork(room, *result, direction);
 			RoomObject *roomObject = generate(*result, rooms, forked, map);
 
 			map->addRoom(roomObject);

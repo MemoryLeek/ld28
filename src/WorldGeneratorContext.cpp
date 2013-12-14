@@ -5,28 +5,39 @@
 
 WorldGeneratorContext::WorldGeneratorContext(std::set<int> &generatedRooms)
 	: m_generatedRooms(generatedRooms)
+	, m_direction(Direction::None)
 	, m_x(0)
 	, m_y(0)
 {
 
 }
 
-WorldGeneratorContext::WorldGeneratorContext(std::set<int> &generatedRooms, const int x, const int y)
+WorldGeneratorContext::WorldGeneratorContext(std::set<int> &generatedRooms, const Direction::Value direction, const int x, const int y)
 	: m_generatedRooms(generatedRooms)
+	, m_direction(direction)
 	, m_x(x)
 	, m_y(y)
 {
 
 }
 
-WorldGeneratorContext WorldGeneratorContext::fork(const Room &current, const Room &next)
+WorldGeneratorContext WorldGeneratorContext::fork(const Room &current, const Room &next, const Direction::Value direction)
 {
 	const int width = current.width();
 	const int height = current.height();
 
-	std::cout << width << "x" << height << std::endl;
+	const Direction::Value reverse = Direction::reverse(direction);
+	const Coordinate c1 = current.entrance(direction);
+	const Coordinate c2 = next.entrance(reverse);
 
-	return WorldGeneratorContext(m_generatedRooms, m_x + width, m_y + height);
+	const int f = c1.second - c2.second;
+
+	return WorldGeneratorContext(m_generatedRooms, direction, m_x + c1.first, m_y + f);
+}
+
+Direction::Value WorldGeneratorContext::direction() const
+{
+	return m_direction;
 }
 
 bool WorldGeneratorContext::isRoomGenerated(const Room &room) const

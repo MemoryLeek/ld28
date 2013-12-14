@@ -25,6 +25,13 @@ std::map<Direction::Value, Coordinate> Room::entrances() const
 	return m_entrances;
 }
 
+Coordinate Room::entrance(const Direction::Value direction) const
+{
+	std::cout << direction << std::endl;
+
+	return m_entrances.at(direction);
+}
+
 int Room::weight() const
 {
 	return m_tiles.size();

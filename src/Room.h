@@ -24,6 +24,8 @@ class Room
 		std::map<Coordinate, Tile> tiles() const;
 		std::map<Direction::Value, Coordinate> entrances() const;
 
+		Coordinate entrance(const Direction::Value direction) const;
+
 		int weight() const;
 		int id() const;
 		int width() const;

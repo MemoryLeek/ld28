@@ -51,7 +51,8 @@ SOURCES += \
     RoomObject.cpp \
     Map.cpp \
     IdGenerator.cpp \
-    WorldGeneratorContext.cpp
+    WorldGeneratorContext.cpp \
+    RoomSelectorPredicate.cpp
 
 HEADERS += \
     World.h \
@@ -106,7 +107,8 @@ HEADERS += \
     RoomObject.h \
     Map.h \
     IdGenerator.h \
-    WorldGeneratorContext.h
+    WorldGeneratorContext.h \
+    RoomSelectorPredicate.h
 
 win32:DEFINES += M_PI=3.14159265358979323846
 win32:LIBS += -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\lib -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\bin

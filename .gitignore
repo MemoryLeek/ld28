@@ -1,6 +1,7 @@
 bin/ld28
 bin/*callgrind*
 bin/settings.dat
+tools/columbus/columbus
 
 *.o
 *.pro.user*
