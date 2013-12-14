@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="12" height="12" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="placeholder" tilewidth="32" tileheight="32">
-  <image source="placeholder.png" width="64" height="32"/>
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="512" height="512"/>
  </tileset>
  <layer name="Background" width="12" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYBrFo5hMDABIjwEh
+   eJwzYmBgMBrFo5hMDADgURwh
   </data>
  </layer>
  <layer name="Collision" width="12" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYCQREwuGunqYHlqpH2z+JRTf2OQAMcwAKQ==
+   eJxjZGBgYCISMwOxIAPxQHiQqRchUT0DjdWzkKieHuGpCMRKSJgVSZ4FTU4ZiAG2nwJm
   </data>
  </layer>
 </map>

@@ -3,17 +3,17 @@
  <properties>
   <property name="type" value="1"/>
  </properties>
- <tileset firstgid="1" name="placeholder" tilewidth="32" tileheight="32">
-  <image source="placeholder.png" width="64" height="32"/>
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="512" height="512"/>
  </tileset>
  <layer name="Background" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJztwwEJAAAMBKHj+4dej6HgqqmqqqqvHyPACAE=
+   eJztwwEJAAAMBKHL9P3DrcdQcNVUVVXV1w/9z8gB
   </data>
  </layer>
  <layer name="Collision" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJzt1LEKACAIAFH9/59uaixEhws6wVFfKZgRkXB241Zb6as/90+7pP9frZ/20Od8ev/0/ZsG7e83/OrT89fnfTJe8On56+vr65M+mQs/uwCX
+   eJzt0zsOgCAURNFRcQF+WICy/z3yGhpjI884EmaSW1GcRHAAMJKarAX1WyvPyjb5bv/a175nXt87+W3f/937fxrz++9kH537gey3/v+/4Ueyz9wf/Jnss9+ffPny+/UP6ySVrAytrwp2
   </data>
  </layer>
 </map>
