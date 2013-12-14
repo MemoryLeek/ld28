@@ -2,6 +2,7 @@ bin/ld28
 bin/*callgrind*
 bin/settings.dat
 tools/columbus/columbus
+tools/breeder/breeder
 
 *.o
 *.pro.user*

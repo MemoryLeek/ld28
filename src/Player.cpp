@@ -8,7 +8,7 @@
 #include "TreasureContainer.h"
 
 Player::Player(WorldPosition *position)
-	: DrawableObject(position, 32, 32)
+	: AnimatedObject("resources/test.spb", position, 32, 32)
 	, m_movement(0, 0)
 	, m_interactable(nullptr)
 {
@@ -16,6 +16,8 @@ Player::Player(WorldPosition *position)
 
 	m_body = physicsWorldPosition.body();
 	m_body->SetFixedRotation(true);
+
+	setImageIndex(1);
 }
 
 void Player::onCollision(const WorldObject *other)
@@ -41,32 +43,26 @@ void Player::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 	}
 }
 
-void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-}
-
-void Player::update()
+void Player::update(const int delta)
 {
 	const b2Vec2 &currentVelocity = m_body->GetLocalVector(m_body->GetLinearVelocity());
-
-	const int speed = 5;
 
 	b2Vec2 impulse(0, 0);
 
 	// Forward/back
 	if(m_movement.x == 0)
 	{
-		impulse.x = (currentVelocity.x < 0) ? speed : -speed;
+		impulse.x = (currentVelocity.x < 0) ? SPEED : -SPEED;
 	}
 	else
 	{
-		if(m_movement.x > 0 && currentVelocity.x < speed)
+		if(m_movement.x > 0 && currentVelocity.x < SPEED)
 		{
-			impulse.x = speed * 2;
+			impulse.x = SPEED * 2;
 		}
-		if(m_movement.x < 0 && currentVelocity.x > -speed)
+		if(m_movement.x < 0 && currentVelocity.x > -SPEED)
 		{
-			impulse.x = -speed * 2;
+			impulse.x = -SPEED * 2;
 		}
 	}
 
@@ -88,6 +84,8 @@ void Player::update()
 	}
 
 	m_body->ApplyForce(m_body->GetWorldVector(impulse), m_body->GetWorldCenter(), true);
+
+	AnimatedObject::update(delta);
 }
 
 void Player::interact()

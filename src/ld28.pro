@@ -55,7 +55,12 @@ SOURCES += \
     RoomSelectorPredicate.cpp \
     RoomPlacementStrategySelector.cpp \
 	TreasureContainer.cpp \
-    CoordinateRect.cpp
+	CoordinateRect.cpp \
+	SpriteBundle.cpp \
+	Sprite.cpp \
+	SpriteLoader.cpp \
+    ImageWrapper.cpp \
+    AnimatedObject.cpp
 
 HEADERS += \
     World.h \
@@ -116,7 +121,12 @@ HEADERS += \
     RoomPlacementStrategy.h \
     RoomPlacementStrategySelector.h \
 	TreasureContainer.h \
-    CoordinateRect.h
+	CoordinateRect.h \
+	SpriteBundle.h \
+	Sprite.h \
+	SpriteLoader.h \
+    ImageWrapper.h \
+    AnimatedObject.h
 
 win32:DEFINES += M_PI=3.14159265358979323846
 win32:LIBS += -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\lib -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\bin

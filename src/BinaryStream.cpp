@@ -63,3 +63,19 @@ BinaryStream &operator <<(BinaryStream &stream, const bool &value)
 
 	return stream;
 }
+
+BinaryStream &operator >>(BinaryStream &stream, float &value)
+{
+	std::fstream &subject = stream.m_subject;
+	subject.read((char *)&value, sizeof(float));
+
+	return stream;
+}
+
+BinaryStream &operator <<(BinaryStream &stream, const float &value)
+{
+	std::fstream &subject = stream.m_subject;
+	subject.write((char *)&value, sizeof(float));
+
+	return stream;
+}

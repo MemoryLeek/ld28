@@ -33,7 +33,7 @@ GameState::GameState(sf::RenderWindow *window)
 	CollisionListener *collisionListener = new CollisionListener();
 
 	World *world = new World();
-	world->SetDebugDraw(worldDebugger);
+//	world->SetDebugDraw(worldDebugger);
 	world->SetContactListener(collisionListener);
 
 	PhysicsWorldPosition *playerWorldPosition = world->createCircle(playerPosition, 16, b2_dynamicBody);
@@ -86,7 +86,11 @@ void GameState::update()
 	{
 		if(!i)
 		{
-			m_player->update();
+			const int elapsed = m_clock
+				.getElapsedTime()
+				.asMilliseconds();
+
+			m_player->update(elapsed - m_lastPhysicsStepTime);
 			m_bot->update();
 		}
 
@@ -124,6 +128,7 @@ void GameState::update()
 
 	m_world->DrawDebugData();
 	m_window->draw(*m_bot);
+	m_window->draw(*m_player);
 
 	m_window->setView(defaultView);
 	m_window->draw(m_fpsText);

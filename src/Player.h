@@ -3,11 +3,13 @@
 
 #include "Box2D/Dynamics/b2Body.h"
 
-#include "DrawableObject.h"
+#include "AnimatedObject.h"
 
 class TreasureContainer;
 
-class Player : public DrawableObject
+const int SPEED = 5;
+
+class Player : public AnimatedObject
 {
 	public:
 		Player(WorldPosition *position);
@@ -16,9 +18,7 @@ class Player : public DrawableObject
 		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
 		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
 
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
-
-		void update();
+		void update(const int delta);
 
 		void interact();
 
