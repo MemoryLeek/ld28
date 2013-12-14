@@ -27,8 +27,6 @@
 
 int main(int argc, char *argv[])
 {
-	std::cout << argv[0] << std::endl;
-
 	sf::VideoMode videoMode(800, 600);
 	sf::RenderWindow window(videoMode, "My window");
 	
