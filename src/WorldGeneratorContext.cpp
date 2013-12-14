@@ -40,6 +40,11 @@ Direction::Value WorldGeneratorContext::direction() const
 	return m_direction;
 }
 
+Direction::Value WorldGeneratorContext::reverse() const
+{
+	return Direction::reverse(m_direction);
+}
+
 bool WorldGeneratorContext::isRoomGenerated(const Room &room) const
 {
 	const int id = room.id();

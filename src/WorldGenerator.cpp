@@ -67,18 +67,22 @@ RoomObject *WorldGenerator::generate(const Room &room, std::vector<Room> &rooms,
 	for(; iterator != entrances.end(); iterator++)
 	{
 		const Direction::Value direction = iterator->first;
-		const Direction::Value reverse = Direction::reverse(direction);
-		const RoomSelectorPredicate predicate(reverse, context);
 
-		const std::function<bool(const Room &)> func = std::bind(&RoomSelectorPredicate::predicate, predicate, std::placeholders::_1);
-		const std::vector<Room>::iterator result = std::find_if(rooms.begin(), rooms.end(), func);
-
-		if(result != rooms.end())
+		if(context.reverse() != direction)
 		{
-			WorldGeneratorContext forked = context.fork(room, *result, direction);
-			RoomObject *roomObject = generate(*result, rooms, forked, map);
+			const Direction::Value reverse = Direction::reverse(direction);
+			const RoomSelectorPredicate predicate(reverse, context);
 
-			map->addRoom(roomObject);
+			const std::function<bool(const Room &)> func = std::bind(&RoomSelectorPredicate::predicate, predicate, std::placeholders::_1);
+			const std::vector<Room>::iterator result = std::find_if(rooms.begin(), rooms.end(), func);
+
+			if(result != rooms.end())
+			{
+				WorldGeneratorContext forked = context.fork(room, *result, direction);
+				RoomObject *roomObject = generate(*result, rooms, forked, map);
+
+				map->addRoom(roomObject);
+			}
 		}
 	}
 

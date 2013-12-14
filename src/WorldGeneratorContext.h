@@ -16,6 +16,7 @@ class WorldGeneratorContext
 		WorldGeneratorContext fork(const Room &current, const Room &next, const Direction::Value direction);
 
 		Direction::Value direction() const;
+		Direction::Value reverse() const;
 
 		bool isRoomGenerated(const Room &room) const;
 		void markAsGenerated(const Room &room);
