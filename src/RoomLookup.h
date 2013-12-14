@@ -5,7 +5,7 @@
 
 #include <SFML/Graphics/Drawable.hpp>
 
-#include "RoomObject.h"
+#include "Room.h"
 #include "BinaryStream.h"
 
 class RoomLookup
@@ -15,10 +15,10 @@ class RoomLookup
 	public:
 		RoomLookup();
 
-		std::list<RoomObject> rooms() const;
+		std::vector<Room> &rooms();
 
 	private:
-		std::list<RoomObject> m_rooms;
+		std::vector<Room> m_rooms;
 };
 
 #endif // ROOMLOOKUP_H

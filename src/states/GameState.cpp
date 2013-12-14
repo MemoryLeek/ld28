@@ -6,13 +6,16 @@
 #include "PhysicsWorldPosition.h"
 #include "PlayerInputProxy.h"
 #include "MapLoader.h"
-#include "Map.h"
+#include "RoomObject.h"
 #include "WorldDebug.h"
 #include "StringEx.h"
 #include "CollisionListener.h"
+#include "Map.h"
 
 #include "ai/HumanoidBot.h"
 #include "ai/Pathfinder.h"
+
+#include <WorldGenerator.h>
 
 GameState::GameState(sf::RenderWindow *window)
 	: m_window(window)
@@ -36,8 +39,9 @@ GameState::GameState(sf::RenderWindow *window)
 
 	Pathfinder *pathfinder = new Pathfinder();
 	MapLoader mapLoader(world, pathfinder);
+	WorldGenerator worldGenerator(&mapLoader, "resources/world.wld");
 
-	m_map = mapLoader.load("resources/world.wld");
+	m_map = worldGenerator.generate();
 	m_player = new Player(playerWorldPosition);
 	m_bot = new HumanoidBot(botWorldPosition, { m_player }, pathfinder);
 	m_proxy = new PlayerInputProxy(m_player);

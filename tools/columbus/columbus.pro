@@ -7,13 +7,19 @@ SOURCES += \
     RoomLoader.cpp \
     RoomObject.cpp \
     RoomLookup.cpp \
-    RoomLookupPersister.cpp
+    RoomLookupPersister.cpp \
+    DirectionSelectorStrategy.cpp
 
 HEADERS += QStringEx.h \
     TileObject.h \
     RoomLoader.h \
     RoomObject.h \
     RoomLookup.h \
-    RoomLookupPersister.h
+    RoomLookupPersister.h \
+    TileFeature.h \
+    Direction.h \
+    DirectionSelectorStrategy.h \
+    PropertyEnumMapper.h \
+    MapType.h
 
 LIBS += -ltiled

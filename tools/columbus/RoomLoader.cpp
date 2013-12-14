@@ -8,30 +8,44 @@
 
 #include "RoomLoader.h"
 #include "TileObject.h"
+#include "TileFeature.h"
+#include "Direction.h"
+#include "DirectionSelectorStrategy.h"
+#include "PropertyEnumMapper.h"
+#include "MapType.h"
 
 RoomLoader::RoomLoader()
 {
-
+	m_directionSelectorStrategies =
+	{
+		new LeftDirectionSelectorStrategy(),
+		new RightDirectionSelectorStrategy(),
+		new TopDirectionSelectorStrategy(),
+		new BottomDirectionSelectorStrategy()
+	};
 }
 
-RoomObject *RoomLoader::load(const QString &path) const
+Room *RoomLoader::load(const QString &path) const
 {
 	Tiled::MapReader reader;
 	Tiled::Map *map = reader.readMap(path);
 
-	const int tileWidth = map->tileWidth();
-	const int tileHeight = map->tileHeight();
-	const int collisionIndex = map->layerCount() - 1;
-
 	if(map)
 	{
-		RoomObject *room = new RoomObject();
+		const int mapWidth = map->width() - 1;
+		const int mapHeight = map->height() - 1;
+		const int tileWidth = map->tileWidth();
+		const int tileHeight = map->tileHeight();
+		const int collisionIndex = map->layerCount() - 1;
+
+		MapType::Value mapType = PropertyEnumMapper<MapType::Value>::map(map, "type");
+		Room *room = new Room(mapType, mapWidth, mapHeight);
 
 		for(int x = 0; x < map->width(); x++)
 		{
 			for(int y = 0; y < map->height(); y++)
 			{
-				Tile target(tileWidth, tileHeight);
+				TileObject target(tileWidth, tileHeight);
 				Coordinate coordinate(x, y);
 
 				for(int i = 0; i < map->layerCount(); i++)
@@ -51,6 +65,23 @@ RoomObject *RoomLoader::load(const QString &path) const
 						if(i == collisionIndex)
 						{
 							target.setCollidable(true);
+						}
+					}
+					else
+					{
+						if(i == collisionIndex)
+						{
+							const QRect rect(x, y, mapWidth, mapHeight);
+
+							for(const IDirectionSelectorStrategy *strategy : m_directionSelectorStrategies)
+							{
+								const Direction::Value &direction = strategy->direction(rect);
+
+								if(direction != Direction::None)
+								{
+									room->setEntrance(direction, coordinate);
+								}
+							}
 						}
 					}
 				}

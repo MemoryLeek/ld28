@@ -13,7 +13,6 @@ SOURCES += \
     World.cpp \
     MapLoader.cpp \
     DrawableObject.cpp \
-    Map.cpp \
     WorldObject.cpp \
     WorldDebug.cpp \
     TileLayer.cpp \
@@ -41,18 +40,23 @@ SOURCES += \
     states/MenuState.cpp \
     RoomLookupLoader.cpp \
     RoomLookup.cpp \
-    RoomObject.cpp \
     Tile.cpp \
     TileObject.cpp \
     ai/Bot.cpp \
     ai/HumanoidBot.cpp \
-    CollisionListener.cpp
+	CollisionListener.cpp \
+    Room.cpp \
+    Direction.cpp \
+    MapType.cpp \
+    RoomObject.cpp \
+    Map.cpp \
+    IdGenerator.cpp \
+    WorldGeneratorContext.cpp
 
 HEADERS += \
     World.h \
     MapLoader.h \
     DrawableObject.h \
-    Map.h \
     StringEx.h \
     WorldObject.h \
     WorldDebug.h \
@@ -92,7 +96,17 @@ HEADERS += \
     TileObject.h \
     states/MenuState.h \
     ai/HumanoidBot.h \
-    CollisionListener.h
+	CollisionListener.h \
+	states/MenuState.h \
+	RoomLookupLoader.h \
+	RoomLookup.h \
+    Room.h \
+    Direction.h \
+    MapType.h \
+    RoomObject.h \
+    Map.h \
+    IdGenerator.h \
+    WorldGeneratorContext.h
 
 win32:DEFINES += M_PI=3.14159265358979323846
 win32:LIBS += -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\lib -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\bin

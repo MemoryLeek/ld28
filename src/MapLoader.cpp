@@ -6,9 +6,10 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "ai/Pathfinder.h"
+
 #include "Tile.h"
 #include "MapLoader.h"
-#include "Map.h"
+#include "RoomObject.h"
 #include "PhysicsWorldPosition.h"
 #include "StaticWorldPosition.h"
 #include "StringEx.h"
@@ -16,6 +17,7 @@
 #include "PositionFactory.h"
 #include "RoomLookupLoader.h"
 #include "TileObject.h"
+#include "WorldGeneratorContext.h"
 
 MapLoader::MapLoader(World *world, Pathfinder *pathfinder)
 	: m_world(world)
@@ -24,44 +26,39 @@ MapLoader::MapLoader(World *world, Pathfinder *pathfinder)
 
 }
 
-Map *MapLoader::load(const sf::String &fileName)
+RoomObject *MapLoader::load(const Room &room, const WorldGeneratorContext &context)
 {
-	RoomLookupLoader loader(fileName);
-	RoomLookup *lookup = loader.load();
-	Map *map = new Map();
+	RoomObject *map = new RoomObject();
 
-	for(const RoomObject &room : lookup->rooms())
+	std::map<Coordinate, Tile> tiles = room.tiles();
+	std::map<Coordinate, Tile>::const_iterator iterator = tiles.begin();
+
+	for(; iterator != tiles.end(); iterator++)
 	{
-		std::map<Coordinate, Tile> tiles = room.tiles();
-		std::map<Coordinate, Tile>::const_iterator iterator = tiles.begin();
+		const Coordinate &coordinate = iterator->first;
+		const Tile &tile = iterator->second;
 
-		for(; iterator != tiles.end(); iterator++)
+		const bool collidable = tile.isCollidable();
+
+		const int x = coordinate.first + context.x();
+		const int y = coordinate.second + context.y();
+
+		const PositionFactory factory(m_world);
+		const b2Vec2 position(x * TILE_SIZE, y * TILE_SIZE);
+
+		sf::Image image = tile.texture();
+		sf::Texture texture;
+		texture.loadFromImage(image);
+
+		WorldPosition *worldPosition = factory.create(collidable, position, TILE_SIZE, TILE_SIZE);
+		TileObject *tileObject = new TileObject(worldPosition, texture);
+
+		map->addObject(tileObject);
+
+		if(!collidable)
 		{
-			const Coordinate &coordinate = iterator->first;
-			const Tile &tile = iterator->second;
-			const PositionFactory factory(m_world);
-			const b2Vec2 position(coordinate.first * TILE_SIZE, coordinate.second * TILE_SIZE);
-
-			const bool collidable = tile.isCollidable();
-
-			sf::Image image = tile.texture();
-			sf::Texture texture;
-			texture.loadFromImage(image);
-
-			WorldPosition *worldPosition = factory.create(collidable, position, TILE_SIZE, TILE_SIZE);
-			TileObject *tileObject = new TileObject(worldPosition, texture);
-
-			map->addObject(tileObject);
-
-			if(!collidable)
-			{
-				m_pathfinder->setWalkable(coordinate.first, coordinate.second);
-			}
+			m_pathfinder->setWalkable(x, y);
 		}
-
-		// For now, to retain old behavior
-
-		break;
 	}
 
 	return map;

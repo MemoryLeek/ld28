@@ -5,12 +5,17 @@
 
 #include "RoomObject.h"
 
+class IDirectionSelectorStrategy;
+
 class RoomLoader
 {
 	public:
 		RoomLoader();
 
-		RoomObject *load(const QString &path) const;
+		Room *load(const QString &path) const;
+
+	private:
+		QList<IDirectionSelectorStrategy *> m_directionSelectorStrategies;
 };
 
 #endif // ROOMLOADER_H

@@ -8,7 +8,7 @@ RoomLookup::RoomLookup()
 
 }
 
-void RoomLookup::addRoom(const RoomObject &room)
+void RoomLookup::addRoom(const Room &room)
 {
 	m_rooms << room;
 }

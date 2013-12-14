@@ -3,6 +3,7 @@
 
 #include "TileObject.h"
 #include "RoomObject.h"
+#include "Room.h"
 
 TileObject::TileObject(WorldPosition *position, const sf::Texture &texture)
 	: DrawableObject(position, TILE_SIZE, TILE_SIZE)

@@ -9,16 +9,18 @@
 using TextureCache = std::unordered_map<int, sf::Texture *>;
 using TextureCacheIterator = TextureCache::iterator;
 
-class Map;
+class WorldGeneratorContext;
+class RoomObject;
 class Pathfinder;
 class World;
+class Room;
 
 class MapLoader
 {
 	public:
 		MapLoader(World *world, Pathfinder *pathfinder);
 
-		Map *load(const sf::String &fileName);
+		RoomObject *load(const Room &room, const WorldGeneratorContext &context);
 
 	private:
 		World *m_world;

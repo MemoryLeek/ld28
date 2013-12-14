@@ -1,30 +1,20 @@
 #include "Map.h"
-#include "DrawableObject.h"
+#include "RoomObject.h"
 
 Map::Map()
 {
 
 }
 
-std::list<const WorldObject *> Map::objects() const
-{
-	return m_objects;
-}
-
-void Map::addObject(const WorldObject *object)
-{
-	m_objects.push_back(object);
-}
-
 void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	for(const WorldObject *object : m_objects)
+	for(RoomObject *room : m_rooms)
 	{
-		const DrawableObject *drawable = dynamic_cast<const DrawableObject *>(object);
-
-		if(drawable)
-		{
-			target.draw(*drawable, states);
-		}
+		room->draw(target, states);
 	}
+}
+
+void Map::addRoom(RoomObject *room)
+{
+	m_rooms.push_back(room);
 }

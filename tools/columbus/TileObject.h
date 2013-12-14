@@ -4,13 +4,15 @@
 #include <QImage>
 #include <QPainter>
 
-class Tile
+class TileObject
 {
-	public:
-		Tile();
-		Tile(const int width, const int height);
+	friend QDataStream &operator <<(QDataStream &stream, const TileObject &tile);
 
-		~Tile();
+	public:
+		TileObject();
+		TileObject(const int width, const int height);
+
+		~TileObject();
 
 		QPainter *painter();
 
@@ -18,8 +20,6 @@ class Tile
 		void setCollidable(const bool collidable);
 
 	private:
-		friend QDataStream &operator <<(QDataStream &stream, const Tile &tile);
-
 		QImage m_texture;
 		QPainter *m_painter;
 

@@ -4,19 +4,19 @@
 #include <QList>
 #include <QDataStream>
 
-class RoomObject;
+class Room;
 
 class RoomLookup
 {
 	public:
 		RoomLookup();
 
-		void addRoom(const RoomObject &room);
+		void addRoom(const Room &room);
 
 	private:
 		friend QDataStream &operator <<(QDataStream &stream, const RoomLookup &lookup);
 
-		QList<RoomObject> m_rooms;
+		QList<Room> m_rooms;
 };
 
 #endif // ROOMLOOKUP_H

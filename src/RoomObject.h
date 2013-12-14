@@ -1,26 +1,24 @@
 #ifndef ROOMOBJECT_H
 #define ROOMOBJECT_H
 
-#include <map>
-#include <utility>
+#include <list>
 
-#include "Tile.h"
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
 
-using Coordinate = std::pair<int, int>;
+class WorldObject;
 
-const int TILE_SIZE = 32;
-
-class RoomObject
+class RoomObject : public sf::Drawable
 {
-	friend BinaryStream &operator >>(BinaryStream &stream, RoomObject &room);
-
 	public:
-		RoomObject();
+		std::list<const WorldObject *> objects() const;
+		void addObject(const WorldObject *object);
 
-		std::map<Coordinate, Tile> tiles() const;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 	private:
-		std::map<Coordinate, Tile> m_tiles;
+		std::list<const WorldObject *> m_objects;
 };
 
 #endif // ROOMOBJECT_H

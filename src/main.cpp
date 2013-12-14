@@ -13,7 +13,7 @@
 #include "states/GameState.h"
 
 #include "MapLoader.h"
-#include "Map.h"
+#include "RoomObject.h"
 #include "PhysicsWorldPosition.h"
 #include "Player.h"
 #include "World.h"

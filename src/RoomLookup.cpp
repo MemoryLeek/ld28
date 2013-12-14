@@ -6,7 +6,7 @@ RoomLookup::RoomLookup()
 
 }
 
-std::list<RoomObject> RoomLookup::rooms() const
+std::vector<Room> &RoomLookup::rooms()
 {
 	return m_rooms;
 }

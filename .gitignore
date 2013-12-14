@@ -3,6 +3,6 @@ bin/*callgrind*
 bin/settings.dat
 
 *.o
-*.pro.user
+*.pro.user*
 Makefile
 

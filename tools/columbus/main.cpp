@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 			const QString &path = QStringEx::format("%1/%2", folder, fileName);
 
 			RoomLoader roomLoader;
-			RoomObject *room = roomLoader.load(path);
+			Room *room = roomLoader.load(path);
 
 			if(room)
 			{

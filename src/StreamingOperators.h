@@ -4,10 +4,12 @@
 #include <iostream>
 #include <fstream>
 #include <utility>
+#include <vector>
 #include <list>
 #include <map>
 
 #include "BinaryStream.h"
+#include "Direction.h"
 
 template<class T>
 BinaryStream &operator <<(BinaryStream &stream, std::list<T> &list)
@@ -35,6 +37,23 @@ BinaryStream &operator >>(BinaryStream &stream, std::list<T> &list)
 		stream >> t;
 
 		list.push_back(t);
+	}
+
+	return stream;
+}
+
+template<class T>
+BinaryStream &operator >>(BinaryStream &stream, std::vector<T> &vector)
+{
+	unsigned int size = 0;
+	stream >> size;
+
+	for(unsigned int i = 0; i < size; i++)
+	{
+		T t;
+		stream >> t;
+
+		vector.push_back(t);
 	}
 
 	return stream;

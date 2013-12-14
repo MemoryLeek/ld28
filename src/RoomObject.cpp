@@ -1,22 +1,25 @@
-#include <iostream>
-
 #include "RoomObject.h"
-#include "StaticWorldPosition.h"
-#include "StreamingOperators.h"
+#include "DrawableObject.h"
 
-RoomObject::RoomObject()
+std::list<const WorldObject *> RoomObject::objects() const
 {
-
+	return m_objects;
 }
 
-std::map<Coordinate, Tile> RoomObject::tiles() const
+void RoomObject::addObject(const WorldObject *object)
 {
-	return m_tiles;
+	m_objects.push_back(object);
 }
 
-BinaryStream &operator >>(BinaryStream &stream, RoomObject &room)
+void RoomObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	stream >> room.m_tiles;
+	for(const WorldObject *object : m_objects)
+	{
+		const DrawableObject *drawable = dynamic_cast<const DrawableObject *>(object);
 
-	return stream;
+		if(drawable)
+		{
+			target.draw(*drawable, states);
+		}
+	}
 }

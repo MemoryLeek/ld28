@@ -5,22 +5,19 @@
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
 
-class WorldObject;
+class RoomObject;
 
 class Map : public sf::Drawable
 {
 	public:
 		Map();
 
-		std::list<const WorldObject *> objects() const;
-		void addObject(const WorldObject *object);
-
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+		void addRoom(RoomObject *room);
 
 	private:
-		std::list<const WorldObject *> m_objects;
+		std::list<RoomObject *> m_rooms;
 };
 
 #endif // MAP_H

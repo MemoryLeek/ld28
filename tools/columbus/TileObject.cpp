@@ -3,21 +3,21 @@
 
 #include "TileObject.h"
 
-Tile::Tile()
+TileObject::TileObject()
 	: m_painter(0)
 	, m_collidable(false)
 {
 
 }
 
-Tile::Tile(const int width, const int height)
+TileObject::TileObject(const int width, const int height)
 	: m_texture(width, height, QImage::Format_ARGB32)
 	, m_collidable(false)
 {
 	m_painter = new QPainter(&m_texture);
 }
 
-Tile::~Tile()
+TileObject::~TileObject()
 {
 	if(m_painter)
 	{
@@ -27,22 +27,22 @@ Tile::~Tile()
 	delete m_painter;
 }
 
-QPainter *Tile::painter()
+QPainter *TileObject::painter()
 {
 	return m_painter;
 }
 
-bool Tile::collidable() const
+bool TileObject::collidable() const
 {
 	return m_collidable;
 }
 
-void Tile::setCollidable(bool collidable)
+void TileObject::setCollidable(bool collidable)
 {
 	m_collidable = collidable;
 }
 
-QDataStream &operator <<(QDataStream &stream, const Tile &tile)
+QDataStream &operator <<(QDataStream &stream, const TileObject &tile)
 {
 	QBuffer buffer;
 	buffer.open(QIODevice::WriteOnly);
