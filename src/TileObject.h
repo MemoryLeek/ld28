@@ -11,7 +11,8 @@ class TileObject : public DrawableObject
 		TileObject(WorldPosition *position, const sf::Texture &texture);
 
 		void onCollision(const WorldObject *other) override;
-		void onSensorDetection(const b2Fixture *sensor, const WorldObject *other) override;
+		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
+		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

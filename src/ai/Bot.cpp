@@ -30,7 +30,7 @@ void Bot::onCollision(const WorldObject *other)
 	std::cout << "Bot collided with another object." << std::endl;
 }
 
-void Bot::onSensorDetection(const b2Fixture *sensor, const WorldObject *other)
+void Bot::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
 {
 	if(std::find(m_enemies.begin(), m_enemies.end(), other) == m_enemies.end())
 	{
@@ -50,6 +50,10 @@ void Bot::onSensorDetection(const b2Fixture *sensor, const WorldObject *other)
 			onTargetSpotted(other);
 		}
 	}
+}
+
+void Bot::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
+{
 }
 
 void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const

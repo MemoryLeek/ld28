@@ -25,6 +25,11 @@ Settings DefaultSettingsProvider::load()
 		.right()
 		.setKey(sf::Keyboard::D);
 
+	inputMapping
+		.interact()
+		.setKey(sf::Keyboard::E)
+		.setButton(0);
+
 	return settings;
 }
 

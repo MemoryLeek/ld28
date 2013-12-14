@@ -12,9 +12,10 @@ int KeyMapping::key() const
 	return m_key;
 }
 
-void KeyMapping::setKey(const int key)
+KeyMapping &KeyMapping::setKey(const int key)
 {
 	m_key = key;
+	return *this;
 }
 
 int KeyMapping::button() const
@@ -22,9 +23,10 @@ int KeyMapping::button() const
 	return m_button;
 }
 
-void KeyMapping::setButton(const int button)
+KeyMapping &KeyMapping::setButton(const int button)
 {
 	m_button = button;
+	return *this;
 }
 
 void KeyMapping::onKeyDown() const

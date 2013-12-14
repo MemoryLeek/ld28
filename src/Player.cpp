@@ -5,10 +5,12 @@
 
 #include "PhysicsWorldPosition.h"
 #include "Player.h"
+#include "TreasureContainer.h"
 
 Player::Player(WorldPosition *position)
 	: DrawableObject(position, 32, 32)
 	, m_movement(0, 0)
+	, m_interactable(nullptr)
 {
 	const PhysicsWorldPosition &physicsWorldPosition = (PhysicsWorldPosition &)worldPosition();
 
@@ -21,9 +23,22 @@ void Player::onCollision(const WorldObject *other)
 	std::cout << "Player collided with another object." << std::endl;
 }
 
-void Player::onSensorDetection(const b2Fixture *sensor, const WorldObject *other)
+void Player::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
 {
-	std::cout << "Player sensor triggered." << std::endl;
+	TreasureContainer *treasure = dynamic_cast<TreasureContainer*>(other);
+	if(treasure)
+	{
+		m_interactable = treasure;
+	}
+}
+
+void Player::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
+{
+	TreasureContainer *treasure = dynamic_cast<TreasureContainer*>(other);
+	if(treasure)
+	{
+		m_interactable = nullptr;
+	}
 }
 
 void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -73,6 +88,14 @@ void Player::update()
 	}
 
 	m_body->ApplyForce(m_body->GetWorldVector(impulse), m_body->GetWorldCenter(), true);
+}
+
+void Player::interact()
+{
+	if(m_interactable)
+	{
+		std::cout << "The player is interacting with the treasure, huzzah!" << std::endl;
+	}
 }
 
 b2Vec2 Player::movement() const

@@ -16,7 +16,11 @@ void TileObject::onCollision(const WorldObject *other)
 {
 }
 
-void TileObject::onSensorDetection(const b2Fixture *sensor, const WorldObject *other)
+void TileObject::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
+{
+}
+
+void TileObject::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 {
 }
 

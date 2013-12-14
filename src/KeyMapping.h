@@ -18,10 +18,10 @@ class KeyMapping
 		KeyMapping();
 
 		int key() const;
-		void setKey(const int key);
+		KeyMapping &setKey(const int key);
 
 		int button() const;
-		void setButton(const int button);
+		KeyMapping &setButton(const int button);
 
 		void onKeyDown() const;
 		void onKeyUp() const;

@@ -11,6 +11,7 @@
 #include "StringEx.h"
 #include "CollisionListener.h"
 #include "Map.h"
+#include "TreasureContainer.h"
 
 #include "ai/HumanoidBot.h"
 #include "ai/Pathfinder.h"
@@ -24,6 +25,7 @@ GameState::GameState(sf::RenderWindow *window)
 {
 	const b2Vec2 playerPosition(64, 64);
 	const b2Vec2 botPosition(576, 64);
+	const b2Vec2 treasurePosition(256, 64);
 
 	WorldDebug *worldDebugger = new WorldDebug(m_window);
 	worldDebugger->SetFlags(b2Draw::e_shapeBit);
@@ -35,7 +37,9 @@ GameState::GameState(sf::RenderWindow *window)
 	world->SetContactListener(collisionListener);
 
 	PhysicsWorldPosition *playerWorldPosition = world->createBox(playerPosition, 32, 32, b2_dynamicBody);
+	PhysicsWorldPosition *treasureWorldPosition = world->createBox(treasurePosition, 32, 32, b2_staticBody);
 	WorldPosition *botWorldPosition = world->createCircle(botPosition, 16, b2_dynamicBody);
+	//TreasureContainer *treasureContainer = TreasureContainer
 
 	Pathfinder *pathfinder = new Pathfinder();
 	MapLoader mapLoader(world, pathfinder);
@@ -48,7 +52,8 @@ GameState::GameState(sf::RenderWindow *window)
 	m_world = world;
 	m_pathfinder = pathfinder;
 
-	playerWorldPosition->createRectangularSensor(96, 96);
+	TreasureContainer *treasureContainer = new TreasureContainer(treasureWorldPosition);
+	playerWorldPosition->createRectangularSensor(64, 64);
 
 	// UI Initialization
 	m_font.loadFromFile("resources/Oxygen-Regular.ttf");
@@ -65,12 +70,14 @@ void GameState::setupInput(InputMapping *mapping)
 	KeyMapping &right = mapping->right();
 	KeyMapping &forward = mapping->forward();
 	KeyMapping &backwards = mapping->backwards();
+	KeyMapping &interact = mapping->interact();
 
 	analog.connect(m_proxy, &PlayerInputProxy::absoluteInput, &PlayerInputProxy::relativeInput);
 	left.connect(m_proxy, &PlayerInputProxy::moveLeft, &PlayerInputProxy::stopHorizontally);
 	right.connect(m_proxy, &PlayerInputProxy::moveRight, &PlayerInputProxy::stopHorizontally);
 	forward.connect(m_proxy, &PlayerInputProxy::moveForward, &PlayerInputProxy::stopVertically);
 	backwards.connect(m_proxy, &PlayerInputProxy::moveBackwards, &PlayerInputProxy::stopVertically);
+	interact.connect(m_proxy, &PlayerInputProxy::interact, &PlayerInputProxy::nothing);
 }
 
 void GameState::update()

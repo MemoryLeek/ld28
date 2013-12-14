@@ -32,6 +32,11 @@ KeyMapping &InputMapping::forward()
 	return m_forward;
 }
 
+KeyMapping &InputMapping::interact()
+{
+	return m_interact;
+}
+
 KeyMapping &InputMapping::menuUp()
 {
 	return m_menuUp;
@@ -54,7 +59,8 @@ const KeyMapping *InputMapping::find(const sf::Event &event) const
 		&m_left,
 		&m_right,
 		&m_backwards,
-		&m_forward
+		&m_forward,
+		&m_interact
 	};
 
 	for(const KeyMapping *mapping : mappings)
@@ -104,6 +110,7 @@ BinaryStream &operator >>(BinaryStream &stream, InputMapping &mapping)
 	stream >> mapping.m_right;
 	stream >> mapping.m_backwards;
 	stream >> mapping.m_forward;
+	stream >> mapping.m_interact;
 
 	return stream;
 }
@@ -114,6 +121,7 @@ BinaryStream &operator <<(BinaryStream &stream, const InputMapping &mapping)
 	stream << mapping.m_right;
 	stream << mapping.m_backwards;
 	stream << mapping.m_forward;
+	stream << mapping.m_interact;
 
 	return stream;
 }

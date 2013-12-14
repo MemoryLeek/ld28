@@ -18,6 +18,7 @@ class InputMapping
 		KeyMapping &right();
 		KeyMapping &backwards();
 		KeyMapping &forward();
+		KeyMapping &interact();
 
 		KeyMapping &menuUp();
 		KeyMapping &menuDown();
@@ -35,6 +36,7 @@ class InputMapping
 		KeyMapping m_right;
 		KeyMapping m_backwards;
 		KeyMapping m_forward;
+		KeyMapping m_interact;
 
 		KeyMapping m_menuUp;
 		KeyMapping m_menuDown;

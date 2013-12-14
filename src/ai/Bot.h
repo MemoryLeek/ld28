@@ -20,7 +20,8 @@ class Bot : public DrawableObject
 		Bot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder);
 
 		void onCollision(const WorldObject *other) override;
-		void onSensorDetection(const b2Fixture *sensor, const WorldObject *other) override;
+		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
+		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
 
 		virtual void onTargetSpotted(const WorldObject *target) = 0;
 		virtual void onTargetHeard(const WorldObject *target) = 0;

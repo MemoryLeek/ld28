@@ -17,7 +17,8 @@ class WorldObject
 		WorldPosition &worldPosition() const;
 
 		virtual void onCollision(const WorldObject *other) = 0;
-		virtual void onSensorDetection(const b2Fixture *sensor, const WorldObject *other) = 0;
+		virtual void onSensorEnter(const b2Fixture *sensor, WorldObject *other) = 0;
+		virtual void onSensorLeave(const b2Fixture *sensor, WorldObject *other) = 0;
 
 	protected:
 		int m_width;

@@ -16,8 +16,12 @@ class PlayerInputProxy
 		void moveForward();
 		void moveBackwards();
 
+		void interact();
+
 		void stopHorizontally();
 		void stopVertically();
+
+		void nothing();
 
 	private:
 		Player *m_player;

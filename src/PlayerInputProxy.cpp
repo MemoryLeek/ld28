@@ -59,6 +59,11 @@ void PlayerInputProxy::moveBackwards()
 	m_player->setMovement(value);
 }
 
+void PlayerInputProxy::interact()
+{
+	m_player->interact();
+}
+
 void PlayerInputProxy::stopHorizontally()
 {
 	const b2Vec2 &movement = m_player->movement();
@@ -73,4 +78,8 @@ void PlayerInputProxy::stopVertically()
 	const b2Vec2 value(0, movement.y);
 
 	m_player->setMovement(value);
+}
+
+void PlayerInputProxy::nothing()
+{
 }
