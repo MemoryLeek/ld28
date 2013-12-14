@@ -5,12 +5,12 @@
  </tileset>
  <layer name="Background" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJwzYmBgMBrFIw6LAbE4Fc0TgmJqmkUtM9HNw4Y5qGyeBBXNo7Z/h5t5o3jgMABcVEam
+   eJwzYmBgMMKCeYCYF4ccPTEXlc2TGgR+GgxYDIjFqWieEBRT0yxqmYluHjbMQWXzJKhoHrX9O9zMIxdzU9k8aTq6nZZYBohliVQLAOAcRbI=
   </data>
  </layer>
  <layer name="Collision" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYMKCeYCYF4s4Hw71IMwMxIIMpAE5PHLCQMxFZfOkqGwetf1LqnlaQKyDA+viMI8Fic1Kgl3Y3AcySxmJr0iCmdjME8aiDmSmEhrGZgex5hEL6G2eEw59jEAsSoZ5uACuNDYUzRNhwF0ewTC2sAMBbjx2kQOkqWweOeUBIfOw5SV0LAPEskSoA+V7ADWLCYI=
+   eJxjZGBgYMKCYQBdnA+HehBmBmJBBtKAHB45YRLNGgjzqO1fUs0zB2IdHFgXh3ksSGxWEuzC5j6QWcpIfEUSzMRmHrY4ApmphIax2UGsecQCepvnhEMfIxCLkmEeLoArjQ1F80QYcJdHMIwt7AjZRS6gpnnklAeEzMOWl9AxDBBSB8r3AOLZCPM=
   </data>
  </layer>
 </map>
