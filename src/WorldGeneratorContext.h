@@ -6,12 +6,13 @@
 #include "Direction.h"
 
 class Room;
+class RoomPlacementStrategySelector;
 
 class WorldGeneratorContext
 {
 	public:
-		WorldGeneratorContext(std::set<int> &generatedRooms);
-		WorldGeneratorContext(std::set<int> &generatedRooms, const Direction::Value direction, const int x, const int y);
+		WorldGeneratorContext(std::set<int> &generatedRooms, RoomPlacementStrategySelector &selector);
+		WorldGeneratorContext(const WorldGeneratorContext &other, const Direction::Value direction, const int x, const int y);
 
 		WorldGeneratorContext fork(const Room &current, const Room &next, const Direction::Value direction);
 
@@ -26,6 +27,8 @@ class WorldGeneratorContext
 
 	private:
 		std::set<int> &m_generatedRooms;
+
+		RoomPlacementStrategySelector &m_selector;
 		Direction::Value m_direction;
 
 		int m_x;

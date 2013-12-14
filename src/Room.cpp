@@ -25,6 +25,19 @@ std::map<Direction::Value, Coordinate> Room::entrances() const
 	return m_entrances;
 }
 
+std::vector<Direction::Value> Room::directions() const
+{
+	std::map<Direction::Value, Coordinate>::const_iterator iterator = m_entrances.begin();
+	std::vector<Direction::Value> directions;
+
+	for(; iterator != m_entrances.end(); iterator++)
+	{
+		directions.push_back(iterator->first);
+	}
+
+	return directions;
+}
+
 Coordinate Room::entrance(const Direction::Value direction) const
 {
 	std::cout << direction << std::endl;

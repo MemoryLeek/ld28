@@ -34,22 +34,24 @@ void Player::update()
 {
 	const b2Vec2 &currentVelocity = m_body->GetLocalVector(m_body->GetLinearVelocity());
 
+	const int speed = 5;
+
 	b2Vec2 impulse(0, 0);
 
 	// Forward/back
 	if(m_movement.x == 0)
 	{
-		impulse.x = (currentVelocity.x < 0) ? 2 : -2;
+		impulse.x = (currentVelocity.x < 0) ? speed : -speed;
 	}
 	else
 	{
-		if(m_movement.x > 0 && currentVelocity.x < 2)
+		if(m_movement.x > 0 && currentVelocity.x < speed)
 		{
-			impulse.x = 4;
+			impulse.x = speed * 2;
 		}
-		if(m_movement.x < 0 && currentVelocity.x > -2)
+		if(m_movement.x < 0 && currentVelocity.x > -speed)
 		{
-			impulse.x = -4;
+			impulse.x = -speed * 2;
 		}
 	}
 

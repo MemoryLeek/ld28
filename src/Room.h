@@ -23,6 +23,7 @@ class Room
 
 		std::map<Coordinate, Tile> tiles() const;
 		std::map<Direction::Value, Coordinate> entrances() const;
+		std::vector<Direction::Value> directions() const;
 
 		Coordinate entrance(const Direction::Value direction) const;
 

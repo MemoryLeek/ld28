@@ -12,6 +12,7 @@
 #include "StringEx.h"
 #include "WorldGeneratorContext.h"
 #include "RoomSelectorPredicate.h"
+#include "RoomPlacementStrategySelector.h"
 
 WorldGenerator::WorldGenerator(MapLoader *mapLoader, const sf::String &fileName)
 	: m_mapLoader(mapLoader)
@@ -41,7 +42,8 @@ Map *WorldGenerator::generate()
 		Room &start = *std::find_if(rooms.begin(), rooms.end(), &Room::isStart);
 //		Room &end = *std::find_if(rooms.begin(), rooms.end(), &Room::isEnd);
 
-		WorldGeneratorContext context(generatedRooms);
+		RoomPlacementStrategySelector selector;
+		WorldGeneratorContext context(generatedRooms, selector);
 		RoomObject *startObject = generate(start, rooms, context, map);
 
 		map->addRoom(startObject);
@@ -59,14 +61,18 @@ Map *WorldGenerator::generate()
 
 RoomObject *WorldGenerator::generate(const Room &room, std::vector<Room> &rooms, WorldGeneratorContext &context, Map *map)
 {
-	std::map<Direction::Value, Coordinate> entrances = room.entrances();
-	std::map<Direction::Value, Coordinate>::iterator iterator = entrances.begin();
+	std::vector<Direction::Value> directions = room.directions();
+	std::vector<Direction::Value>::iterator iterator = directions.begin();
+
+	std::random_device device;
+	std::mt19937 generator(device());
+	std::shuffle(iterator, directions.end(), generator);
 
 	context.markAsGenerated(room);
 
-	for(; iterator != entrances.end(); iterator++)
+	for(; iterator != directions.end(); iterator++)
 	{
-		const Direction::Value direction = iterator->first;
+		const Direction::Value direction = *iterator;
 
 		if(context.reverse() != direction)
 		{
