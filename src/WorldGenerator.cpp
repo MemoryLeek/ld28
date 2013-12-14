@@ -62,6 +62,8 @@ Map *WorldGenerator::generate()
 
 RoomObject *WorldGenerator::generate(const Room &room, std::vector<Room> &rooms, WorldGeneratorContext &context, Map *map)
 {
+	RoomObject *roomObject = m_mapLoader->load(room, context);
+
 	std::vector<Direction::Value> directions = room.directions();
 	std::vector<Direction::Value>::iterator iterator = directions.begin();
 
@@ -70,8 +72,6 @@ RoomObject *WorldGenerator::generate(const Room &room, std::vector<Room> &rooms,
 	std::shuffle(iterator, directions.end(), generator);
 
 	context.markAsGenerated(room);
-
-	RoomObject *r = m_mapLoader->load(room, context);
 
 	for(; iterator != directions.end(); iterator++)
 	{
@@ -94,5 +94,5 @@ RoomObject *WorldGenerator::generate(const Room &room, std::vector<Room> &rooms,
 		}
 	}
 
-	return r;
+	return roomObject;
 }

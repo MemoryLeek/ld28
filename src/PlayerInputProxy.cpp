@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "PlayerInputProxy.h"
 #include "Player.h"
 
@@ -82,4 +80,5 @@ void PlayerInputProxy::stopVertically()
 
 void PlayerInputProxy::nothing()
 {
+
 }

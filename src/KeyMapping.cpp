@@ -1,8 +1,8 @@
 #include "KeyMapping.h"
 
 KeyMapping::KeyMapping()
-	: m_key(0)
-	, m_button(0)
+	: m_key(-1)
+	, m_button(-1)
 {
 
 }
@@ -15,6 +15,7 @@ int KeyMapping::key() const
 KeyMapping &KeyMapping::setKey(const int key)
 {
 	m_key = key;
+
 	return *this;
 }
 
@@ -26,6 +27,7 @@ int KeyMapping::button() const
 KeyMapping &KeyMapping::setButton(const int button)
 {
 	m_button = button;
+
 	return *this;
 }
 
