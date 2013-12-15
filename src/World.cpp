@@ -15,7 +15,7 @@ World::World()
 	SetAutoClearForces(false);
 }
 
-PhysicsWorldPosition *World::createCircle(const b2Vec2 &position, int radius, b2BodyType type)
+PhysicsWorldPosition *World::createCircle(const b2Vec2 &position, int radius, b2BodyType type, const b2Filter &filter)
 {
 	float scaledRadius = radius / SCALE;
 	b2Vec2 scaledPosition(position.x / SCALE,
@@ -30,12 +30,13 @@ PhysicsWorldPosition *World::createCircle(const b2Vec2 &position, int radius, b2
 
 	b2CircleShape shape;
 	shape.m_radius = scaledRadius;
-	body->CreateFixture(&shape, 1.0f);
+	b2Fixture *fixture = body->CreateFixture(&shape, 1.0f);
+	fixture->SetFilterData(filter);
 
 	return new PhysicsWorldPosition(body);
 }
 
-PhysicsWorldPosition *World::createBox(const b2Vec2 &position, int width, int height, b2BodyType type)
+PhysicsWorldPosition *World::createBox(const b2Vec2 &position, int width, int height, b2BodyType type, const b2Filter &filter)
 {
 	float scaledWidth = width / SCALE;
 	float scaledheight = height / SCALE;
@@ -51,7 +52,8 @@ PhysicsWorldPosition *World::createBox(const b2Vec2 &position, int width, int he
 
 	b2PolygonShape shape;
 	shape.SetAsBox(scaledWidth / 2, scaledheight / 2);
-	body->CreateFixture(&shape, 1.0f);
+	b2Fixture *fixture = body->CreateFixture(&shape, 1.0f);
+	fixture->SetFilterData(filter);
 
 	return new PhysicsWorldPosition(body);
 }

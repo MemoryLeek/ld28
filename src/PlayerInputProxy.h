@@ -16,7 +16,7 @@ class PlayerInputProxy
 		void moveForward();
 		void moveBackwards();
 
-		void interact();
+		void action();
 
 		void stopHorizontally();
 		void stopVertically();

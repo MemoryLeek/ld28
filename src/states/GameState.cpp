@@ -22,6 +22,8 @@
 
 #include "ui/FloatingPanel.h"
 
+#include "equipment/LaserPistol.h"
+
 GameState::GameState(sf::RenderWindow *window)
 	: m_window(window)
 	, m_lastPhysicsStepTime(0)
@@ -37,10 +39,14 @@ GameState::GameState(sf::RenderWindow *window)
 	CollisionListener *collisionListener = new CollisionListener();
 
 	World *world = new World();
-//	world->SetDebugDraw(worldDebugger);
+	world->SetDebugDraw(worldDebugger);
 	world->SetContactListener(collisionListener);
 
-	PhysicsWorldPosition *playerWorldPosition = world->createCircle(playerPosition, 16, b2_dynamicBody);
+	b2Filter playerCollisionFilter;
+	playerCollisionFilter.categoryBits = World::Player;
+	playerCollisionFilter.maskBits = 0xFFFF ^ World::PlayerProjectile;
+
+	PhysicsWorldPosition *playerWorldPosition = world->createCircle(playerPosition, 16, b2_dynamicBody, playerCollisionFilter);
 	PhysicsWorldPosition *treasureWorldPosition = world->createBox(treasurePosition, 32, 32, b2_staticBody);
 	WorldPosition *botWorldPosition = world->createCircle(botPosition, 16, b2_dynamicBody);
 
@@ -51,8 +57,12 @@ GameState::GameState(sf::RenderWindow *window)
 	m_interactionPanel = new FloatingPanel("Press to interact", window);
 	m_interactionPanel->setVisible(false);
 
+	LaserPistol *laserPistol = new LaserPistol(*playerWorldPosition, *world);
+
 	m_map = worldGenerator.generate();
 	m_player = new Player(playerWorldPosition, m_interactionPanel);
+	m_player->setWeapon(laserPistol);
+
 	m_bot = new HumanoidBot(botWorldPosition, { m_player }, pathfinder);
 	m_proxy = new PlayerInputProxy(m_player);
 	m_world = world;
@@ -76,14 +86,14 @@ void GameState::setupInput(InputMapping *mapping)
 	KeyMapping &right = mapping->right();
 	KeyMapping &forward = mapping->forward();
 	KeyMapping &backwards = mapping->backwards();
-	KeyMapping &interact = mapping->interact();
+	KeyMapping &action = mapping->action();
 
 	analog.connect(m_proxy, &PlayerInputProxy::absoluteInput, &PlayerInputProxy::relativeInput);
 	left.connect(m_proxy, &PlayerInputProxy::moveLeft, &PlayerInputProxy::stopHorizontally);
 	right.connect(m_proxy, &PlayerInputProxy::moveRight, &PlayerInputProxy::stopHorizontally);
 	forward.connect(m_proxy, &PlayerInputProxy::moveForward, &PlayerInputProxy::stopVertically);
 	backwards.connect(m_proxy, &PlayerInputProxy::moveBackwards, &PlayerInputProxy::stopVertically);
-	interact.connect(m_proxy, &PlayerInputProxy::interact, &PlayerInputProxy::nothing);
+	action.connect(m_proxy, &PlayerInputProxy::action, &PlayerInputProxy::nothing);
 }
 
 void GameState::update()

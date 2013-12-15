@@ -26,8 +26,7 @@ Settings DefaultSettingsProvider::load()
 		.setKey(sf::Keyboard::D);
 
 	inputMapping
-		.interact()
-		.setKey(sf::Keyboard::E)
+		.action()
 		.setJoystickButton(0)
 		.setMouseButton(sf::Mouse::Left);
 

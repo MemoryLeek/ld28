@@ -7,6 +7,7 @@
 
 class InteractableObject;
 class FloatingPanel;
+class Weapon;
 
 const int SPEED = 5;
 
@@ -26,12 +27,16 @@ class Player : public AnimatedObject
 		b2Vec2 movement() const;
 		void setMovement(const b2Vec2 &movement);
 
+		Weapon *weapon() const;
+		void setWeapon(Weapon *weapon);
+
 	private:
 		b2Body *m_body;
 		b2Vec2 m_movement;
 
 		InteractableObject *m_interactable;
 		FloatingPanel *m_interactionPanel;
+		Weapon *m_weapon;
 };
 
 #endif // PLAYER_H

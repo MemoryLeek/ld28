@@ -6,6 +6,8 @@
 #include "PhysicsWorldPosition.h"
 #include "WorldObject.h"
 
+#include "equipment/Projectile.h"
+
 CollisionListener::CollisionListener()
 {
 }
@@ -21,10 +23,24 @@ void CollisionListener::BeginContact(b2Contact *contact)
 	WorldObject *objectA = static_cast<WorldObject*>(bodyA->GetUserData());
 	WorldObject *objectB = static_cast<WorldObject*>(bodyB->GetUserData());
 
+	Projectile *projectileA = dynamic_cast<Projectile*>(objectA);
+	Projectile *projectileB = dynamic_cast<Projectile*>(objectB);
+
 	if(!fixtureA->IsSensor() && !fixtureB->IsSensor())
 	{
-		objectA->onCollision(objectB);
-		objectB->onCollision(objectA);
+		if(projectileA)
+		{
+			projectileA->deleteLater();
+		}
+		else if(projectileB)
+		{
+			projectileB->deleteLater();
+		}
+		else
+		{
+			objectA->onCollision(objectB);
+			objectB->onCollision(objectA);
+		}
 	}
 	else
 	{

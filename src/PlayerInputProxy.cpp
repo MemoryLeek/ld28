@@ -1,6 +1,8 @@
 #include "PlayerInputProxy.h"
 #include "Player.h"
 
+#include "equipment/Weapon.h"
+
 PlayerInputProxy::PlayerInputProxy(Player *player)
 	: m_player(player)
 {
@@ -57,9 +59,17 @@ void PlayerInputProxy::moveBackwards()
 	m_player->setMovement(value);
 }
 
-void PlayerInputProxy::interact()
+void PlayerInputProxy::action()
 {
-	m_player->interact();
+	Weapon *weapon = m_player->weapon();
+	if(weapon)
+	{
+		weapon->fire();
+	}
+	else
+	{
+		m_player->interact();
+	}
 }
 
 void PlayerInputProxy::stopHorizontally()

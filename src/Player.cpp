@@ -14,6 +14,7 @@ Player::Player(WorldPosition *position, FloatingPanel *interactionPanel)
 	, m_movement(0, 0)
 	, m_interactable(nullptr)
 	, m_interactionPanel(interactionPanel)
+	, m_weapon(nullptr)
 {
 	const PhysicsWorldPosition &physicsWorldPosition = (PhysicsWorldPosition &)worldPosition();
 
@@ -111,4 +112,20 @@ b2Vec2 Player::movement() const
 void Player::setMovement(const b2Vec2 &movement)
 {
 	m_movement = movement;
+}
+
+Weapon *Player::weapon() const
+{
+	// Disable weapon on interactables
+	if(m_interactable)
+	{
+		return nullptr;
+	}
+
+	return m_weapon;
+}
+
+void Player::setWeapon(Weapon *weapon)
+{
+	m_weapon = weapon;
 }
