@@ -5,7 +5,7 @@ DESTDIR = ../bin
 
 OBJECTS_DIR = build
 
-LIBS += -lsfml-system -lsfml-graphics -lsfml-window -lBox2D
+LIBS += -lsfml-system -lsfml-graphics -lsfml-window -lsfml-audio -lBox2D
 CONFIG += c++11
 
 SOURCES += \

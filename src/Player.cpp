@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Audio/Sound.hpp>
 
 #include "Player.h"
 #include "PhysicsWorldPosition.h"
@@ -116,6 +118,15 @@ void Player::setMovement(const b2Vec2 &movement)
 
 Weapon *Player::weapon() const
 {
+	sf::SoundBuffer *b = new sf::SoundBuffer();
+	b->loadFromFile("resources/stup.wav");
+
+	sf::Sound *sound = new sf::Sound();
+	sound->setBuffer(*b);
+	sound->play();
+
+	std::cout << "aiuysd" << std::endl;
+
 	// Disable weapon on interactables
 	if(m_interactable)
 	{

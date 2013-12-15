@@ -1,3 +1,6 @@
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Audio/Sound.hpp>
+
 #include "GameState.h"
 #include "InputMapping.h"
 #include "Player.h"
