@@ -6,6 +6,11 @@
 class WorldPosition
 {
 	public:
+		virtual ~WorldPosition()
+		{
+
+		}
+
 		virtual b2Vec2 position() const = 0;
 		virtual void setPosition(const b2Vec2 &position) = 0;
 

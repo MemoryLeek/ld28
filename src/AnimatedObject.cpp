@@ -22,11 +22,6 @@ void AnimatedObject::setImageIndex(const int index)
 	m_spriteBundle->setImageIndex(index);
 }
 
-void AnimatedObject::update(const int delta)
-{
-	m_spriteBundle->update(delta);
-}
-
 void AnimatedObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 	const WorldPosition &wp = worldPosition();
@@ -67,4 +62,11 @@ void AnimatedObject::draw(sf::RenderTarget &target, sf::RenderStates states) con
 sf::String AnimatedObject::getFilename(const sf::String &fileName, const Direction::Value)
 {
 	return fileName;
+}
+
+bool AnimatedObject::update(const int delta)
+{
+	m_spriteBundle->update(delta);
+
+	return true;
 }

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <Box2D/Collision/Shapes/b2CircleShape.h>
 #include <Box2D/Collision/Shapes/b2PolygonShape.h>
 
@@ -8,6 +10,12 @@ PhysicsWorldPosition::PhysicsWorldPosition(b2Body *body)
 {
 }
 
+
+PhysicsWorldPosition::~PhysicsWorldPosition()
+{
+	b2World *world = m_body->GetWorld();
+	world->DestroyBody(m_body);
+}
 
 b2Vec2 PhysicsWorldPosition::position() const
 {

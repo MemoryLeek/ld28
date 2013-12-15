@@ -61,7 +61,7 @@ void TileObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	target.draw(vertices, 4, sf::Quads, states);
 }
 
-void TileObject::update(const int)
+bool TileObject::update(const int)
 {
-
+	return true;
 }

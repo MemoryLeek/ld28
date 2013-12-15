@@ -14,8 +14,9 @@ class AnimatedObject : public DrawableObject
 		AnimatedObject(const sf::String &fileName, WorldPosition *worldPosition);
 
 		void setImageIndex(const int index);
-		void update(const int delta);
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
+		bool update(const int delta);
 
 	protected:
 		virtual sf::String getFilename(const sf::String &fileName, const Direction::Value direction);

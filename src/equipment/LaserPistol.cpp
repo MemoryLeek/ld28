@@ -4,10 +4,12 @@
 #include "PhysicsWorldPosition.h"
 #include "Projectile.h"
 #include "World.h"
+#include "Map.h"
 
-LaserPistol::LaserPistol(const WorldPosition &position, World &world)
-	: Weapon(position, world)
+LaserPistol::LaserPistol(const WorldPosition &position, World &world, Map &map)
+	: Weapon(position, world, map)
 {
+
 }
 
 void LaserPistol::fire()
@@ -21,7 +23,7 @@ void LaserPistol::fire()
 	projectileFilter.categoryBits = World::PlayerProjectile;
 	projectileFilter.maskBits = 0xFFFF ^ World::Player;
 
-	PhysicsWorldPosition *projectilePosition = world().createBox(origin, 16, 2, b2_dynamicBody, projectileFilter);
+	PhysicsWorldPosition *projectilePosition = m_world.createBox(origin, 16, 2, b2_dynamicBody, projectileFilter);
 	projectilePosition->setRotation(angle);
 
 	b2Body *projectileBody = projectilePosition->body();
@@ -30,5 +32,7 @@ void LaserPistol::fire()
 	projectileBody->SetBullet(true);
 	projectileBody->ApplyLinearImpulse(projectileBody->GetWorldVector(b2Vec2(.5f, 0)), projectileBody->GetWorldCenter(), true);
 
-	new Projectile(projectilePosition);
+	Projectile *projectile = new Projectile(projectilePosition, m_map);
+
+	m_map.addObject(projectile);
 }

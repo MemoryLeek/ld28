@@ -60,9 +60,10 @@ GameState::GameState(sf::RenderWindow *window)
 	m_interactionPanel = new FloatingPanel("Press to interact", window);
 	m_interactionPanel->setVisible(false);
 
-	LaserPistol *laserPistol = new LaserPistol(*playerWorldPosition, *world);
-
 	m_map = worldGenerator.generate();
+
+	LaserPistol *laserPistol = new LaserPistol(*playerWorldPosition, *world, *m_map);
+
 	m_player = new Player(playerWorldPosition, m_interactionPanel);
 	m_player->setWeapon(laserPistol);
 

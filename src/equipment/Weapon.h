@@ -1,23 +1,25 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include "World.h"
-#include "WorldPosition.h"
+class Map;
+class World;
+class WorldPosition;
 
 class Weapon
 {
 	public:
-		Weapon(const WorldPosition &position, World &world);
+		Weapon(const WorldPosition &position, World &world, Map &map);
 
 		virtual void fire() = 0;
 
 	protected:
 		const WorldPosition &position() const;
-		World &world();
+
+		Map &m_map;
+		World &m_world;
 
 	private:
 		const WorldPosition &m_position;
-		World &m_world;
 };
 
 #endif // WEAPON_H

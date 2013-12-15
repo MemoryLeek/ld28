@@ -20,6 +20,7 @@ class Map : public sf::Drawable
 
 		void addRoom(RoomObject *roomObject);
 		void addObject(DrawableObject *worldObject);
+		void removeObject(DrawableObject *worldObject);
 
 	private:
 		std::list<sf::Drawable *> m_drawables;

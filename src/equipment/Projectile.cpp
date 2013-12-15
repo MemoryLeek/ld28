@@ -1,11 +1,14 @@
-#include "Projectile.h"
+#include <iostream>
 
-Projectile::Projectile(WorldPosition *position)
+#include "Projectile.h"
+#include "Map.h"
+
+Projectile::Projectile(WorldPosition *position, Map &map)
 	: DrawableObject(position)
+	, m_map(map)
 	, m_shouldBeDeleted(false)
 {
 }
-
 
 void Projectile::onCollision(const WorldObject *other)
 {
@@ -23,9 +26,16 @@ void Projectile::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 }
 
-void Projectile::update(const int delta)
+bool Projectile::update(const int delta)
 {
+	if(m_shouldBeDeleted)
+	{
+		m_map.removeObject(this);
 
+		return false;
+	}
+
+	return true;
 }
 
 void Projectile::deleteLater()

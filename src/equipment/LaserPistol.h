@@ -4,11 +4,12 @@
 #include "Weapon.h"
 
 class World;
+class Map;
 
 class LaserPistol : public Weapon
 {
 	public:
-		LaserPistol(const WorldPosition &position, World &world);
+		LaserPistol(const WorldPosition &position, World &world, Map &map);
 
 		void fire() override;
 };

@@ -82,7 +82,7 @@ void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	}
 }
 
-void Bot::update(int delta)
+bool Bot::update(int delta)
 {
 	if(m_trackedTargets.size() > 0)
 	{
@@ -123,6 +123,8 @@ void Bot::update(int delta)
 	{
 		m_body->SetLinearVelocity(b2Vec2(0, 0));
 	}
+
+	return true;
 }
 
 bool Bot::moveTo(const b2Vec2 &position)

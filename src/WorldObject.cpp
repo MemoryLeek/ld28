@@ -12,6 +12,11 @@ WorldObject::WorldObject(WorldPosition *position)
 	}
 }
 
+WorldObject::~WorldObject()
+{
+	delete m_worldPosition;
+}
+
 WorldPosition &WorldObject::worldPosition() const
 {
 	return *m_worldPosition;

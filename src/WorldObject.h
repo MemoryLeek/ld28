@@ -13,12 +13,15 @@ class WorldObject
 		WorldObject();
 		WorldObject(WorldPosition *position);
 
+		virtual ~WorldObject();
+
 		WorldPosition &worldPosition() const;
 
 		virtual void onCollision(const WorldObject *other) = 0;
 		virtual void onSensorEnter(const b2Fixture *sensor, WorldObject *other) = 0;
 		virtual void onSensorLeave(const b2Fixture *sensor, WorldObject *other) = 0;
-		virtual void update(const int delta) = 0;
+
+		virtual bool update(const int delta) = 0;
 
 	private:
 		WorldPosition *m_worldPosition;

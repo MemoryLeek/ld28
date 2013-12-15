@@ -10,6 +10,8 @@
 class PhysicsWorldPosition : public WorldPosition
 {
 	public:
+		~PhysicsWorldPosition();
+
 		b2Vec2 position() const override;
 		void setPosition(const b2Vec2 &position) override;
 

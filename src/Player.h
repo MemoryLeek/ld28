@@ -20,7 +20,7 @@ class Player : public AnimatedObject
 		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
 		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
 
-		void update(const int delta);
+		bool update(const int delta);
 
 		void interact();
 

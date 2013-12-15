@@ -2,8 +2,6 @@
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Audio/SoundBuffer.hpp>
-#include <SFML/Audio/Sound.hpp>
 
 #include "Player.h"
 #include "PhysicsWorldPosition.h"
@@ -53,7 +51,7 @@ void Player::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 	}
 }
 
-void Player::update(const int delta)
+bool Player::update(const int delta)
 {
 	const b2Vec2 &currentVelocity = m_body->GetLocalVector(m_body->GetLinearVelocity());
 
@@ -96,6 +94,8 @@ void Player::update(const int delta)
 	m_body->ApplyForce(m_body->GetWorldVector(impulse), m_body->GetWorldCenter(), true);
 
 	AnimatedObject::update(delta);
+
+	return true;
 }
 
 void Player::interact()
@@ -118,15 +118,6 @@ void Player::setMovement(const b2Vec2 &movement)
 
 Weapon *Player::weapon() const
 {
-	sf::SoundBuffer *b = new sf::SoundBuffer();
-	b->loadFromFile("resources/stup.wav");
-
-	sf::Sound *sound = new sf::Sound();
-	sound->setBuffer(*b);
-	sound->play();
-
-	std::cout << "aiuysd" << std::endl;
-
 	// Disable weapon on interactables
 	if(m_interactable)
 	{
