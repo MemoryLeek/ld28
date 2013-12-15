@@ -4,6 +4,8 @@
 #include <QImage>
 #include <QPainter>
 
+#include "MapObject.h"
+
 class TileObject
 {
 	friend QDataStream &operator <<(QDataStream &stream, const TileObject &tile);
@@ -18,7 +20,7 @@ class TileObject
 
 		void setCollidable(const bool collidable);
 		void setHasContent(const bool hasContent);
-		void setMapObject(const int mapObject);
+		void setMapObject(const MapObject &mapObject);
 
 	private:
 		QImage m_texture;
@@ -27,7 +29,7 @@ class TileObject
 		bool m_collidable;
 		bool m_hasContent;
 
-		int m_mapObject;
+		MapObject m_mapObject;
 };
 
 #endif // TILEOBJECT_H

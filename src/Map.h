@@ -18,12 +18,11 @@ class Map : public sf::Drawable
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 		void update(const int delta);
 
-		void addRoom(RoomObject *roomObject);
 		void addObject(DrawableObject *worldObject);
 		void removeObject(DrawableObject *worldObject);
 
 	private:
-		std::list<sf::Drawable *> m_drawables;
+		std::list<DrawableObject *> m_drawables;
 		std::list<WorldObject *> m_objects;
 };
 

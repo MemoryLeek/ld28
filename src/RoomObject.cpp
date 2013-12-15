@@ -1,14 +1,22 @@
+#include <iostream>
+
 #include "RoomObject.h"
 #include "DrawableObject.h"
 
-std::list<const WorldObject *> RoomObject::objects() const
+RoomObject::RoomObject()
+	: DrawableObject(0)
 {
-	return m_objects;
+
 }
 
-void RoomObject::addObject(const WorldObject *object)
+void RoomObject::addObject(WorldObject *object)
 {
 	m_objects.push_back(object);
+}
+
+void RoomObject::done()
+{
+	m_objects.sort(&DrawableObject::compare);
 }
 
 void RoomObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
@@ -22,4 +30,29 @@ void RoomObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 			target.draw(*drawable, states);
 		}
 	}
+}
+
+void RoomObject::onCollision(WorldObject *other)
+{
+
+}
+
+void RoomObject::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
+{
+
+}
+
+void RoomObject::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
+{
+
+}
+
+bool RoomObject::update(const int delta)
+{
+	for(WorldObject *object : m_objects)
+	{
+		object->update(delta);
+	}
+
+	return true;
 }

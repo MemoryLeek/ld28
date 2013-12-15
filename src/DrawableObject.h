@@ -12,6 +12,10 @@ class DrawableObject : public WorldObject, public sf::Drawable
 		virtual ~DrawableObject();
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override = 0;
+
+		virtual int drawingOrder() const;
+
+		static bool compare(WorldObject *d1, WorldObject *d2);
 };
 
 #endif // DRAWABLEOBJECT_H

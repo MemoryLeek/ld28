@@ -20,17 +20,23 @@ class PhysicsWorldPosition : public WorldPosition
 
 		bool isDestroyed() const;
 
+		b2Vec2 size() const override;
+		void setSize(const b2Vec2 &size) override;
+
 		b2Fixture *createRectangularSensor(int xOffset, int yOffset, int width, int height);
 		b2Fixture *createCircularSensor(int radius);
 		b2Fixture *createConeSensor(int length, int width);
 
 		b2Body *body() const;
 
+		void suspendCollision();
+
 	private:
-		PhysicsWorldPosition(b2Body *body);
+		PhysicsWorldPosition(b2Body *body, b2Vec2 size);
 
 		b2Body *m_body;
 		bool m_destroyed;
+		b2Vec2 m_size;
 
 	friend class World;
 };

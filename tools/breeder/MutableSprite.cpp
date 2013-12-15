@@ -29,7 +29,5 @@ QDataStream &operator <<(QDataStream &stream, const MutableSprite &sprite)
 	stream << sprite.m_delay;
 	stream << sprite.m_frames;
 
-	qDebug() << "delay:" << sprite.m_delay << sizeof(float);
-
 	return stream;
 }

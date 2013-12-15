@@ -3,7 +3,7 @@
 #include "TreasureContainer.h"
 
 TreasureContainer::TreasureContainer(WorldPosition *worldPosition)
-	: InteractableObject(worldPosition)
+	: InteractableObject("resources/key.spb", worldPosition)
 {
 
 }

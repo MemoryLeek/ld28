@@ -105,19 +105,24 @@ Room *RoomLoader::load(const QString &path) const
 							for(Tiled::MapObject *object : objects)
 							{
 								const QPointF &position = object->position();
-								const QPointF current(x, y + 1);
+								const QPointF current(x, y);
 
 								if(current == position)
 								{
-									const QString typeName = object->type();
+									const QString &typeName = object->type();
 
 									if(typeName.count() > 0)
 									{
 										const int id = mapper.map(typeName);
+										const int direction = (*object)
+											.property("direction")
+											.toInt();
 
 										if(id > -1)
 										{
-											target.setMapObject(id);
+											MapObject mapObject(id, direction);
+
+											target.setMapObject(mapObject);
 										}
 									}
 								}

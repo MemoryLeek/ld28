@@ -10,14 +10,17 @@
  </layer>
  <objectgroup name="Objects" width="20" height="20">
   <object type="key" gid="66" x="224" y="384"/>
-  <object type="door" gid="12" x="192" y="32"/>
-  <object type="door" gid="13" x="224" y="32"/>
-  <object type="door" gid="29" x="320" y="640"/>
-  <object type="door" gid="28" x="288" y="640"/>
-  <object type="door" gid="11" x="608" y="512"/>
-  <object type="door" gid="27" x="608" y="544"/>
-  <object type="door" gid="10" x="0" y="96"/>
-  <object type="door" gid="26" x="0" y="128"/>
+  <object type="door" x="608" y="480" width="32" height="64">
+   <properties>
+    <property name="direction" value="2"/>
+   </properties>
+  </object>
+  <object type="door" x="0" y="64" width="32" height="64">
+   <properties>
+    <property name="direction" value="1"/>
+   </properties>
+  </object>
+  <object type="key" x="256" y="352" width="32" height="32"/>
  </objectgroup>
  <layer name="Collision" width="20" height="20">
   <data encoding="base64" compression="zlib">

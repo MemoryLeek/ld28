@@ -26,6 +26,11 @@ const sf::Texture *SpriteBundle::currentImage() const
 	return frame;
 }
 
+const Sprite &SpriteBundle::sprite() const
+{
+	return m_sprites[m_index];
+}
+
 int SpriteBundle::spriteCount() const
 {
 	return m_sprites.size();

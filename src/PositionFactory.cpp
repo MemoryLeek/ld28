@@ -18,6 +18,6 @@ WorldPosition *PositionFactory::create(bool isCollidable, b2Vec2 position, int w
 	}
 	else
 	{
-		return new StaticWorldPosition(position);
+		return new StaticWorldPosition(position, b2Vec2(width, height));
 	}
 }

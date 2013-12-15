@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Map.h"
 #include "RoomObject.h"
 #include "WorldObject.h"
@@ -10,7 +12,7 @@ Map::Map()
 
 void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	for(sf::Drawable *drawable : m_drawables)
+	for(DrawableObject *drawable : m_drawables)
 	{
 		target.draw(*drawable, states);
 	}
@@ -29,11 +31,6 @@ void Map::update(const int delta)
 			delete object;
 		}
 	}
-}
-
-void Map::addRoom(RoomObject *roomObject)
-{
-	m_drawables.push_back(roomObject);
 }
 
 void Map::addObject(DrawableObject *worldObject)

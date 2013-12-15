@@ -18,9 +18,6 @@ class AnimatedObject : public DrawableObject
 
 		bool update(const int delta);
 
-	protected:
-		virtual sf::String getFilename(const sf::String &fileName, const Direction::Value direction);
-
 	private:
 		SpriteBundle *m_spriteBundle;
 };

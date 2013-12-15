@@ -1,0 +1,66 @@
+#include <iostream>
+
+<<<<<<< Updated upstream
+#include "Player.h"
+=======
+#include <SFML/Graphics/RectangleShape.hpp>
+
+>>>>>>> Stashed changes
+#include "Projectile.h"
+#include "Map.h"
+
+#include "ai/Bot.h"
+
+Projectile::Projectile(WorldPosition *position, Map &map)
+	: DrawableObject(position)
+	, m_map(map)
+	, m_shouldBeDeleted(false)
+{
+}
+
+void Projectile::onCollision(WorldObject *other)
+{
+	Damagable *damagable = dynamic_cast<Damagable *>(other);
+
+	if(damagable)
+	{
+		damagable->doDamage(10);
+	}
+}
+
+void Projectile::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
+{
+}
+
+void Projectile::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
+{
+}
+
+void Projectile::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+	WorldPosition &p = worldPosition();
+	b2Vec2 v = p.position();
+
+	sf::RectangleShape rectangle;
+	rectangle.setPosition(v.x, v.y);
+	rectangle.setSize(sf::Vector2f(5, 5));
+
+	target.draw(rectangle, states);
+}
+
+bool Projectile::update(const int delta)
+{
+	if(m_shouldBeDeleted)
+	{
+		m_map.removeObject(this);
+
+		return false;
+	}
+
+	return true;
+}
+
+void Projectile::deleteLater()
+{
+	m_shouldBeDeleted = true;
+}

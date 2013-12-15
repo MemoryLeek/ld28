@@ -13,6 +13,7 @@
 #include "WorldGeneratorContext.h"
 #include "RoomSelectorPredicate.h"
 #include "RoomPlacementStrategySelector.h"
+#include "RoomObject.h"
 
 WorldGenerator::WorldGenerator(MapLoader *mapLoader, const sf::String &fileName)
 	: m_mapLoader(mapLoader)
@@ -47,7 +48,7 @@ Map *WorldGenerator::generate()
 		WorldGeneratorContext context(generatedRooms, generatedTiles, selector);
 		RoomObject *startObject = generate(start, rooms, context, map);
 
-		map->addRoom(startObject);
+		map->addObject(startObject);
 
 		return map;
 	}
@@ -89,7 +90,7 @@ RoomObject *WorldGenerator::generate(const Room &room, std::vector<Room> &rooms,
 				WorldGeneratorContext forked = context.fork(room, *result, direction);
 				RoomObject *roomObject = generate(*result, rooms, forked, map);
 
-				map->addRoom(roomObject);
+				map->addObject(roomObject);
 			}
 		}
 	}

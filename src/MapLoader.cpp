@@ -18,6 +18,8 @@
 #include "RoomLookupLoader.h"
 #include "TileObject.h"
 #include "WorldGeneratorContext.h"
+#include "MapObjectResolver.h"
+#include "MapObjectFactory.h"
 
 MapLoader::MapLoader(World *world, Pathfinder *pathfinder)
 	: m_world(world)
@@ -28,7 +30,7 @@ MapLoader::MapLoader(World *world, Pathfinder *pathfinder)
 
 RoomObject *MapLoader::load(const Room &room, WorldGeneratorContext &context)
 {
-	RoomObject *map = new RoomObject();
+	RoomObject *roomObject = new RoomObject();
 
 	std::map<Coordinate, Tile> tiles = room.tiles();
 	std::map<Coordinate, Tile>::const_iterator iterator = tiles.begin();
@@ -37,14 +39,18 @@ RoomObject *MapLoader::load(const Room &room, WorldGeneratorContext &context)
 	{
 		const Coordinate &coordinate = iterator->first;
 		const Tile &tile = iterator->second;
+		const MapObject &mapObject = tile.mapObject();
 
 		const bool isCollidable = tile.isCollidable();
 		const bool isEmpty = tile.isEmpty();
 
 		const int x = coordinate.first + context.x();
 		const int y = coordinate.second + context.y();
+		const int id = mapObject.id();
 
 		const PositionFactory factory(m_world);
+		const MapObjectResolver resolver(factory);
+		const Direction::Value direction = (Direction::Value)mapObject.direction();
 		const b2Vec2 position(x * TILE_SIZE, y * TILE_SIZE);
 
 		sf::Image image = tile.texture();
@@ -54,7 +60,15 @@ RoomObject *MapLoader::load(const Room &room, WorldGeneratorContext &context)
 		WorldPosition *worldPosition = factory.create(isCollidable, position, TILE_SIZE, TILE_SIZE);
 		TileObject *tileObject = new TileObject(worldPosition, texture);
 
-		map->addObject(tileObject);
+		roomObject->addObject(tileObject);
+
+		if(id >= 0)
+		{
+			IMapObjectFactory *mapObjectFactory = resolver.resolve(id);
+			WorldObject *worldObject = mapObjectFactory->create(position, direction);
+
+			roomObject->addObject(worldObject);
+		}
 
 		if(!isCollidable)
 		{
@@ -67,5 +81,7 @@ RoomObject *MapLoader::load(const Room &room, WorldGeneratorContext &context)
 		}
 	}
 
-	return map;
+	roomObject->done();
+
+	return roomObject;
 }

@@ -32,8 +32,9 @@ PhysicsWorldPosition *World::createCircle(const b2Vec2 &position, int radius, b2
 	shape.m_radius = scaledRadius;
 	b2Fixture *fixture = body->CreateFixture(&shape, 1.0f);
 	fixture->SetFilterData(filter);
+	b2Vec2 size(radius * 2, radius * 2);
 
-	return new PhysicsWorldPosition(body);
+	return new PhysicsWorldPosition(body, size);
 }
 
 PhysicsWorldPosition *World::createBox(const b2Vec2 &position, int width, int height, b2BodyType type, const b2Filter &filter)
@@ -54,6 +55,7 @@ PhysicsWorldPosition *World::createBox(const b2Vec2 &position, int width, int he
 	shape.SetAsBox(scaledWidth / 2, scaledheight / 2);
 	b2Fixture *fixture = body->CreateFixture(&shape, 1.0f);
 	fixture->SetFilterData(filter);
+	b2Vec2 size(width, height);
 
-	return new PhysicsWorldPosition(body);
+	return new PhysicsWorldPosition(body, size);
 }

@@ -1,20 +1,20 @@
 #ifndef INTERACTABLEOBJECT_H
 #define INTERACTABLEOBJECT_H
 
-#include "DrawableObject.h"
+#include "AnimatedObject.h"
 
-class InteractableObject : public DrawableObject
+class InteractableObject : public AnimatedObject
 {
 	public:
-		InteractableObject(WorldPosition *position);
+		InteractableObject(const sf::String &fileName, WorldPosition *position);
 
 		void onCollision(WorldObject *other) override;
 		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
 		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
 
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const;
-
 		virtual void onInteraction() = 0;
+
+		int drawingOrder() const override;
 };
 
 #endif // INTERACTABLEOBJECT_H

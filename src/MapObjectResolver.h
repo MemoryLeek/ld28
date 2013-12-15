@@ -4,11 +4,12 @@
 #include <map>
 
 class IMapObjectFactory;
+class PositionFactory;
 
 class MapObjectResolver
 {
 	public:
-		MapObjectResolver();
+		MapObjectResolver(const PositionFactory &positionFactory);
 
 		IMapObjectFactory *resolve(const int id) const;
 

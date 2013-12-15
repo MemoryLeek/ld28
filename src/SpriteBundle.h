@@ -20,6 +20,8 @@ class SpriteBundle
 
 		const sf::Texture *currentImage() const;
 
+		const Sprite &sprite() const;
+
 		int spriteCount() const;
 		int imageIndex() const;
 

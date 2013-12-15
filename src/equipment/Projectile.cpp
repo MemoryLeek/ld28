@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Player.h"
+
 #include "Projectile.h"
 #include "Map.h"
 
@@ -33,6 +34,7 @@ void Projectile::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 
 void Projectile::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+
 }
 
 bool Projectile::update(const int delta)

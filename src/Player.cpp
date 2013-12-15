@@ -26,7 +26,6 @@ Player::Player(WorldPosition *position, FloatingPanel *interactionPanel, const s
 
 	m_stepSound.setRelativeToListener(true);
 
-	setImageIndex(1);
 }
 
 void Player::onCollision(WorldObject *other)

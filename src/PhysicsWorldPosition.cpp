@@ -5,9 +5,10 @@
 
 #include "PhysicsWorldPosition.h"
 
-PhysicsWorldPosition::PhysicsWorldPosition(b2Body *body)
+PhysicsWorldPosition::PhysicsWorldPosition(b2Body *body, b2Vec2 size)
 	: m_body(body)
 	, m_destroyed(false)
+	, m_size(size)
 {
 }
 
@@ -48,6 +49,16 @@ void PhysicsWorldPosition::setRotation(float rotation)
 bool PhysicsWorldPosition::isDestroyed() const
 {
 	return m_destroyed;
+}
+
+b2Vec2 PhysicsWorldPosition::size() const
+{
+	return m_size;
+}
+
+void PhysicsWorldPosition::setSize(const b2Vec2 &size)
+{
+	m_size = size;
 }
 
 b2Fixture *PhysicsWorldPosition::createRectangularSensor(int xOffset, int yOffset, int width, int height)
@@ -104,4 +115,18 @@ b2Fixture *PhysicsWorldPosition::createConeSensor(int length, int width)
 b2Body *PhysicsWorldPosition::body() const
 {
 	return m_body;
+}
+
+void PhysicsWorldPosition::suspendCollision()
+{
+	b2Filter playerCollisionFilter;
+	playerCollisionFilter.maskBits = 0;
+
+	b2Fixture *fixture = m_body->GetFixtureList();
+
+	while(fixture)
+	{
+		fixture->SetFilterData(playerCollisionFilter);
+		fixture = fixture->GetNext();
+	}
 }

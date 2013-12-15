@@ -7,6 +7,7 @@
 #include "BinaryStream.h"
 #include "DrawableObject.h"
 #include "TileLayer.h"
+#include "MapObject.h"
 
 class Tile
 {
@@ -18,7 +19,7 @@ class Tile
 		bool isCollidable() const;
 		bool isEmpty() const;
 
-		int mapObject() const;
+		MapObject mapObject() const;
 
 	private:
 		sf::Image m_texture;
@@ -26,7 +27,7 @@ class Tile
 		bool m_collidable;
 		bool m_hasContent;
 
-		int m_mapObject;
+		MapObject m_mapObject;
 };
 
 #endif // TILE_H

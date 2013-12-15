@@ -1,7 +1,7 @@
 #include "InteractableObject.h"
 
-InteractableObject::InteractableObject(WorldPosition *position)
-	: DrawableObject(position)
+InteractableObject::InteractableObject(const sf::String &fileName, WorldPosition *position)
+	: AnimatedObject(fileName, position)
 {
 }
 
@@ -17,6 +17,7 @@ void InteractableObject::onSensorLeave(const b2Fixture *sensor, WorldObject *oth
 {
 }
 
-void InteractableObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
+int InteractableObject::drawingOrder() const
 {
+	return 1;
 }

@@ -20,7 +20,7 @@ bool Tile::isEmpty() const
 	return !m_hasContent;
 }
 
-int Tile::mapObject() const
+MapObject Tile::mapObject() const
 {
 	return m_mapObject;
 }

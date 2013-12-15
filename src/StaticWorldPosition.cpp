@@ -1,7 +1,8 @@
 #include "StaticWorldPosition.h"
 
-StaticWorldPosition::StaticWorldPosition(const b2Vec2 &position)
+StaticWorldPosition::StaticWorldPosition(const b2Vec2 &position, const b2Vec2 &size)
 	: m_position(position)
+	, m_size(size)
 	, m_rotation(0)
 {
 }
@@ -24,4 +25,14 @@ float StaticWorldPosition::rotation() const
 void StaticWorldPosition::setRotation(float rotation)
 {
 	m_rotation = rotation;
+}
+
+b2Vec2 StaticWorldPosition::size() const
+{
+	return m_size;
+}
+
+void StaticWorldPosition::setSize(const b2Vec2 &size)
+{
+	m_size = size;
 }

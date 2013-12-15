@@ -9,7 +9,8 @@ SOURCES += \
     RoomLookup.cpp \
     RoomLookupPersister.cpp \
     DirectionSelectorStrategy.cpp \
-    MapObjectTypeMapper.cpp
+    MapObjectTypeMapper.cpp \
+    MapObject.cpp
 
 HEADERS += QStringEx.h \
     TileObject.h \
@@ -22,6 +23,7 @@ HEADERS += QStringEx.h \
     DirectionSelectorStrategy.h \
     PropertyEnumMapper.h \
     MapType.h \
-    MapObjectTypeMapper.h
+    MapObjectTypeMapper.h \
+    MapObject.h
 
 LIBS += -ltiled

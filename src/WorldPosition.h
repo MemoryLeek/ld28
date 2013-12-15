@@ -16,6 +16,9 @@ class WorldPosition
 
 		virtual float rotation() const = 0;
 		virtual void setRotation(float rotation) = 0;
+
+		virtual b2Vec2 size() const = 0;
+		virtual void setSize(const b2Vec2 &size) = 0;
 };
 
 #endif // WORLDPOSITION_H
