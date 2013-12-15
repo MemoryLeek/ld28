@@ -69,7 +69,7 @@ GameState::GameState(sf::RenderWindow *window)
 	m_pathfinder = pathfinder;
 
 	TreasureContainer *treasureContainer = new TreasureContainer(treasureWorldPosition);
-	playerWorldPosition->createCircularSensor(32);
+	playerWorldPosition->createRectangularSensor(16, 0, 32, 48);
 
 	// UI Initialization
 	m_font.loadFromFile("resources/Oxygen-Regular.ttf");

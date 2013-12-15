@@ -35,13 +35,15 @@ void PhysicsWorldPosition::setRotation(float rotation)
 	m_body->SetTransform(m_body->GetPosition(), rotation * M_PI / 180);
 }
 
-b2Fixture *PhysicsWorldPosition::createRectangularSensor(int width, int height)
+b2Fixture *PhysicsWorldPosition::createRectangularSensor(int xOffset, int yOffset, int width, int height)
 {
+	const float scaledXOffset = xOffset / World::SCALE;
+	const float scaledYOffset = yOffset / World::SCALE;
 	const float scaledWidth = width / World::SCALE;
 	const float scaledHeight = height / World::SCALE;
 
 	b2PolygonShape shape;
-	shape.SetAsBox(scaledWidth / 2, scaledHeight / 2);
+	shape.SetAsBox(scaledWidth / 2, scaledHeight / 2, b2Vec2(scaledXOffset, scaledYOffset), 0);
 
 	b2FixtureDef fixtureDefinition;
 	fixtureDefinition.shape = &shape;
