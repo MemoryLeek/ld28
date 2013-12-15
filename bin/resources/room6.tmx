@@ -8,11 +8,6 @@
    eJwzYmBgMBrFIw6LAbE4Fc0TgmJqmkUtM9HNw4Y5qGyeBBXNo7Z/h5t5o3jgMABcVEam
   </data>
  </layer>
- <layer name="Collision" width="20" height="20">
-  <data encoding="base64" compression="zlib">
-   eJxjZGBgYMKCYQCbHC7MDMSCDNQDwlQ0i1bmUdu/9DCPBYnNSqF5ILOUkfiKJJiJzTxscQQyUwkNY7ODWPOIBYPFPEYgFqWiebjS2FA0T4SBcLmELewI2UUuGOzlAba8hI5hgJA6UL4HAG4yBtQ=
-  </data>
- </layer>
  <objectgroup name="Objects" width="20" height="20">
   <object type="key" gid="66" x="224" y="384"/>
   <object type="door" gid="12" x="192" y="32"/>
@@ -24,4 +19,9 @@
   <object type="door" gid="10" x="0" y="96"/>
   <object type="door" gid="26" x="0" y="128"/>
  </objectgroup>
+ <layer name="Collision" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYMKCYQCbHC7MDMSCDNQDwlQ0i1bmUdu/9DCPBYnNSqF5ILOUkfiKJJiJzTxscQQyUwkNY7ODWPOIBYPFPEYgFqWiebjS2FA0T4SBcLmELewI2UUuGOzlAba8hI5hgJA6UL4HAG4yBtQ=
+  </data>
+ </layer>
 </map>

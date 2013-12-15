@@ -18,11 +18,15 @@ class Tile
 		bool isCollidable() const;
 		bool isEmpty() const;
 
+		int mapObject() const;
+
 	private:
 		sf::Image m_texture;
 
 		bool m_collidable;
 		bool m_hasContent;
+
+		int m_mapObject;
 };
 
 #endif // TILE_H

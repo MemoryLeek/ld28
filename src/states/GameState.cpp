@@ -11,9 +11,10 @@
 #include "StringEx.h"
 #include "CollisionListener.h"
 #include "Map.h"
-#include "TreasureContainer.h"
+#include "InteractableObject.h"
 #include "WorldGeneratorContext.h"
 #include "WorldGenerator.h"
+#include "TreasureContainer.h"
 
 #include "ai/HumanoidBot.h"
 #include "ai/Pathfinder.h"

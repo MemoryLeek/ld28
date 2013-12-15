@@ -20,12 +20,18 @@ bool Tile::isEmpty() const
 	return !m_hasContent;
 }
 
+int Tile::mapObject() const
+{
+	return m_mapObject;
+}
+
 BinaryStream &operator >>(BinaryStream &stream, Tile &tile)
 {
 	unsigned int size = 0;
 
 	stream >> tile.m_collidable;
 	stream >> tile.m_hasContent;
+	stream >> tile.m_mapObject;
 	stream >> size;
 
 	char *data = stream.read(size);

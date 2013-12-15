@@ -1,18 +1,14 @@
 #ifndef TREASURECONTAINER_H
 #define TREASURECONTAINER_H
 
-#include "DrawableObject.h"
+#include "InteractableObject.h"
 
-class TreasureContainer : public DrawableObject
+class TreasureContainer : public InteractableObject
 {
 	public:
-		TreasureContainer(WorldPosition *position);
+		TreasureContainer(WorldPosition *worldPosition);
 
-		void onCollision(const WorldObject *other) override;
-		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
-		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
-
-		void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+		void onInteraction() override;
 };
 
 #endif // TREASURECONTAINER_H

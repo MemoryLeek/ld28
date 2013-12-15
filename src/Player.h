@@ -5,7 +5,7 @@
 
 #include "AnimatedObject.h"
 
-class TreasureContainer;
+class InteractableObject;
 
 const int SPEED = 5;
 
@@ -29,7 +29,7 @@ class Player : public AnimatedObject
 		b2Body *m_body;
 
 		b2Vec2 m_movement;
-		TreasureContainer *m_interactable;
+		InteractableObject *m_interactable;
 };
 
 #endif // PLAYER_H

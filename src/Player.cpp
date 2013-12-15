@@ -5,7 +5,7 @@
 
 #include "PhysicsWorldPosition.h"
 #include "Player.h"
-#include "TreasureContainer.h"
+#include "InteractableObject.h"
 
 Player::Player(WorldPosition *position)
 	: AnimatedObject("resources/test.spb", position, 32, 32)
@@ -27,7 +27,8 @@ void Player::onCollision(const WorldObject *other)
 
 void Player::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
 {
-	TreasureContainer *treasure = dynamic_cast<TreasureContainer*>(other);
+	InteractableObject *treasure = dynamic_cast<InteractableObject*>(other);
+
 	if(treasure)
 	{
 		m_interactable = treasure;
@@ -36,7 +37,7 @@ void Player::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
 
 void Player::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 {
-	TreasureContainer *treasure = dynamic_cast<TreasureContainer*>(other);
+	InteractableObject *treasure = dynamic_cast<InteractableObject*>(other);
 	if(treasure)
 	{
 		m_interactable = nullptr;
@@ -92,7 +93,7 @@ void Player::interact()
 {
 	if(m_interactable)
 	{
-		std::cout << "The player is interacting with the treasure, huzzah!" << std::endl;
+		m_interactable->onInteraction();
 	}
 }
 

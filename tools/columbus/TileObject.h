@@ -18,6 +18,7 @@ class TileObject
 
 		void setCollidable(const bool collidable);
 		void setHasContent(const bool hasContent);
+		void setMapObject(const int mapObject);
 
 	private:
 		QImage m_texture;
@@ -25,6 +26,8 @@ class TileObject
 
 		bool m_collidable;
 		bool m_hasContent;
+
+		int m_mapObject;
 };
 
 #endif // TILEOBJECT_H

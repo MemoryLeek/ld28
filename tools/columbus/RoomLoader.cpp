@@ -15,6 +15,7 @@
 #include "DirectionSelectorStrategy.h"
 #include "PropertyEnumMapper.h"
 #include "MapType.h"
+#include "MapObjectTypeMapper.h"
 
 RoomLoader::RoomLoader()
 {
@@ -40,6 +41,7 @@ Room *RoomLoader::load(const QString &path) const
 		const int tileHeight = map->tileHeight();
 		const int collisionIndex = map->layerCount() - 1;
 
+		MapObjectTypeMapper mapper;
 		MapType::Value mapType = PropertyEnumMapper<MapType::Value>::map(map, "type");
 		Room *room = new Room(mapType, mapWidth, mapHeight);
 
@@ -103,11 +105,27 @@ Room *RoomLoader::load(const QString &path) const
 							for(Tiled::MapObject *object : objects)
 							{
 								const QPointF &position = object->position();
-								const QPointF current(x, y);
+								const QPointF current(x, y + 1);
 
 								if(current == position)
 								{
-									qDebug() << position;
+									Tiled::Tile *tile = object->tile();
+
+									if(tile)
+									{
+										QPainter *painter = target.painter();
+										QPixmap image = tile->image();
+										QString typeName = object->type();
+
+										painter->drawPixmap(0, 0, image);
+
+										const int id = mapper.map(typeName);
+
+										if(id > -1)
+										{
+											target.setMapObject(id);
+										}
+									}
 								}
 							}
 
