@@ -10,7 +10,7 @@
 #include "ui/FloatingPanel.h"
 
 Player::Player(WorldPosition *position, FloatingPanel *interactionPanel)
-	: AnimatedObject("resources/test.spb", position, 32, 32)
+	: AnimatedObject("resources/test.spb", position)
 	, m_movement(0, 0)
 	, m_interactable(nullptr)
 	, m_interactionPanel(interactionPanel)

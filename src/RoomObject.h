@@ -13,8 +13,8 @@ class RoomObject : public sf::Drawable
 {
 	public:
 		std::list<const WorldObject *> objects() const;
-		void addObject(const WorldObject *object);
 
+		void addObject(const WorldObject *object);
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 	private:

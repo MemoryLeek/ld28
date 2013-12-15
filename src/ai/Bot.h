@@ -29,7 +29,7 @@ class Bot : public DrawableObject
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
-		void update();
+		void update(int delta) override;
 
 	protected:
 		bool moveTo(const b2Vec2 &position);

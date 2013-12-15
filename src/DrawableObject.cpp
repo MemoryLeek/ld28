@@ -1,7 +1,8 @@
 #include "DrawableObject.h"
+#include "Room.h"
 
-DrawableObject::DrawableObject(WorldPosition *position, int width, int height)
-	: WorldObject(position, width, height)
+DrawableObject::DrawableObject(WorldPosition *position)
+	: WorldObject(position)
 {
 
 }

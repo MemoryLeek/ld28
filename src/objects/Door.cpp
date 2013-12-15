@@ -2,7 +2,7 @@
 #include "Room.h"
 
 Door::Door(WorldPosition *worldPosition)
-	: AnimatedObject("fileName", worldPosition, TILE_SIZE, TILE_SIZE)
+	: AnimatedObject("fileName", worldPosition)
 {
 
 }

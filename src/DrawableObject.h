@@ -8,7 +8,7 @@
 class DrawableObject : public WorldObject, public sf::Drawable
 {
 	public:
-		DrawableObject(WorldPosition *position, int width, int height);
+		DrawableObject(WorldPosition *position);
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override = 0;
 };

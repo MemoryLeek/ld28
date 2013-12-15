@@ -5,24 +5,20 @@
 
 #include "WorldPosition.h"
 
+class Map;
+
 class WorldObject
 {
 	public:
 		WorldObject();
-		WorldObject(WorldPosition *position, int width, int height);
-
-		int width() const;
-		int height() const;
+		WorldObject(WorldPosition *position);
 
 		WorldPosition &worldPosition() const;
 
 		virtual void onCollision(const WorldObject *other) = 0;
 		virtual void onSensorEnter(const b2Fixture *sensor, WorldObject *other) = 0;
 		virtual void onSensorLeave(const b2Fixture *sensor, WorldObject *other) = 0;
-
-	protected:
-		int m_width;
-		int m_height;
+		virtual void update(const int delta) = 0;
 
 	private:
 		WorldPosition *m_worldPosition;

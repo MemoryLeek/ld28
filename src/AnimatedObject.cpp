@@ -6,11 +6,13 @@
 #include "SpriteBundle.h"
 #include "Room.h"
 
-AnimatedObject::AnimatedObject(const sf::String &fileName, WorldPosition *worldPosition, int width, int height)
-	: DrawableObject(worldPosition, width, height)
+AnimatedObject::AnimatedObject(const sf::String &fileName, WorldPosition *worldPosition)
+	: DrawableObject(worldPosition)
 {
+	sf::String f = getFilename(fileName, Direction::None);
+
 	SpriteLoader spriteLoader;
-	SpriteBundle *spriteBundle = spriteLoader.load(fileName);
+	SpriteBundle *spriteBundle = spriteLoader.load(f);
 
 	m_spriteBundle = spriteBundle;
 }
@@ -60,4 +62,9 @@ void AnimatedObject::draw(sf::RenderTarget &target, sf::RenderStates states) con
 	states.transform = transform;
 
 	target.draw(vertices, 4, sf::Quads, states);
+}
+
+sf::String AnimatedObject::getFilename(const sf::String &fileName, const Direction::Value)
+{
+	return fileName;
 }

@@ -13,10 +13,9 @@ FloatingPanel::FloatingPanel(const sf::String &text, sf::Window *window)
 	, m_text(text)
 {
 	m_font.loadFromFile("resources/mini_pixel-7.ttf");
-//	m_font.loadFromFile("resources/Oxygen-Regular.ttf");
 }
 
-void FloatingPanel::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void FloatingPanel::draw(sf::RenderTarget &target, sf::RenderStates) const
 {
 	const bool visible = isVisible();
 

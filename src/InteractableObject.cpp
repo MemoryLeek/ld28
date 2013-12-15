@@ -1,7 +1,7 @@
 #include "InteractableObject.h"
 
 InteractableObject::InteractableObject(WorldPosition *position)
-	: DrawableObject(position, 32, 32)
+	: DrawableObject(position)
 {
 }
 

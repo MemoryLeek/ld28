@@ -11,7 +11,7 @@
 #include "PathNode.h"
 
 Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder)
-	: DrawableObject(position, 32, 32)
+	: DrawableObject(position)
 	, m_enemies(enemies)
 	, m_pathfinder(pathfinder)
 	, m_maxVisionDistance(20)
@@ -82,7 +82,7 @@ void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	}
 }
 
-void Bot::update()
+void Bot::update(int delta)
 {
 	if(m_trackedTargets.size() > 0)
 	{

@@ -69,12 +69,16 @@ GameState::GameState(sf::RenderWindow *window)
 	m_pathfinder = pathfinder;
 
 	TreasureContainer *treasureContainer = new TreasureContainer(treasureWorldPosition);
+<<<<<<< Updated upstream
 	playerWorldPosition->createRectangularSensor(16, 0, 32, 48);
+=======
 
 	m_map->addObject(m_player);
 	m_map->addObject(m_bot);
 	m_map->addObject(treasureContainer);
 
+	playerWorldPosition->createCircularSensor(32);
+>>>>>>> Stashed changes
 
 	// UI Initialization
 	m_font.loadFromFile("resources/Oxygen-Regular.ttf");

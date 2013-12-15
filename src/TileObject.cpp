@@ -6,7 +6,7 @@
 #include "Room.h"
 
 TileObject::TileObject(WorldPosition *position, const sf::Texture &texture)
-	: DrawableObject(position, TILE_SIZE, TILE_SIZE)
+	: DrawableObject(position)
 	, m_texture(texture)
 {
 
@@ -59,4 +59,9 @@ void TileObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	states.transform = transform;
 
 	target.draw(vertices, 4, sf::Quads, states);
+}
+
+void TileObject::update(const int)
+{
+
 }

@@ -30,5 +30,5 @@ void LaserPistol::fire()
 	projectileBody->SetBullet(true);
 	projectileBody->ApplyLinearImpulse(projectileBody->GetWorldVector(b2Vec2(.5f, 0)), projectileBody->GetWorldCenter(), true);
 
-	new Projectile(projectilePosition, 16, 2);
+	new Projectile(projectilePosition);
 }
