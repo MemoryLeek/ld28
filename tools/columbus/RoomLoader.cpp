@@ -109,16 +109,10 @@ Room *RoomLoader::load(const QString &path) const
 
 								if(current == position)
 								{
-									Tiled::Tile *tile = object->tile();
+									const QString typeName = object->type();
 
-									if(tile)
+									if(typeName.count() > 0)
 									{
-										QPainter *painter = target.painter();
-										QPixmap image = tile->image();
-										QString typeName = object->type();
-
-										painter->drawPixmap(0, 0, image);
-
 										const int id = mapper.map(typeName);
 
 										if(id > -1)

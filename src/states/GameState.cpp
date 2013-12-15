@@ -14,10 +14,13 @@
 #include "InteractableObject.h"
 #include "WorldGeneratorContext.h"
 #include "WorldGenerator.h"
-#include "TreasureContainer.h"
+
+#include "objects/TreasureContainer.h"
 
 #include "ai/HumanoidBot.h"
 #include "ai/Pathfinder.h"
+
+#include "ui/FloatingPanel.h"
 
 GameState::GameState(sf::RenderWindow *window)
 	: m_window(window)
@@ -26,7 +29,7 @@ GameState::GameState(sf::RenderWindow *window)
 {
 	const b2Vec2 playerPosition(64, 64);
 	const b2Vec2 botPosition(576, 64);
-	const b2Vec2 treasurePosition(256, 64);
+	const b2Vec2 treasurePosition(256, 320);
 
 	WorldDebug *worldDebugger = new WorldDebug(m_window);
 	worldDebugger->SetFlags(b2Draw::e_shapeBit);
@@ -40,14 +43,16 @@ GameState::GameState(sf::RenderWindow *window)
 	PhysicsWorldPosition *playerWorldPosition = world->createCircle(playerPosition, 16, b2_dynamicBody);
 	PhysicsWorldPosition *treasureWorldPosition = world->createBox(treasurePosition, 32, 32, b2_staticBody);
 	WorldPosition *botWorldPosition = world->createCircle(botPosition, 16, b2_dynamicBody);
-	//TreasureContainer *treasureContainer = TreasureContainer
 
 	Pathfinder *pathfinder = new Pathfinder();
 	MapLoader mapLoader(world, pathfinder);
 	WorldGenerator worldGenerator(&mapLoader, "resources/world.wld");
 
+	m_interactionPanel = new FloatingPanel("Press to interact", window);
+	m_interactionPanel->setVisible(false);
+
 	m_map = worldGenerator.generate();
-	m_player = new Player(playerWorldPosition);
+	m_player = new Player(playerWorldPosition, m_interactionPanel);
 	m_bot = new HumanoidBot(botWorldPosition, { m_player }, pathfinder);
 	m_proxy = new PlayerInputProxy(m_player);
 	m_world = world;
@@ -133,6 +138,7 @@ void GameState::update()
 
 	m_window->setView(defaultView);
 	m_window->draw(m_fpsText);
+	m_window->draw(*m_interactionPanel);
 
 	m_window->setView(cameraView);
 	m_window->display();

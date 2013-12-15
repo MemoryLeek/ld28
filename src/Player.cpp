@@ -3,14 +3,17 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-#include "PhysicsWorldPosition.h"
 #include "Player.h"
+#include "PhysicsWorldPosition.h"
 #include "InteractableObject.h"
 
-Player::Player(WorldPosition *position)
+#include "ui/FloatingPanel.h"
+
+Player::Player(WorldPosition *position, FloatingPanel *interactionPanel)
 	: AnimatedObject("resources/test.spb", position, 32, 32)
 	, m_movement(0, 0)
 	, m_interactable(nullptr)
+	, m_interactionPanel(interactionPanel)
 {
 	const PhysicsWorldPosition &physicsWorldPosition = (PhysicsWorldPosition &)worldPosition();
 
@@ -27,20 +30,23 @@ void Player::onCollision(const WorldObject *other)
 
 void Player::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
 {
-	InteractableObject *treasure = dynamic_cast<InteractableObject*>(other);
+	InteractableObject *interactable = dynamic_cast<InteractableObject*>(other);
 
-	if(treasure)
+	if(interactable)
 	{
-		m_interactable = treasure;
+		m_interactable = interactable;
+		m_interactionPanel->setVisible(true);
 	}
 }
 
 void Player::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 {
-	InteractableObject *treasure = dynamic_cast<InteractableObject*>(other);
-	if(treasure)
+	InteractableObject *interactable = dynamic_cast<InteractableObject*>(other);
+
+	if(interactable)
 	{
 		m_interactable = nullptr;
+		m_interactionPanel->setVisible(false);
 	}
 }
 

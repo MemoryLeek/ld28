@@ -63,7 +63,9 @@ SOURCES += \
     objects/Door.cpp \
     MapObjectResolver.cpp \
     InteractableObject.cpp \
-    TreasureContainer.cpp
+	objects/TreasureContainer.cpp \
+	ui/FloatingPanel.cpp \
+    ui/UiElement.cpp
 
 HEADERS += \
     World.h \
@@ -133,7 +135,9 @@ HEADERS += \
     MapObjectResolver.h \
     MapObjectFactory.h \
     InteractableObject.h \
-    TreasureContainer.h
+	objects/TreasureContainer.h \
+	ui/FloatingPanel.h \
+    ui/UiElement.h
 
 win32:DEFINES += M_PI=3.14159265358979323846
 win32:LIBS += -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\lib -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\bin
