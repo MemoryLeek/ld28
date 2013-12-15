@@ -22,8 +22,7 @@ class Map : public sf::Drawable
 		void removeObject(DrawableObject *worldObject);
 
 	private:
-		std::list<DrawableObject *> m_drawables;
-		std::list<WorldObject *> m_objects;
+		std::list<DrawableObject *> m_objects;
 };
 
 #endif // MAP_H

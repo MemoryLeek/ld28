@@ -8,14 +8,14 @@
    eJwzZmBgMB7FIwYb4sAjzTxyzR41b3ibN4pJwwAAUE8P
   </data>
  </layer>
- <layer name="Collison" width="20" height="20">
-  <data encoding="base64" compression="zlib">
-   eJxjZGBgYKISZgZiQQbqAeERbh4LECtBMQzA+KxkmCeMRy0x/hhI8xQZCPudFPOQAS63kmueNhDrALEWlczDBQaLedQOv4EyT4SBuHJOlEjzKAW0MA85H1GKlYEYAGHSCDQ=
-  </data>
- </layer>
  <layer name="Overlay" width="20" height="20">
   <data encoding="base64" compression="zlib">
    eJxjYBgFQwGIAbH4QDtiFAwI4KCyeRJUNm8UjFwAACCrAE4=
+  </data>
+ </layer>
+ <layer name="Collison" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYKISZgZiQQbqAeERbh4LECtBMQzA+KxkmCeMRy0x/hhI8xQZCPudFPOQAS63kmueNhDrALEWlczDBQaLedQOv4EyT4SBuHJOlEjzKAW0MA85H1GKlYEYAGHSCDQ=
   </data>
  </layer>
 </map>

@@ -8,14 +8,14 @@
    eJwzYmBgMBrFo3gUj+JRPIpJxADUzE4h
   </data>
  </layer>
- <layer name="Collision" width="20" height="20">
-  <data encoding="base64" compression="zlib">
-   eJzFk90KQEAQRgf3Su4V8puUFN7/yeyWMqadNVh8dWqlPeszeADgb4RofYdAEcGeBJ4l/tBXKToBtdA3kbMHBrznSl/XPtxfdxw3bD7csYHje1qIQ+KT5i9fSfZx3wztzvnoPPQ1N9c783Xtm5m+tLvUdzVv+2i/As77thafzgjm/wAzoLXt+Vz4UkXG0FvumcgVK9UjHiY=
-  </data>
- </layer>
- <layer name="overlay" width="20" height="20">
+ <layer name="Overlay" width="20" height="20">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUjIJRMApIBwAGQAAB
+  </data>
+ </layer>
+ <layer name="Collision" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzFk9sKwjAQREerr0KxvgoqXlpEKAX1/7/MDVScrtl2SSsOHEgJOTDZdAZg3rKidQqZkOOTLcZlLWwm9nHYdxauDi5O313t1QZ8JviWhk/H6/POg/uHjk1Ln487luje01M5PD5v/uU7qXPWm9HdLZ+eR/i25poy36l9D6Ov7v5OMeBLyS99ut8Rw30rOr/A9/trEP8PmJrWnNh7HuvbCXuDW89ejIPwAsGUHcg=
   </data>
  </layer>
 </map>
