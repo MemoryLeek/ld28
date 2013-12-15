@@ -6,6 +6,12 @@
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="512" height="512"/>
  </tileset>
+ <tileset firstgid="257" name="orb" tilewidth="32" tileheight="32">
+  <image source="sprites/orb.png" width="256" height="32"/>
+ </tileset>
+ <tileset firstgid="265" name="orb copy" tilewidth="32" tileheight="32">
+  <image source="sprites/orb copy.png" width="256" height="32"/>
+ </tileset>
  <layer name="Background" width="32" height="32">
   <data encoding="base64" compression="zlib">
    eJztwwEJAAAMBKHL9P3DrcdQcNVUVVXV1w/9z8gB
@@ -13,7 +19,7 @@
  </layer>
  <layer name="Collision" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJzt0zsKgDAQRdHx1wqitoIfLERbXYm6/50Yi0DszEziCJkHtwp6miQCgBhZjjzTJaoC8GuQZ3ql+CR/UM1Gk3G2fuC/MXz61IlP80dmf4Pn/bdtIfrUVcw+BO6njvwd+Z2P938w+za7/ZrZ59wf/Mzh/06Ez33/xBdf/HD9VtUx1asuXLQOcg==
+   eJzt070OQFAMhuEePwODRLBK/MQgrFwJ7v9OVOIkbLTooF/yTo08y2EAwCEWEW82F4uBvpx4s0vUZ/k11h1qD7fhA/+K8abPnfo8vxH2Rzi//7v1TJ+7VNiHn/veQ/5E/O6N/38W9u9s8zNhn7vQAAR7Ev7mhgTb+j7TN2g7u78QfOn3p7766v/XL7BSqApbAbDMDqs=
   </data>
  </layer>
 </map>
