@@ -9,17 +9,21 @@
 
 #include "ui/FloatingPanel.h"
 
-Player::Player(WorldPosition *position, FloatingPanel *interactionPanel)
+Player::Player(WorldPosition *position, FloatingPanel *interactionPanel, const sf::SoundBuffer &stepSound)
 	: AnimatedObject("resources/test.spb", position)
 	, m_movement(0, 0)
 	, m_interactable(nullptr)
 	, m_interactionPanel(interactionPanel)
 	, m_weapon(nullptr)
+	, m_stepSound(stepSound)
+	, m_stepTimer(0)
 {
 	const PhysicsWorldPosition &physicsWorldPosition = (PhysicsWorldPosition &)worldPosition();
 
 	m_body = physicsWorldPosition.body();
 	m_body->SetFixedRotation(true);
+
+	m_stepSound.setRelativeToListener(true);
 
 	setImageIndex(1);
 }
@@ -54,6 +58,17 @@ void Player::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 bool Player::update(const int delta)
 {
 	const b2Vec2 &currentVelocity = m_body->GetLocalVector(m_body->GetLinearVelocity());
+
+	if(currentVelocity.Length() > 1)
+	{
+		m_stepTimer += delta;
+	}
+
+	if(m_stepTimer > 250)
+	{
+		m_stepSound.play();
+		m_stepTimer = 0;
+	}
 
 	b2Vec2 impulse(0, 0);
 

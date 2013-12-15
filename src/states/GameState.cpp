@@ -68,7 +68,7 @@ GameState::GameState(sf::RenderWindow *window)
 
 	LaserPistol *laserPistol = new LaserPistol(*playerWorldPosition, *world, *m_map);
 
-	m_player = new Player(playerWorldPosition, m_interactionPanel);
+	m_player = new Player(playerWorldPosition, m_interactionPanel, *stepSound);
 	m_player->setWeapon(laserPistol);
 
 	m_bot = new HumanoidBot(botWorldPosition, { m_player }, pathfinder, *stepSound);

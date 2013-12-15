@@ -1,7 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Box2D/Dynamics/b2Body.h"
+#include <Box2D/Dynamics/b2Body.h>
+
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 
 #include "AnimatedObject.h"
 
@@ -14,7 +17,7 @@ const int SPEED = 5;
 class Player : public AnimatedObject
 {
 	public:
-		Player(WorldPosition *position, FloatingPanel *interactionPanel);
+		Player(WorldPosition *position, FloatingPanel *interactionPanel, const sf::SoundBuffer &stepSound);
 
 		void onCollision(const WorldObject *other) override;
 		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
@@ -37,6 +40,8 @@ class Player : public AnimatedObject
 		InteractableObject *m_interactable;
 		FloatingPanel *m_interactionPanel;
 		Weapon *m_weapon;
+		sf::Sound m_stepSound;
+		int m_stepTimer;
 };
 
 #endif // PLAYER_H
