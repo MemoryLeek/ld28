@@ -15,16 +15,11 @@ Projectile::Projectile(WorldPosition *position, Map &map)
 
 void Projectile::onCollision(WorldObject *other)
 {
-	Bot *bot = dynamic_cast<Bot *>(other);
-	Player *player = dynamic_cast<Player *>(other);
+	Damagable *damagable = dynamic_cast<Damagable *>(other);
 
-	if(bot)
+	if(damagable)
 	{
-		bot->doDamage(10);
-	}
-	else if(player)
-	{
-		player->doDamage(10);
+		damagable->doDamage(10);
 	}
 }
 

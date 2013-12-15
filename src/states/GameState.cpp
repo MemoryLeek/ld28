@@ -55,7 +55,7 @@ GameState::GameState(sf::RenderWindow *window)
 
 	b2Filter *playerProjectileFilter = new b2Filter();
 	playerProjectileFilter->categoryBits = World::PlayerProjectile;
-	playerProjectileFilter->maskBits = 0xFFFF ^ World::Player;
+	playerProjectileFilter->maskBits = 0xFFFF ^ (World::Player | World::BotProjectile);
 
 	b2Filter *botCollisionFilter = new b2Filter();
 	botCollisionFilter->categoryBits = World::Bot;
@@ -63,7 +63,7 @@ GameState::GameState(sf::RenderWindow *window)
 
 	b2Filter *botProjectileFilter = new b2Filter();
 	botProjectileFilter->categoryBits = World::BotProjectile;
-	botProjectileFilter->maskBits = 0xFFFF ^ World::Bot;
+	botProjectileFilter->maskBits = 0xFFFF ^ (World::Bot | World::PlayerProjectile);
 
 	PhysicsWorldPosition *playerWorldPosition = world->createCircle(playerPosition, 16, b2_dynamicBody, *playerCollisionFilter);
 	PhysicsWorldPosition *treasureWorldPosition = world->createBox(treasurePosition, 32, 32, b2_staticBody);
