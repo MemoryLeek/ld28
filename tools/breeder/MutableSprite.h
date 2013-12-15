@@ -11,15 +11,18 @@ class MutableSprite
 		MutableSprite();
 
 		void addFrame(const QImage image);
-		void setDelay(const float delay);
+		void setDelay(const int delay);
+		void setLoops(const int loops);
 
 		bool isValid() const;
 
 	private:
 		QList<ImageWrapper> m_frames;
 
-		float m_delay;
 		float m_index;
+
+		int m_delay;
+		int m_loops;
 };
 
 #endif // MUTABLESPRITE_H

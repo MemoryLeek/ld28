@@ -47,7 +47,7 @@ GameState::GameState(sf::RenderWindow *window)
 	CollisionListener *collisionListener = new CollisionListener();
 
 	World *world = new World();
-	world->SetDebugDraw(worldDebugger);
+//	world->SetDebugDraw(worldDebugger);
 	world->SetContactListener(collisionListener);
 
 	b2Filter *playerCollisionFilter = new b2Filter();

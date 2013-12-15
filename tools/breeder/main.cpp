@@ -3,12 +3,13 @@
 #include <QDir>
 #include <QDebug>
 #include <QDataStream>
+#include <QDomDocument>
 
 #include "MutableSprite.h"
 #include "MutableSpriteBundle.h"
 #include "QStringEx.h"
 
-MutableSprite process(const QString &filename)
+MutableSprite generate(const QString &filename, const bool loop, const int delay)
 {
 	qDebug() << QStringEx::format("Processing file %1", filename);
 
@@ -18,7 +19,8 @@ MutableSprite process(const QString &filename)
 	if(file.open(QIODevice::ReadOnly))
 	{
 		QImageReader reader(&file);
-		sprite.setDelay(reader.nextImageDelay());
+		sprite.setDelay(delay);
+		sprite.setLoops(loop ? -1 : 1);
 
 		for(int i = 0; i < reader.imageCount(); i++)
 		{
@@ -40,48 +42,80 @@ int main(int argc, char **argv)
 {
 	MutableSpriteBundle spriteBundle;
 	QCoreApplication application(argc, argv);
-	QStringList arguments = application.arguments();
-	
-	if(arguments.count() > 2)
+	QString fileName = application
+		.arguments()
+		.value(1);
+
+	if(!fileName.isEmpty())
 	{
-		QString outputFilename = arguments[1];
-		QFile outputFile(outputFilename);
+		QFile file(fileName);
 
-		if(outputFile.open(QIODevice::WriteOnly))
+		QFileInfo fileInfo(file);
+		QString folder = fileInfo.path();
+
+		if(file.open(QIODevice::ReadOnly))
 		{
-			if(arguments.contains("-R"))
-			{
-				const QString folder = arguments[3];
-				const QDir dir(folder);
-				const QStringList fileList = dir.entryList(QDir::Files);
+			QString error;
+			QDomDocument document;
+			document.setContent(&file, &error);
 
-				for(const QString &filename : fileList)
+			if(error.isEmpty())
+			{
+				const QDomNodeList &images = document
+					.firstChildElement("images")
+					.elementsByTagName("image");
+
+				for(int i = 0; i < images.count(); i++)
 				{
-					const QString path = QStringEx::format("%1/%2", folder, filename);
-					const MutableSprite sprite = process(path);
+					const QDomNode &node = images.at(i);
+					const QString &imageFileName = node
+						.firstChildElement("filename")
+						.text();
+
+					const bool loop = node
+						.firstChildElement("loop")
+						.text() == "true";
+
+					const int delay = node
+						.firstChildElement("delay")
+						.text()
+						.toInt();
+
+					const QString &path = QStringEx::format("%1/%2", folder, imageFileName);
+					const MutableSprite sprite = generate(path, loop, delay);
 
 					if(sprite.isValid())
 					{
 						spriteBundle.addSprite(sprite);
 					}
 				}
+
+				QString inputFileName = fileInfo.baseName();
+				QString outputFileName = QStringEx::format("%1/%2.spb", folder, inputFileName);
+				QFile outputFile(outputFileName);
+
+				if(outputFile.open(QIODevice::WriteOnly))
+				{
+					QDataStream stream(&outputFile);
+					stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+					stream.setByteOrder(QDataStream::LittleEndian);
+					stream << spriteBundle;
+				}
+				else
+				{
+					qDebug() << QStringEx::format("Error opening file '%1' for writing", fileName);
+				}
 			}
 			else
 			{
-				const QString filename = arguments[2];
-				const MutableSprite sprite = process(filename);
-
-				spriteBundle.addSprite(sprite);
+				qDebug() << QStringEx::format("Error parsing XML document: %1", error);
 			}
-
-			QDataStream stream(&outputFile);
-			stream.setByteOrder(QDataStream::LittleEndian);
-			stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
-			stream << spriteBundle;
-
-			outputFile.close();
+		}
+		else
+		{
+			qDebug() << QStringEx::format("Error opening file '%1' for reading", fileName);
 		}
 	}
-	
+
 	return 0;
 }

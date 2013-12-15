@@ -1,0 +1,10 @@
+<images>
+	<image>
+		<filename>0.png</filename>
+		<loop>false</loop>
+	</image>
+	<image>
+		<filename>1.gif</filename>
+		<loop>false</loop>
+	</image>
+</images>

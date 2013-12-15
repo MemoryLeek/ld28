@@ -5,6 +5,7 @@
 TEMPLATE = app
 TARGET = breeder
 INCLUDEPATH += .
+QT += xml
 
 # Input
 HEADERS += MutableSprite.h MutableSpriteBundle.h QStringEx.h \

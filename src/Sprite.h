@@ -19,14 +19,16 @@ class Sprite
 
 		const sf::Texture *currentFrame() const;
 
-		float delay() const;
+		int delay() const;
 		int frameCount() const;
 
 	private:
 		std::vector<ImageWrapper> m_frames;
 
-		float m_delay;
 		float m_index;
+
+		int m_delay;
+		int m_loops;
 };
 
 #endif // SPRITE_H

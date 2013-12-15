@@ -25,7 +25,6 @@ Player::Player(WorldPosition *position, FloatingPanel *interactionPanel, const s
 	m_body->SetFixedRotation(true);
 
 	m_stepSound.setRelativeToListener(true);
-
 }
 
 void Player::onCollision(WorldObject *other)

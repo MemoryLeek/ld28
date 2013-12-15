@@ -6,6 +6,7 @@
 Sprite::Sprite()
 	: m_delay(0)
 	, m_index(0)
+	, m_loops(0)
 {
 
 }
@@ -13,11 +14,20 @@ Sprite::Sprite()
 void Sprite::update(const int delta)
 {
 	const float f = (delta / 1000.0f) * (1000.0f / m_delay);
-	const float c = m_index + f;
-	const float i1 = c < m_frames.size() ? c : 0;
-	const float i2 = i1 > -1 ? i1 : m_frames.size() - 1;
+	const float candidate = m_index + f;
+	const float count = m_frames.size();
 
-	m_index = i2;
+	if(candidate > count)
+	{
+		if(m_loops <= 0)
+		{
+			m_index = 0;
+		}
+	}
+	else
+	{
+		m_index = candidate;
+	}
 }
 
 const sf::Texture *Sprite::currentFrame() const
@@ -25,7 +35,7 @@ const sf::Texture *Sprite::currentFrame() const
 	return m_frames[m_index];
 }
 
-float Sprite::delay() const
+int Sprite::delay() const
 {
 	return m_delay;
 }
@@ -39,6 +49,7 @@ BinaryStream &operator >>(BinaryStream &stream, Sprite &sprite)
 {
 	stream >> sprite.m_delay;
 	stream >> sprite.m_frames;
+	stream >> sprite.m_loops;
 
 	return stream;
 }

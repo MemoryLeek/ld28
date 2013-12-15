@@ -1,0 +1,11 @@
+<images>
+	<image>
+		<filename>standing.png</filename>
+		<loop>false</loop>
+	</image>
+	<image>
+		<filename>walking.gif</filename>
+		<loop>true</loop>
+		<delay>300</delay>
+	</image>
+</images>

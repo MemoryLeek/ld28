@@ -13,7 +13,7 @@ class InteractableObject;
 class FloatingPanel;
 class Weapon;
 
-const int SPEED = 5;
+const int SPEED = 2;
 
 class Player : public AnimatedObject, public Damagable
 {
