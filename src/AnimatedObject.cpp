@@ -30,7 +30,8 @@ void AnimatedObject::draw(sf::RenderTarget &target, sf::RenderStates states) con
 	const b2Vec2 &size = position.size();
 	const float rotation = position.rotation();
 
-	sf::Sprite sprite(*m_spriteBundle->currentImage());
+	sf::Texture texture = *m_spriteBundle->currentImage();
+	sf::Sprite sprite(texture);
 	sprite.setOrigin(size.x / 2, size.y / 2);
 	sprite.setPosition(vector.x, vector.y);
 	sprite.setRotation(rotation);

@@ -1,0 +1,11 @@
+<images>
+	<image>
+		<filename>0.png</filename>
+		<loop>false</loop>
+	</image>
+	<image>
+		<filename>orb.gif</filename>
+		<loop>true</loop>
+		<delay>500</delay>
+	</image>
+</images>

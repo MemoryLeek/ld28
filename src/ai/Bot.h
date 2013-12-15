@@ -10,14 +10,14 @@
 #include <SFML/System/Clock.hpp>
 
 #include "Damagable.h"
-#include "DrawableObject.h"
+#include "AnimatedObject.h"
 #include "RayCastResult.h"
 #include "Map.h"
 
 class Pathfinder;
 class Weapon;
 
-class Bot : public DrawableObject, public Damagable
+class Bot : public AnimatedObject, public Damagable
 {
 	public:
 		Bot(int health, WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder, Map &map);

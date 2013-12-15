@@ -12,7 +12,7 @@
 #include "equipment/Weapon.h"
 
 Bot::Bot(int health, WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder, Map &map)
-	: DrawableObject(position)
+	: AnimatedObject("resources/orb.spb", position)
 	, Damagable(health)
 	, m_enemies(enemies)
 	, m_pathfinder(pathfinder)
@@ -27,6 +27,8 @@ Bot::Bot(int health, WorldPosition *position, const std::list<const WorldObject 
 
 	m_hearingSensor = physicsWorldPosition.createCircularSensor(96);
 	m_visionSensor = physicsWorldPosition.createConeSensor(m_maxVisionDistance * 32, m_maxVisionDistance * 24);
+
+	setImageIndex(1);
 }
 
 Bot::~Bot()
@@ -98,6 +100,8 @@ void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 		}
 		target.draw(debugpath);
 	}
+
+	AnimatedObject::draw(target, states);
 }
 
 bool Bot::update(int delta)
@@ -153,6 +157,8 @@ bool Bot::update(int delta)
 		m_map.removeObject(this);
 		return false;
 	}
+
+	AnimatedObject::update(delta);
 
 	return true;
 }
