@@ -8,7 +8,7 @@ class Door : public AnimatedObject
 	public:
 		Door(WorldPosition *worldPosition);
 
-		void onCollision(const WorldObject *other) override;
+		void onCollision(WorldObject *other) override;
 		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
 		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
 };

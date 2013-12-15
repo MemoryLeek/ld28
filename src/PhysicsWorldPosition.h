@@ -18,6 +18,8 @@ class PhysicsWorldPosition : public WorldPosition
 		float rotation() const override;
 		void setRotation(float rotation) override;
 
+		bool isDestroyed() const;
+
 		b2Fixture *createRectangularSensor(int xOffset, int yOffset, int width, int height);
 		b2Fixture *createCircularSensor(int radius);
 		b2Fixture *createConeSensor(int length, int width);
@@ -28,6 +30,7 @@ class PhysicsWorldPosition : public WorldPosition
 		PhysicsWorldPosition(b2Body *body);
 
 		b2Body *m_body;
+		bool m_destroyed;
 
 	friend class World;
 };

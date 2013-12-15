@@ -6,3 +6,8 @@ DrawableObject::DrawableObject(WorldPosition *position)
 {
 
 }
+
+DrawableObject::~DrawableObject()
+{
+
+}

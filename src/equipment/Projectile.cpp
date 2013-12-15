@@ -3,6 +3,8 @@
 #include "Projectile.h"
 #include "Map.h"
 
+#include "ai/Bot.h"
+
 Projectile::Projectile(WorldPosition *position, Map &map)
 	: DrawableObject(position)
 	, m_map(map)
@@ -10,8 +12,13 @@ Projectile::Projectile(WorldPosition *position, Map &map)
 {
 }
 
-void Projectile::onCollision(const WorldObject *other)
+void Projectile::onCollision(WorldObject *other)
 {
+	Bot *bot = dynamic_cast<Bot*>(other);
+	if(bot)
+	{
+		bot->doDamage(10);
+	}
 }
 
 void Projectile::onSensorEnter(const b2Fixture *sensor, WorldObject *other)

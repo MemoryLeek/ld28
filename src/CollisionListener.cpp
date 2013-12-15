@@ -30,10 +30,12 @@ void CollisionListener::BeginContact(b2Contact *contact)
 	{
 		if(projectileA)
 		{
+			projectileA->onCollision(objectB);
 			projectileA->deleteLater();
 		}
 		else if(projectileB)
 		{
+			projectileB->onCollision(objectA);
 			projectileB->deleteLater();
 		}
 		else
@@ -64,6 +66,14 @@ void CollisionListener::EndContact(b2Contact *contact)
 
 	WorldObject *objectA = static_cast<WorldObject*>(bodyA->GetUserData());
 	WorldObject *objectB = static_cast<WorldObject*>(bodyB->GetUserData());
+
+	const PhysicsWorldPosition *pPositionA = dynamic_cast<const PhysicsWorldPosition*>(&objectA->worldPosition());
+	const PhysicsWorldPosition *pPositionB = dynamic_cast<const PhysicsWorldPosition*>(&objectB->worldPosition());
+
+	if((pPositionA && pPositionA->isDestroyed()) || (pPositionB && pPositionB->isDestroyed()))
+	{
+		return;
+	}
 
 	if(fixtureA->IsSensor() && !fixtureB->IsSensor())
 	{

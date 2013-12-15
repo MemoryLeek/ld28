@@ -68,7 +68,8 @@ SOURCES += \
     ui/UiElement.cpp \
     equipment/LaserPistol.cpp \
     equipment/Weapon.cpp \
-    equipment/Projectile.cpp
+    equipment/Projectile.cpp \
+    Damagable.cpp
 
 HEADERS += \
     World.h \
@@ -143,7 +144,8 @@ HEADERS += \
     ui/UiElement.h \
     equipment/Weapon.h \
     equipment/LaserPistol.h \
-    equipment/Projectile.h
+    equipment/Projectile.h \
+    Damagable.h
 
 win32:DEFINES += M_PI=3.14159265358979323846
 win32:LIBS += -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\lib -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\bin

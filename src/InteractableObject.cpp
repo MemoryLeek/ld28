@@ -5,7 +5,7 @@ InteractableObject::InteractableObject(WorldPosition *position)
 {
 }
 
-void InteractableObject::onCollision(const WorldObject *other)
+void InteractableObject::onCollision(WorldObject *other)
 {
 }
 

@@ -8,7 +8,7 @@ class InteractableObject : public DrawableObject
 	public:
 		InteractableObject(WorldPosition *position);
 
-		void onCollision(const WorldObject *other) override;
+		void onCollision(WorldObject *other) override;
 		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
 		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
 

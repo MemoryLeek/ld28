@@ -14,8 +14,6 @@ LaserPistol::LaserPistol(const WorldPosition &position, World &world, Map &map)
 
 void LaserPistol::fire()
 {
-	std::cout << "LaserPistol::fire()" << std::endl;
-
 	const b2Vec2 &origin = position().position();
 	const float &angle = position().rotation();
 

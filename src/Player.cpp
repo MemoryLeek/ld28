@@ -28,7 +28,7 @@ Player::Player(WorldPosition *position, FloatingPanel *interactionPanel, const s
 	setImageIndex(1);
 }
 
-void Player::onCollision(const WorldObject *other)
+void Player::onCollision(WorldObject *other)
 {
 
 }

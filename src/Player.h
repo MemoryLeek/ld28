@@ -19,7 +19,7 @@ class Player : public AnimatedObject
 	public:
 		Player(WorldPosition *position, FloatingPanel *interactionPanel, const sf::SoundBuffer &stepSound);
 
-		void onCollision(const WorldObject *other) override;
+		void onCollision(WorldObject *other) override;
 		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
 		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
 

@@ -9,17 +9,20 @@
 
 #include <SFML/System/Clock.hpp>
 
+#include "Damagable.h"
 #include "DrawableObject.h"
 #include "RayCastResult.h"
+#include "Map.h"
 
 class Pathfinder;
 
-class Bot : public DrawableObject
+class Bot : public DrawableObject, public Damagable
 {
 	public:
-		Bot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder);
+		Bot(int health, WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder, Map &map);
+		virtual ~Bot();
 
-		void onCollision(const WorldObject *other) override;
+		void onCollision(WorldObject *other) override;
 		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
 		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
 
@@ -47,6 +50,7 @@ class Bot : public DrawableObject
 		b2Body *m_body;
 		const std::list<const WorldObject *> m_enemies;
 		const Pathfinder *m_pathfinder;
+		Map &m_map;
 		const float m_maxVisionDistance;
 
 		b2Fixture *m_hearingSensor;

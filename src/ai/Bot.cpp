@@ -10,10 +10,12 @@
 
 #include "PathNode.h"
 
-Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder)
+Bot::Bot(int health, WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder, Map &map)
 	: DrawableObject(position)
+	, Damagable(health)
 	, m_enemies(enemies)
 	, m_pathfinder(pathfinder)
+	, m_map(map)
 	, m_maxVisionDistance(20)
 {
 	PhysicsWorldPosition &physicsWorldPosition = (PhysicsWorldPosition &)worldPosition();
@@ -25,7 +27,12 @@ Bot::Bot(WorldPosition *position, const std::list<const WorldObject *> &enemies,
 	m_visionSensor = physicsWorldPosition.createConeSensor(m_maxVisionDistance * 32, m_maxVisionDistance * 24);
 }
 
-void Bot::onCollision(const WorldObject *other)
+Bot::~Bot()
+{
+
+}
+
+void Bot::onCollision(WorldObject *other)
 {
 	std::cout << "Bot collided with another object." << std::endl;
 }
@@ -135,6 +142,13 @@ bool Bot::update(int delta)
 	}
 
 	onUpdate(delta);
+
+	if(isDead())
+	{
+		m_map.removeObject(this);
+		return false;
+	}
+
 	return true;
 }
 

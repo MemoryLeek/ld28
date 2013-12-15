@@ -7,7 +7,7 @@ Door::Door(WorldPosition *worldPosition)
 
 }
 
-void Door::onCollision(const WorldObject *other)
+void Door::onCollision(WorldObject *other)
 {
 
 }

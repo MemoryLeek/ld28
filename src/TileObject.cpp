@@ -12,7 +12,7 @@ TileObject::TileObject(WorldPosition *position, const sf::Texture &texture)
 
 }
 
-void TileObject::onCollision(const WorldObject *other)
+void TileObject::onCollision(WorldObject *other)
 {
 }
 

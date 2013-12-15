@@ -11,7 +11,7 @@
 class HumanoidBot : public Bot
 {
 	public:
-		HumanoidBot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder, const sf::SoundBuffer &stepSound);
+		HumanoidBot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder, const sf::SoundBuffer &stepSound, Map &map);
 
 		void onUpdate(int delta) override;
 		void onTargetSpotted(const WorldObject *target) override;

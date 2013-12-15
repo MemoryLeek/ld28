@@ -71,7 +71,7 @@ GameState::GameState(sf::RenderWindow *window)
 	m_player = new Player(playerWorldPosition, m_interactionPanel, *stepSound);
 	m_player->setWeapon(laserPistol);
 
-	m_bot = new HumanoidBot(botWorldPosition, { m_player }, pathfinder, *stepSound);
+	m_bot = new HumanoidBot(botWorldPosition, { m_player }, pathfinder, *stepSound, *m_map);
 	m_proxy = new PlayerInputProxy(m_player);
 	m_world = world;
 	m_pathfinder = pathfinder;

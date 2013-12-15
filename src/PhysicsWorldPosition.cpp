@@ -7,6 +7,7 @@
 
 PhysicsWorldPosition::PhysicsWorldPosition(b2Body *body)
 	: m_body(body)
+	, m_destroyed(false)
 {
 }
 
@@ -14,6 +15,7 @@ PhysicsWorldPosition::PhysicsWorldPosition(b2Body *body)
 PhysicsWorldPosition::~PhysicsWorldPosition()
 {
 	b2World *world = m_body->GetWorld();
+	m_destroyed = true;
 	world->DestroyBody(m_body);
 }
 
@@ -41,6 +43,11 @@ float PhysicsWorldPosition::rotation() const
 void PhysicsWorldPosition::setRotation(float rotation)
 {
 	m_body->SetTransform(m_body->GetPosition(), rotation * M_PI / 180);
+}
+
+bool PhysicsWorldPosition::isDestroyed() const
+{
+	return m_destroyed;
 }
 
 b2Fixture *PhysicsWorldPosition::createRectangularSensor(int xOffset, int yOffset, int width, int height)

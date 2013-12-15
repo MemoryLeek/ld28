@@ -2,8 +2,8 @@
 
 #include "HumanoidBot.h"
 
-HumanoidBot::HumanoidBot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder, const sf::SoundBuffer &stepSound)
-	: Bot(position, enemies, pathfinder)
+HumanoidBot::HumanoidBot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder, const sf::SoundBuffer &stepSound, Map &map)
+	: Bot(100, position, enemies, pathfinder, map)
 	, m_target(NULL)
 	, m_stepSound(stepSound)
 	, m_stepTimer(0)
