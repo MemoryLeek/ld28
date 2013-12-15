@@ -1,5 +1,6 @@
 #include <SFML/Graphics/Transform.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 #include "TileObject.h"
 #include "RoomObject.h"
@@ -26,39 +27,16 @@ void TileObject::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 
 void TileObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	const WorldPosition &wp = worldPosition();
-	const b2Vec2 &p = wp.position();
-	const sf::Vertex vertices[]
-	{
-		sf::Vertex
-		{
-			sf::Vector2f(p.x, p.y),
-			sf::Vector2f(0, 0)
-		},
-		sf::Vertex
-		{
-			sf::Vector2f(p.x, p.y + TILE_SIZE),
-			sf::Vector2f(0, TILE_SIZE)
-		},
-		sf::Vertex
-		{
-			sf::Vector2f(p.x + TILE_SIZE, p.y + TILE_SIZE),
-			sf::Vector2f(TILE_SIZE, TILE_SIZE)
-		},
-		sf::Vertex
-		{
-			sf::Vector2f(p.x + TILE_SIZE, p.y),
-			sf::Vector2f(TILE_SIZE, 0)
-		}
-	};
+	const WorldPosition &position = worldPosition();
+	const b2Vec2 &vector = position.position();
+	const b2Vec2 &size = position.size();
+	const float rotation = position.rotation();
 
-	sf::Transform transform;
-	transform.translate(-TILE_SIZE / 2, -TILE_SIZE / 2);
-
-	states.texture = &m_texture;
-	states.transform = transform;
-
-	target.draw(vertices, 4, sf::Quads, states);
+	sf::Sprite sprite(m_texture);
+	sprite.setOrigin(size.x / 2, size.y / 2);
+	sprite.setPosition(vector.x, vector.y);
+	sprite.setRotation(rotation);
+	target.draw(sprite);
 }
 
 bool TileObject::update(const int)

@@ -10,7 +10,7 @@
 #include "ui/FloatingPanel.h"
 
 Player::Player(WorldPosition *position, FloatingPanel *interactionPanel, const sf::SoundBuffer &stepSound)
-	: AnimatedObject("resources/test.spb", position)
+	: AnimatedObject("resources/character.spb", position)
 	, Damagable(100)
 	, m_movement(0, 0)
 	, m_interactable(nullptr)
@@ -64,6 +64,11 @@ bool Player::update(const int delta)
 	if(currentVelocity.Length() > 1)
 	{
 		m_stepTimer += delta;
+		setImageIndex(1);
+	}
+	else
+	{
+		setImageIndex(0);
 	}
 
 	if(m_stepTimer > 250)
