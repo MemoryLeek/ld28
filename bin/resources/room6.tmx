@@ -5,12 +5,23 @@
  </tileset>
  <layer name="Background" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJwzYmBgMMKCeYCYF4ccPTEXlc2TGgR+GgxYDIjFqWieEBRT0yxqmYluHjbMQWXzJKhoHrX9O9zMIxdzU9k8aTq6nZZYBohliVQLAOAcRbI=
+   eJwzYmBgMBrFIw6LAbE4Fc0TgmJqmkUtM9HNw4Y5qGyeBBXNo7Z/h5t5o3jgMABcVEam
   </data>
  </layer>
  <layer name="Collision" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYMKCYQBdnA+HehBmBmJBBtKAHB45YRLNGgjzqO1fUs0zB2IdHFgXh3ksSGxWEuzC5j6QWcpIfEUSzMRmHrY4ApmphIax2UGsecQCepvnhEMfIxCLkmEeLoArjQ1F80QYcJdHMIwt7AjZRS6gpnnklAeEzMOWl9AxDBBSB8r3AOLZCPM=
+   eJxjZGBgYMKCYQCbHC7MDMSCDNQDwlQ0i1bmUdu/9DCPBYnNSqF5ILOUkfiKJJiJzTxscQQyUwkNY7ODWPOIBYPFPEYgFqWiebjS2FA0T4SBcLmELewI2UUuGOzlAba8hI5hgJA6UL4HAG4yBtQ=
   </data>
  </layer>
+ <objectgroup name="Objects" width="20" height="20">
+  <object type="key" gid="66" x="224" y="384"/>
+  <object type="door" gid="12" x="192" y="32"/>
+  <object type="door" gid="13" x="224" y="32"/>
+  <object type="door" gid="29" x="320" y="640"/>
+  <object type="door" gid="28" x="288" y="640"/>
+  <object type="door" gid="11" x="608" y="512"/>
+  <object type="door" gid="27" x="608" y="544"/>
+  <object type="door" gid="10" x="0" y="96"/>
+  <object type="door" gid="26" x="0" y="128"/>
+ </objectgroup>
 </map>

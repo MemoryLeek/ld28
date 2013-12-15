@@ -62,6 +62,8 @@ int main(int argc, char *argv[])
 				case sf::Event::JoystickButtonPressed:
 				case sf::Event::JoystickButtonReleased:
 				case sf::Event::JoystickMoved:
+				case sf::Event::MouseButtonPressed:
+				case sf::Event::MouseButtonReleased:
 				{
 					inputHandler.handle(event);
 

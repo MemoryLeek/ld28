@@ -65,7 +65,8 @@ const KeyMapping *InputMapping::find(const sf::Event &event) const
 
 	for(const KeyMapping *mapping : mappings)
 	{
-		const int button = mapping->button();
+		const int joystickButton = mapping->joystickButton();
+		const int mouseButton = mapping->mouseButton();
 		const int key = mapping->key();
 
 		switch(event.type)
@@ -75,7 +76,7 @@ const KeyMapping *InputMapping::find(const sf::Event &event) const
 			{
 				std::cout << (int)event.joystickButton.button << std::endl;
 
-				if(button == (int)event.joystickButton.button)
+				if(joystickButton == (int)event.joystickButton.button)
 				{
 					return mapping;
 				}
@@ -92,6 +93,15 @@ const KeyMapping *InputMapping::find(const sf::Event &event) const
 				}
 
 				break;
+			}
+
+			case sf::Event::MouseButtonPressed:
+			case sf::Event::MouseButtonReleased:
+			{
+				if(mouseButton == event.mouseButton.button)
+				{
+					return mapping;
+				}
 			}
 
 			default:

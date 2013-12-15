@@ -20,8 +20,11 @@ class KeyMapping
 		int key() const;
 		KeyMapping &setKey(const int key);
 
-		int button() const;
-		KeyMapping &setButton(const int button);
+		int joystickButton() const;
+		KeyMapping &setJoystickButton(const int joystickButton);
+
+		int mouseButton() const;
+		KeyMapping &setMouseButton(const int mouseButton);
 
 		void onKeyDown() const;
 		void onKeyUp() const;
@@ -35,7 +38,8 @@ class KeyMapping
 
 	protected:
 		int m_key;
-		int m_button;
+		int m_joystickButton;
+		int m_mouseButton;
 
 	private:
 		friend BinaryStream &operator >>(BinaryStream &stream, KeyMapping &mapping);

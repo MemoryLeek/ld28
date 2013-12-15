@@ -5,6 +5,8 @@
 #include <tiled/tilelayer.h>
 #include <tiled/tile.h>
 #include <tiled/map.h>
+#include <tiled/objectgroup.h>
+#include <tiled/mapobject.h>
 
 #include "RoomLoader.h"
 #include "TileObject.h"
@@ -51,39 +53,64 @@ Room *RoomLoader::load(const QString &path) const
 				for(int i = 0; i < map->layerCount(); i++)
 				{
 					Tiled::Layer *layer = map->layerAt(i);
-					Tiled::TileLayer *tileLayer = (Tiled::TileLayer *)layer;
-					Tiled::Cell cell = tileLayer->cellAt(x, y);
-					Tiled::Tile *tile = cell.tile;
+					Tiled::TileLayer *tileLayer = dynamic_cast<Tiled::TileLayer *>(layer);
 
-					if(tile)
+					if(tileLayer)
 					{
-						QPainter *painter = target.painter();
-						QPixmap image = tile->image();
+						Tiled::Cell cell = tileLayer->cellAt(x, y);
+						Tiled::Tile *tile = cell.tile;
 
-						painter->drawPixmap(0, 0, image);
-
-						if(i == collisionIndex)
+						if(tile)
 						{
-							target.setCollidable(true);
-						}
+							QPainter *painter = target.painter();
+							QPixmap image = tile->image();
 
-						target.setHasContent(true);
+							painter->drawPixmap(0, 0, image);
+
+							if(i == collisionIndex)
+							{
+								target.setCollidable(true);
+							}
+
+							target.setHasContent(true);
+						}
+						else
+						{
+							if(i == collisionIndex)
+							{
+								const QRect rect(x, y, mapWidth, mapHeight);
+
+								for(const IDirectionSelectorStrategy *strategy : m_directionSelectorStrategies)
+								{
+									const Direction::Value &direction = strategy->direction(rect);
+
+									if(direction != Direction::None)
+									{
+										room->setEntrance(direction, coordinate);
+									}
+								}
+							}
+						}
 					}
 					else
 					{
-						if(i == collisionIndex)
+						Tiled::ObjectGroup *objectLayer = dynamic_cast<Tiled::ObjectGroup *>(layer);
+
+						if(objectLayer)
 						{
-							const QRect rect(x, y, mapWidth, mapHeight);
+							const QList<Tiled::MapObject *> &objects = objectLayer->objects();
 
-							for(const IDirectionSelectorStrategy *strategy : m_directionSelectorStrategies)
+							for(Tiled::MapObject *object : objects)
 							{
-								const Direction::Value &direction = strategy->direction(rect);
+								const QPointF &position = object->position();
+								const QPointF current(x, y);
 
-								if(direction != Direction::None)
+								if(current == position)
 								{
-									room->setEntrance(direction, coordinate);
+									qDebug() << position;
 								}
 							}
+
 						}
 					}
 				}
