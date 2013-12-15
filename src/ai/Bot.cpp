@@ -40,7 +40,6 @@ void Bot::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
 	if(sensor == m_hearingSensor)
 	{
 		std::cout << "Bot hearing sensor triggered." << std::endl;
-		m_trackedTargets.push_back(other);
 		onTargetHeard(other);
 	}
 	else if(sensor == m_visionSensor)
@@ -48,8 +47,11 @@ void Bot::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
 		std::cout << "Bot vision sensor triggered." << std::endl;
 		if(hasVisionTo(other))
 		{
-			m_trackedTargets.push_back(other);
-			onTargetSpotted(other);
+			if(std::find(m_visibleTargets.begin(), m_visibleTargets.end(), other) == m_visibleTargets.end())
+			{
+				m_visibleTargets.push_back(other);
+				onTargetSpotted(other);
+			}
 		}
 	}
 }
@@ -58,9 +60,13 @@ void Bot::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 {
 	onSensorEnter(sensor, other);
 
-	if(std::find(m_trackedTargets.begin(), m_trackedTargets.end(), other) != m_trackedTargets.end())
+	if(std::find(m_visibleTargets.begin(), m_visibleTargets.end(), other) != m_visibleTargets.end())
 	{
-		m_trackedTargets.remove(other);
+		if(sensor == m_visionSensor)
+		{
+			m_visibleTargets.remove(other);
+			onTargetNoLongerVisible(other);
+		}
 	}
 }
 
@@ -84,13 +90,17 @@ void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 bool Bot::update(int delta)
 {
-	if(m_trackedTargets.size() > 0)
+	if(m_visibleTargets.size() > 0)
 	{
-		for(WorldObject *target : m_trackedTargets)
+		for(WorldObject *target : m_visibleTargets)
 		{
 			if(hasVisionTo(target))
 			{
 				onTargetSpotted(target);
+			}
+			else
+			{
+				onTargetNoLongerVisible(target);
 			}
 		}
 	}
@@ -124,13 +134,26 @@ bool Bot::update(int delta)
 		m_body->SetLinearVelocity(b2Vec2(0, 0));
 	}
 
+	onUpdate(delta);
 	return true;
 }
 
-bool Bot::moveTo(const b2Vec2 &position)
+bool Bot::isMoving() const
 {
-	const b2Vec2 originPoint = (m_path.empty()) ? worldPosition().position() : m_path.top();
-	const std::stack<b2Vec2> newPath = m_pathfinder->find(originPoint, position);
+	return m_path.size() > 1;
+}
+
+void Bot::moveTo(const b2Vec2 &position)
+{
+	std::stack<b2Vec2> newPath;
+	newPath.push(position);
+	newPath.push(position);
+	m_path = newPath;
+}
+
+bool Bot::pathfind(const b2Vec2 &from, const b2Vec2 &to)
+{
+	const std::stack<b2Vec2> newPath = m_pathfinder->find(from, to);
 
 	if(!newPath.empty())
 	{
@@ -139,6 +162,12 @@ bool Bot::moveTo(const b2Vec2 &position)
 	}
 
 	return false;
+}
+
+bool Bot::pathfindTo(const b2Vec2 &position)
+{
+	const b2Vec2 originPoint = (m_path.empty()) ? worldPosition().position() : m_path.top();
+	return pathfind(originPoint, position);
 }
 
 float Bot::distanceTo(const WorldObject *object) const

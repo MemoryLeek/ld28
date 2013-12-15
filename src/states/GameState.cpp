@@ -1,3 +1,4 @@
+#include <SFML/Audio/Listener.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Audio/Sound.hpp>
 
@@ -36,6 +37,9 @@ GameState::GameState(sf::RenderWindow *window)
 	const b2Vec2 botPosition(576, 64);
 	const b2Vec2 treasurePosition(256, 320);
 
+	sf::SoundBuffer *stepSound = new sf::SoundBuffer();
+	stepSound->loadFromFile("resources/sound/step.wav");
+
 	WorldDebug *worldDebugger = new WorldDebug(m_window);
 	worldDebugger->SetFlags(b2Draw::e_shapeBit);
 
@@ -67,7 +71,7 @@ GameState::GameState(sf::RenderWindow *window)
 	m_player = new Player(playerWorldPosition, m_interactionPanel);
 	m_player->setWeapon(laserPistol);
 
-	m_bot = new HumanoidBot(botWorldPosition, { m_player }, pathfinder);
+	m_bot = new HumanoidBot(botWorldPosition, { m_player }, pathfinder, *stepSound);
 	m_proxy = new PlayerInputProxy(m_player);
 	m_world = world;
 	m_pathfinder = pathfinder;
@@ -140,6 +144,8 @@ void GameState::update()
 	const b2Vec2 &playerPosition = (*m_player)
 		.worldPosition()
 		.position();
+
+	sf::Listener::setPosition(playerPosition.x, playerPosition.y, 0);
 
 	const sf::Vector2<unsigned int> &size = m_window->getSize();
 	const sf::Rect<float> cameraRect(playerPosition.x - size.x / 2, playerPosition.y - size.y / 2, size.x, size.y);

@@ -23,7 +23,9 @@ class Bot : public DrawableObject
 		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
 		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
 
+		virtual void onUpdate(int delta) = 0;
 		virtual void onTargetSpotted(const WorldObject *target) = 0;
+		virtual void onTargetNoLongerVisible(const WorldObject *target) = 0;
 		virtual void onTargetHeard(const WorldObject *target) = 0;
 		virtual void onPathEnd() = 0;
 
@@ -32,7 +34,11 @@ class Bot : public DrawableObject
 		bool update(int delta) override;
 
 	protected:
-		bool moveTo(const b2Vec2 &position);
+		bool isMoving() const;
+
+		void moveTo(const b2Vec2 &position);
+		bool pathfind(const b2Vec2 &from, const b2Vec2 &to);
+		bool pathfindTo(const b2Vec2 &position);
 		float distanceTo(const WorldObject *object) const;
 
 	private:
@@ -47,7 +53,7 @@ class Bot : public DrawableObject
 		b2Fixture *m_visionSensor;
 
 		std::stack<b2Vec2> m_path;
-		std::list<WorldObject*> m_trackedTargets;
+		std::list<WorldObject*> m_visibleTargets;
 };
 
 #endif // BOT_H
