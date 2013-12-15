@@ -13,6 +13,7 @@ class World;
 class PlayerInputProxy;
 class Pathfinder;
 class FloatingPanel;
+class HealthBar;
 
 const float TIMESTEP = 1.f / 120.f;
 
@@ -40,6 +41,7 @@ class GameState : public State
 		PlayerInputProxy *m_proxy;
 		Pathfinder *m_pathfinder;
 		FloatingPanel *m_interactionPanel;
+		HealthBar *m_healthBar;
 
 		int m_lastPhysicsStepTime;
 		int m_fpsCount;

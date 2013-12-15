@@ -25,6 +25,7 @@
 #include "ai/Pathfinder.h"
 
 #include "ui/FloatingPanel.h"
+#include "ui/HealthBar.h"
 
 #include "equipment/LaserPistol.h"
 
@@ -90,6 +91,8 @@ GameState::GameState(sf::RenderWindow *window)
 	m_proxy = new PlayerInputProxy(m_player);
 	m_world = world;
 	m_pathfinder = pathfinder;
+
+	m_healthBar = new HealthBar(*m_player);
 
 	TreasureContainer *treasureContainer = new TreasureContainer(treasureWorldPosition);
 	playerWorldPosition->createRectangularSensor(16, 0, 32, 48);
@@ -176,6 +179,7 @@ void GameState::update()
 	m_window->setView(defaultView);
 	m_window->draw(m_fpsText);
 	m_window->draw(*m_interactionPanel);
+	m_window->draw(*m_healthBar);
 
 	m_window->setView(cameraView);
 	m_window->display();

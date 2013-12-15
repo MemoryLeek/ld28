@@ -2,6 +2,7 @@
 
 Damagable::Damagable(int health)
 	: m_health(health)
+	, m_maxHealth(health)
 {
 }
 
@@ -13,6 +14,11 @@ bool Damagable::isDead() const
 int Damagable::remainingHealth() const
 {
 	return m_health;
+}
+
+int Damagable::maxHealth() const
+{
+	return m_maxHealth;
 }
 
 void Damagable::doDamage(int damage)

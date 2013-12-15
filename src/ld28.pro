@@ -70,7 +70,8 @@ SOURCES += \
     equipment/Weapon.cpp \
     equipment/Projectile.cpp \
     Damagable.cpp \
-    MapObject.cpp
+    MapObject.cpp \
+    ui/HealthBar.cpp
 
 HEADERS += \
     World.h \
@@ -147,7 +148,8 @@ HEADERS += \
     equipment/LaserPistol.h \
     equipment/Projectile.h \
     Damagable.h \
-    MapObject.h
+    MapObject.h \
+    ui/HealthBar.h
 
 win32:DEFINES += M_PI=3.14159265358979323846
 win32:LIBS += -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\lib -LC:\Qt\Qt5.1.0\5.1.0\mingw48_32\bin
