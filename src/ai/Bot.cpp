@@ -7,8 +7,9 @@
 #include "PhysicsWorldPosition.h"
 #include "RayCastResult.h"
 #include "WorldObject.h"
-
 #include "PathNode.h"
+
+#include "equipment/Weapon.h"
 
 Bot::Bot(int health, WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder, Map &map)
 	: DrawableObject(position)
@@ -17,6 +18,7 @@ Bot::Bot(int health, WorldPosition *position, const std::list<const WorldObject 
 	, m_pathfinder(pathfinder)
 	, m_map(map)
 	, m_maxVisionDistance(20)
+	, m_weapon(nullptr)
 {
 	PhysicsWorldPosition &physicsWorldPosition = (PhysicsWorldPosition &)worldPosition();
 
@@ -34,7 +36,7 @@ Bot::~Bot()
 
 void Bot::onCollision(WorldObject *other)
 {
-	std::cout << "Bot collided with another object." << std::endl;
+
 }
 
 void Bot::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
@@ -65,7 +67,10 @@ void Bot::onSensorEnter(const b2Fixture *sensor, WorldObject *other)
 
 void Bot::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 {
-	onSensorEnter(sensor, other);
+	if(std::find(m_enemies.begin(), m_enemies.end(), other) == m_enemies.end())
+	{
+		return;
+	}
 
 	if(std::find(m_visibleTargets.begin(), m_visibleTargets.end(), other) != m_visibleTargets.end())
 	{
@@ -150,6 +155,16 @@ bool Bot::update(int delta)
 	}
 
 	return true;
+}
+
+Weapon *Bot::weapon() const
+{
+	return m_weapon;
+}
+
+void Bot::setWeapon(Weapon *weapon)
+{
+	m_weapon = weapon;
 }
 
 bool Bot::isMoving() const

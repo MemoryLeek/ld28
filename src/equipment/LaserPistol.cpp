@@ -6,8 +6,8 @@
 #include "World.h"
 #include "Map.h"
 
-LaserPistol::LaserPistol(const WorldPosition &position, World &world, Map &map)
-	: Weapon(position, world, map)
+LaserPistol::LaserPistol(const WorldPosition &position, const b2Filter &filter, World &world, Map &map)
+	: Weapon(position, filter, world, map)
 {
 
 }
@@ -17,11 +17,7 @@ void LaserPistol::fire()
 	const b2Vec2 &origin = position().position();
 	const float &angle = position().rotation();
 
-	b2Filter projectileFilter;
-	projectileFilter.categoryBits = World::PlayerProjectile;
-	projectileFilter.maskBits = 0xFFFF ^ World::Player;
-
-	PhysicsWorldPosition *projectilePosition = m_world.createBox(origin, 16, 2, b2_dynamicBody, projectileFilter);
+	PhysicsWorldPosition *projectilePosition = m_world.createBox(origin, 16, 2, b2_dynamicBody, filter());
 	projectilePosition->setRotation(angle);
 
 	b2Body *projectileBody = projectilePosition->body();

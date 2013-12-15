@@ -24,6 +24,8 @@ class HumanoidBot : public Bot
 
 		sf::Sound m_stepSound;
 		int m_stepTimer;
+
+		int m_fireTimer;
 };
 
 #endif // HUMANOIDBOT_H

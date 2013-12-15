@@ -9,7 +9,7 @@ class Map;
 class LaserPistol : public Weapon
 {
 	public:
-		LaserPistol(const WorldPosition &position, World &world, Map &map);
+		LaserPistol(const WorldPosition &position, const b2Filter &filter, World &world, Map &map);
 
 		void fire() override;
 };

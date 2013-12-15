@@ -2,11 +2,14 @@
 
 #include "HumanoidBot.h"
 
+#include "equipment/Weapon.h"
+
 HumanoidBot::HumanoidBot(WorldPosition *position, const std::list<const WorldObject *> &enemies, const Pathfinder *pathfinder, const sf::SoundBuffer &stepSound, Map &map)
 	: Bot(100, position, enemies, pathfinder, map)
 	, m_target(NULL)
 	, m_stepSound(stepSound)
 	, m_stepTimer(0)
+	, m_fireTimer(0)
 {
 	m_stepSound.setAttenuation(0.05f);
 }
@@ -24,6 +27,14 @@ void HumanoidBot::onUpdate(int delta)
 		m_stepSound.setPosition(position.x, position.y, 0);
 		m_stepSound.play();
 		m_stepTimer = 0;
+	}
+
+	m_fireTimer += delta;
+
+	if(m_target && m_fireTimer > 500 && hasVisionTo(m_target))
+	{
+		weapon()->fire();
+		m_fireTimer = 0;
 	}
 }
 
@@ -48,7 +59,9 @@ void HumanoidBot::onTargetNoLongerVisible(const WorldObject *target)
 {
 	if(target == m_target)
 	{
+		std::cout << "HumanoidBot: Lost target, moving to last known position." << std::endl;
 		pathfind(worldPosition().position(), target->worldPosition().position());
+		m_target = nullptr;
 	}
 }
 
@@ -70,6 +83,5 @@ void HumanoidBot::onTargetHeard(const WorldObject *target)
 
 void HumanoidBot::onPathEnd()
 {
-	std::cout << "HumanoidBot: End of path, target lost." << std::endl;
-	m_target = nullptr;
+
 }

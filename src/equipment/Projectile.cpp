@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "Player.h"
 #include "Projectile.h"
 #include "Map.h"
 
@@ -14,10 +15,16 @@ Projectile::Projectile(WorldPosition *position, Map &map)
 
 void Projectile::onCollision(WorldObject *other)
 {
-	Bot *bot = dynamic_cast<Bot*>(other);
+	Bot *bot = dynamic_cast<Bot *>(other);
+	Player *player = dynamic_cast<Player *>(other);
+
 	if(bot)
 	{
 		bot->doDamage(10);
+	}
+	else if(player)
+	{
+		player->doDamage(10);
 	}
 }
 

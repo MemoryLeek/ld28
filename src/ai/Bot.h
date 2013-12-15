@@ -15,6 +15,7 @@
 #include "Map.h"
 
 class Pathfinder;
+class Weapon;
 
 class Bot : public DrawableObject, public Damagable
 {
@@ -36,6 +37,9 @@ class Bot : public DrawableObject, public Damagable
 
 		bool update(int delta) override;
 
+		Weapon *weapon() const;
+		void setWeapon(Weapon *weapon);
+
 	protected:
 		bool isMoving() const;
 
@@ -43,15 +47,15 @@ class Bot : public DrawableObject, public Damagable
 		bool pathfind(const b2Vec2 &from, const b2Vec2 &to);
 		bool pathfindTo(const b2Vec2 &position);
 		float distanceTo(const WorldObject *object) const;
-
-	private:
 		bool hasVisionTo(const WorldObject *object) const;
 
+	private:
 		b2Body *m_body;
 		const std::list<const WorldObject *> m_enemies;
 		const Pathfinder *m_pathfinder;
 		Map &m_map;
 		const float m_maxVisionDistance;
+		Weapon *m_weapon;
 
 		b2Fixture *m_hearingSensor;
 		b2Fixture *m_visionSensor;

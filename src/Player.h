@@ -7,6 +7,7 @@
 #include <SFML/Audio/SoundBuffer.hpp>
 
 #include "AnimatedObject.h"
+#include "Damagable.h"
 
 class InteractableObject;
 class FloatingPanel;
@@ -14,7 +15,7 @@ class Weapon;
 
 const int SPEED = 5;
 
-class Player : public AnimatedObject
+class Player : public AnimatedObject, public Damagable
 {
 	public:
 		Player(WorldPosition *position, FloatingPanel *interactionPanel, const sf::SoundBuffer &stepSound);

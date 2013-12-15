@@ -15,8 +15,10 @@ class World : public b2World
 	public:
 		enum CollisionGroup
 		{
-			Player = 0x0002,
-			PlayerProjectile = 0x0004
+			Player				= (1 << 1),
+			Bot					= (1 << 2),
+			PlayerProjectile	= (1 << 3),
+			BotProjectile		= (1 << 4)
 		};
 
 		World();

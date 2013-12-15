@@ -11,6 +11,7 @@
 
 Player::Player(WorldPosition *position, FloatingPanel *interactionPanel, const sf::SoundBuffer &stepSound)
 	: AnimatedObject("resources/test.spb", position)
+	, Damagable(100)
 	, m_movement(0, 0)
 	, m_interactable(nullptr)
 	, m_interactionPanel(interactionPanel)
@@ -57,6 +58,8 @@ void Player::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 
 bool Player::update(const int delta)
 {
+	assert(!isDead());
+
 	const b2Vec2 &currentVelocity = m_body->GetLocalVector(m_body->GetLinearVelocity());
 
 	if(currentVelocity.Length() > 1)

@@ -49,13 +49,25 @@ GameState::GameState(sf::RenderWindow *window)
 	world->SetDebugDraw(worldDebugger);
 	world->SetContactListener(collisionListener);
 
-	b2Filter playerCollisionFilter;
-	playerCollisionFilter.categoryBits = World::Player;
-	playerCollisionFilter.maskBits = 0xFFFF ^ World::PlayerProjectile;
+	b2Filter *playerCollisionFilter = new b2Filter();
+	playerCollisionFilter->categoryBits = World::Player;
+	playerCollisionFilter->maskBits = 0xFFFF ^ World::PlayerProjectile;
 
-	PhysicsWorldPosition *playerWorldPosition = world->createCircle(playerPosition, 16, b2_dynamicBody, playerCollisionFilter);
+	b2Filter *playerProjectileFilter = new b2Filter();
+	playerProjectileFilter->categoryBits = World::PlayerProjectile;
+	playerProjectileFilter->maskBits = 0xFFFF ^ World::Player;
+
+	b2Filter *botCollisionFilter = new b2Filter();
+	botCollisionFilter->categoryBits = World::Bot;
+	botCollisionFilter->maskBits = 0xFFFF ^ World::BotProjectile;
+
+	b2Filter *botProjectileFilter = new b2Filter();
+	botProjectileFilter->categoryBits = World::BotProjectile;
+	botProjectileFilter->maskBits = 0xFFFF ^ World::Bot;
+
+	PhysicsWorldPosition *playerWorldPosition = world->createCircle(playerPosition, 16, b2_dynamicBody, *playerCollisionFilter);
 	PhysicsWorldPosition *treasureWorldPosition = world->createBox(treasurePosition, 32, 32, b2_staticBody);
-	WorldPosition *botWorldPosition = world->createCircle(botPosition, 16, b2_dynamicBody);
+	WorldPosition *botWorldPosition = world->createCircle(botPosition, 16, b2_dynamicBody, *botCollisionFilter);
 
 	Pathfinder *pathfinder = new Pathfinder();
 	MapLoader mapLoader(world, pathfinder);
@@ -66,12 +78,15 @@ GameState::GameState(sf::RenderWindow *window)
 
 	m_map = worldGenerator.generate();
 
-	LaserPistol *laserPistol = new LaserPistol(*playerWorldPosition, *world, *m_map);
+	LaserPistol *playerPistol = new LaserPistol(*playerWorldPosition, *playerProjectileFilter, *world, *m_map);
+	LaserPistol *botPistol = new LaserPistol(*botWorldPosition, *botProjectileFilter, *world, *m_map);
 
 	m_player = new Player(playerWorldPosition, m_interactionPanel, *stepSound);
-	m_player->setWeapon(laserPistol);
+	m_player->setWeapon(playerPistol);
 
 	m_bot = new HumanoidBot(botWorldPosition, { m_player }, pathfinder, *stepSound, *m_map);
+	m_bot->setWeapon(botPistol);
+
 	m_proxy = new PlayerInputProxy(m_player);
 	m_world = world;
 	m_pathfinder = pathfinder;
