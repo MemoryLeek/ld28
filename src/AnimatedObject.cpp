@@ -34,6 +34,7 @@ void AnimatedObject::draw(sf::RenderTarget &target, sf::RenderStates states) con
 	sprite.setOrigin(size.x / 2, size.y / 2);
 	sprite.setPosition(vector.x, vector.y);
 	sprite.setRotation(rotation);
+
 	target.draw(sprite);
 }
 
