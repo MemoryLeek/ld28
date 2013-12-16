@@ -35,7 +35,6 @@ class GameState : public State
 		sf::Font m_font;
 
 		World *m_world;
-		Bot *m_bot;
 		Map *m_map;
 		Player *m_player;
 		PlayerInputProxy *m_proxy;

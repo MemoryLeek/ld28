@@ -68,10 +68,11 @@ GameState::GameState(sf::RenderWindow *window)
 
 	PhysicsWorldPosition *playerWorldPosition = world->createCircle(playerPosition, 16, b2_dynamicBody, *playerCollisionFilter);
 	PhysicsWorldPosition *treasureWorldPosition = world->createBox(treasurePosition, 32, 32, b2_staticBody);
-	WorldPosition *botWorldPosition = world->createCircle(botPosition, 16, b2_dynamicBody, *botCollisionFilter);
+
+	m_player = new Player(playerWorldPosition, m_interactionPanel, *stepSound);
 
 	Pathfinder *pathfinder = new Pathfinder();
-	MapLoader mapLoader(world, pathfinder);
+	MapLoader mapLoader(world, pathfinder, m_player, botProjectileFilter, stepSound);
 	WorldGenerator worldGenerator(&mapLoader, "resources/world.wld");
 
 	m_interactionPanel = new FloatingPanel("Press to interact", window);
@@ -80,13 +81,8 @@ GameState::GameState(sf::RenderWindow *window)
 	m_map = worldGenerator.generate();
 
 	LaserPistol *playerPistol = new LaserPistol(*playerWorldPosition, *playerProjectileFilter, *world, *m_map);
-	LaserPistol *botPistol = new LaserPistol(*botWorldPosition, *botProjectileFilter, *world, *m_map);
 
-	m_player = new Player(playerWorldPosition, m_interactionPanel, *stepSound);
 	m_player->setWeapon(playerPistol);
-
-	m_bot = new HumanoidBot(botWorldPosition, { m_player }, pathfinder, *stepSound, *m_map);
-	m_bot->setWeapon(botPistol);
 
 	m_proxy = new PlayerInputProxy(m_player);
 	m_world = world;
@@ -98,7 +94,6 @@ GameState::GameState(sf::RenderWindow *window)
 	playerWorldPosition->createRectangularSensor(16, 0, 32, 48);
 
 	m_map->addObject(m_player);
-	m_map->addObject(m_bot);
 	m_map->addObject(treasureContainer);
 
 

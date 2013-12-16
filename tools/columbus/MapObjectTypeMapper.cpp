@@ -5,7 +5,8 @@ MapObjectTypeMapper::MapObjectTypeMapper()
 	m_mappings =
 	{
 		{ "door", 0 },
-		{ "key", 1 }
+		{ "key", 1 },
+		{ "spawn", 2 }
 	};
 }
 

@@ -8,6 +8,9 @@
    eJwzYmBgMBrFo3gUDxgGAJ9PK/M=
   </data>
  </layer>
+ <objectgroup name="Objects" width="15" height="15">
+  <object type="spawn" x="224" y="192" width="32" height="32"/>
+ </objectgroup>
  <layer name="Collision" width="15" height="15">
   <data encoding="base64" compression="zlib">
    eJxjZGBgYCIDMwOxIAN5QHiE6RWhQC/DAOlloUDvUIwjSvUqArESGmZFUsOCRR6ElYEYAHk5Az4=

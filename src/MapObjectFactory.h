@@ -5,12 +5,17 @@
 
 #include "Direction.h"
 #include "PositionFactory.h"
+#include "Player.h"
 #include "Room.h"
 
+#include "equipment/LaserPistol.h"
+#include "ai/HumanoidBot.h"
 #include "objects/Door.h"
 
 class WorldObject;
 class WorldPosition;
+class Map;
+class Pathfinder;
 
 class IMapObjectFactory
 {
@@ -33,13 +38,48 @@ class MapObjectFactory : public IMapObjectFactory
 			WorldPosition *position = m_worldPositionFactory.create(true, vector, TILE_SIZE, TILE_SIZE);
 			WorldObject *object = new TMapObject(position);
 
-			std::cout << "Creating something else at " << vector.x << "x" << vector.y << std::endl;
-
 			return object;
 		}
 
 	private:
 		const PositionFactory &m_worldPositionFactory;
+};
+
+class SpawnFactory : public IMapObjectFactory
+{
+	public:
+		SpawnFactory(const PositionFactory &worldPositionFactory, Player *player, Pathfinder *pathfinder, Map *map, World *world, b2Filter *projectileFilter, sf::SoundBuffer *stepSound)
+			: m_worldPositionFactory(worldPositionFactory)
+			, m_player(player)
+			, m_pathfinder(pathfinder)
+			, m_map(map)
+			, m_world(world)
+			, m_projectileFilter(projectileFilter)
+			, m_stepSound(stepSound)
+		{
+
+		}
+
+		WorldObject *create(const b2Vec2 &vector, const Direction::Value) const override
+		{
+			WorldPosition *position = m_worldPositionFactory.create(true, vector, TILE_SIZE, TILE_SIZE);
+			LaserPistol *weapon = new LaserPistol(*position, *m_projectileFilter, *m_world, *m_map);
+			HumanoidBot *bot = new HumanoidBot(position, { m_player }, m_pathfinder, *m_stepSound, *m_map);
+			bot->setWeapon(weapon);
+
+			return bot;
+		}
+
+	private:
+		const PositionFactory &m_worldPositionFactory;
+
+		Player *m_player;
+		Pathfinder *m_pathfinder;
+		Map *m_map;
+		World *m_world;
+
+		b2Filter *m_projectileFilter;
+		sf::SoundBuffer *m_stepSound;
 };
 
 template<>

@@ -5,7 +5,7 @@
  </tileset>
  <layer name="Background" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJwzZmBgMB4AbEQEHkjzBgMWA2JxKponBMUjzTwQ5qCyeRJU9i813DeKRzG9MQCqFE0n
+   eJwzZmBgMB4AbEQEHkjzBgMWA2JxKponBMUjzTwQ5qCyeRJU9i8DFcxjA2J2KobfKB7FhDAAuqFMxg==
   </data>
  </layer>
  <layer name="Overlay" width="20" height="20">
@@ -13,9 +13,13 @@
    eJxjYBg44DSAdlMC+IFYYKAdMQpGwSgYBQMMAB8aAGI=
   </data>
  </layer>
+ <objectgroup name="Objects" width="20" height="20">
+  <object type="spawn" x="96" y="288" width="32" height="32"/>
+  <object type="spawn" x="352" y="288" width="32" height="32"/>
+ </objectgroup>
  <layer name="Collision" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYCKA+YhQA8LMQCzIQBjIEaEGBIQHyDwVINbBgbXo5D4WJHFWKpgnjCSO7mZ089SobJ45A/aw1MVhniIDqp8p9S86oJd5mkCsQYR5jEAsSqT7kOWQzRMBYjYgZkczCwTwpWcLHObhA2ZEqIGZh+4WSgC+OBgs5qHnVVxAnQG1LMFlHjHxATLLgqAqiHmgvKVEAOsRoQaElYEYABMxDOQ=
+   eJzNlMsKg0AMRWPVbUHUrWArvlCX6v9/WROKEIOZCSi2F84mhkPGeQQA8PDwNPQQIZKAP4Whh5L+yFchg0J/03wRq8cX+FJWlzNLX32xb4HjfzkqvhL2az67Xpm7fB3SGnwBkhvn49+4L2N17qK4zvOq+FyZDT2bT85yJq49+BefvKtaGti/JZrPsh/kWr1dXx/drZeHydBDvJEP81oM1w==
   </data>
  </layer>
 </map>

@@ -63,7 +63,7 @@ Map *WorldGenerator::generate()
 
 RoomObject *WorldGenerator::generate(const Room &room, std::vector<Room> &rooms, WorldGeneratorContext &context, Map *map)
 {
-	RoomObject *roomObject = m_mapLoader->load(room, context);
+	RoomObject *roomObject = m_mapLoader->load(room, context, map);
 
 	std::vector<Direction::Value> directions = room.directions();
 	std::vector<Direction::Value>::iterator iterator = directions.begin();

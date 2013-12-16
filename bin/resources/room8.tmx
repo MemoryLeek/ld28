@@ -13,6 +13,9 @@
    eJxjYBgFo2AUjIJRMApIBwAGQAAB
   </data>
  </layer>
+ <objectgroup name="Objects" width="20" height="20">
+  <object type="spawn" x="256" y="160" width="32" height="32"/>
+ </objectgroup>
  <layer name="Collision" width="20" height="20">
   <data encoding="base64" compression="zlib">
    eJzFk9sKwjAQREerr0KxvgoqXlpEKAX1/7/MDVScrtl2SSsOHEgJOTDZdAZg3rKidQqZkOOTLcZlLWwm9nHYdxauDi5O313t1QZ8JviWhk/H6/POg/uHjk1Ln487luje01M5PD5v/uU7qXPWm9HdLZ+eR/i25poy36l9D6Ov7v5OMeBLyS99ut8Rw30rOr/A9/trEP8PmJrWnNh7HuvbCXuDW89ejIPwAsGUHcg=

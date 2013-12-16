@@ -20,7 +20,6 @@
     <property name="direction" value="1"/>
    </properties>
   </object>
-  <object type="key" x="256" y="352" width="32" height="32"/>
   <object type="door" x="192" y="0" width="64" height="32">
    <properties>
     <property name="direction" value="3"/>

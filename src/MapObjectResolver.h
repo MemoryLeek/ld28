@@ -5,11 +5,26 @@
 
 class IMapObjectFactory;
 class PositionFactory;
+class Player;
+class Pathfinder;
+class Map;
+class World;
+
+namespace sf
+{
+	class SoundBuffer;
+}
 
 class MapObjectResolver
 {
 	public:
-		MapObjectResolver(const PositionFactory &positionFactory);
+		MapObjectResolver(const PositionFactory &positionFactory
+			, Player *player
+			, Pathfinder *pathfinder
+			, Map *map
+			, World *world
+			, b2Filter *projectileFilter
+			, sf::SoundBuffer *stepSound);
 
 		IMapObjectFactory *resolve(const int id) const;
 

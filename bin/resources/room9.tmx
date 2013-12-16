@@ -13,6 +13,12 @@
    eJxjYBgFo2AUjIJRMApIBwAGQAAB
   </data>
  </layer>
+ <objectgroup name="Objects" width="20" height="20">
+  <object type="spawn" x="320" y="288" width="32" height="32"/>
+  <object type="spawn" x="480" y="96" width="32" height="32"/>
+  <object type="spawn" x="96" y="448" width="32" height="32"/>
+  <object type="spawn" x="128" y="96" width="32" height="32"/>
+ </objectgroup>
  <layer name="Collison" width="20" height="20">
   <data encoding="base64" compression="zlib">
    eJxjZGBgYCKABRkQQBiPOmY0tbiAHA42OhAeJuaZUdk8XGZTwzx8ABb3OniwFonmkQM0cdjNRKZ5+IASDrtI9SsMkBMfuPyrRIJ5akSoIZRekM3Al46JNY+YfIZsJ7nm4XI3uebhYg8F8xQZIOkGG0Yv52HiejjYykAMAORXDW0=

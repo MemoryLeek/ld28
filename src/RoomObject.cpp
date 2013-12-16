@@ -51,7 +51,10 @@ bool RoomObject::update(const int delta)
 {
 	for(WorldObject *object : m_objects)
 	{
-		object->update(delta);
+		if(object)
+		{
+			object->update(delta);
+		}
 	}
 
 	return true;
