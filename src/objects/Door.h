@@ -11,7 +11,7 @@ class Door : public InteractableObject
 		void onCollision(WorldObject *other) override;
 		void onSensorEnter(const b2Fixture *sensor, WorldObject *other) override;
 		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
-		void onInteraction() override;
+		void onInteraction(Player &player) override;
 };
 
 #endif // DOOR_H

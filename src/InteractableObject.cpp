@@ -5,6 +5,11 @@ InteractableObject::InteractableObject(const sf::String &fileName, WorldPosition
 {
 }
 
+InteractableObject::~InteractableObject()
+{
+
+}
+
 void InteractableObject::onCollision(WorldObject *other)
 {
 }

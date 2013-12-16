@@ -123,7 +123,7 @@ void Player::interact()
 {
 	if(m_interactable)
 	{
-		m_interactable->onInteraction();
+		m_interactable->onInteraction(*this);
 	}
 }
 

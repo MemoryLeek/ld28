@@ -8,8 +8,11 @@ class TreasureContainer : public InteractableObject
 	public:
 		TreasureContainer(WorldPosition *worldPosition);
 
-		void onInteraction() override;
+		void onInteraction(Player &player) override;
 		bool update(const int delta) override;
+
+	private:
+		bool m_empty;
 };
 
 #endif // TREASURECONTAINER_H

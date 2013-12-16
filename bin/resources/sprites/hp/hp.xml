@@ -1,0 +1,10 @@
+<images>
+	<image>
+		<filename>hp_full.png</filename>
+		<loop>false</loop>
+	</image>
+	<image>
+		<filename>hp_empty.png</filename>
+		<loop>false</loop>
+	</image>
+</images>

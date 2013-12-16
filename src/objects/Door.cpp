@@ -25,7 +25,7 @@ void Door::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 
 }
 
-void Door::onInteraction()
+void Door::onInteraction(Player &player)
 {
 	WorldPosition &position = worldPosition();
 	PhysicsWorldPosition *physicsPosition = dynamic_cast<PhysicsWorldPosition *>(&position);

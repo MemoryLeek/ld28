@@ -32,3 +32,15 @@ void Damagable::doDamage(int damage)
 		m_health -= damage;
 	}
 }
+
+void Damagable::giveHealth(int health)
+{
+	if(m_health + health > m_maxHealth)
+	{
+		m_health = m_maxHealth;
+	}
+	else
+	{
+		m_health += health;
+	}
+}

@@ -9,7 +9,9 @@ class Damagable
 		bool isDead() const;
 		int remainingHealth() const;
 		int maxHealth() const;
+
 		void doDamage(int damage);
+		void giveHealth(int health);
 
 	private:
 		int m_health;
