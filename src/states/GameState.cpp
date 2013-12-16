@@ -74,7 +74,7 @@ GameState::GameState(sf::RenderWindow *window)
 	m_player = new Player(playerWorldPosition, m_interactionPanel, *stepSound);
 
 	Pathfinder *pathfinder = new Pathfinder();
-	MapLoader mapLoader(world, pathfinder, m_player, botProjectileFilter, stepSound);
+	MapLoader mapLoader(world, pathfinder, m_player, botCollisionFilter, botProjectileFilter, stepSound);
 	WorldGenerator worldGenerator(&mapLoader, "resources/world.wld");
 
 	m_map = worldGenerator.generate();

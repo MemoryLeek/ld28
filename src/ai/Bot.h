@@ -34,6 +34,7 @@ class Bot : public AnimatedObject, public Damagable
 		virtual void onPathEnd() = 0;
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+		int drawingOrder() const override;
 
 		bool update(int delta) override;
 

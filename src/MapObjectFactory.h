@@ -7,6 +7,8 @@
 #include "PositionFactory.h"
 #include "Player.h"
 #include "Room.h"
+#include "World.h"
+#include "PhysicsWorldPosition.h"
 
 #include "equipment/LaserPistol.h"
 #include "ai/HumanoidBot.h"
@@ -48,12 +50,13 @@ class MapObjectFactory : public IMapObjectFactory
 class SpawnFactory : public IMapObjectFactory
 {
 	public:
-		SpawnFactory(const PositionFactory &worldPositionFactory, Player *player, Pathfinder *pathfinder, Map *map, World *world, b2Filter *projectileFilter, sf::SoundBuffer *stepSound)
+		SpawnFactory(const PositionFactory &worldPositionFactory, Player *player, Pathfinder *pathfinder, Map *map, World *world, b2Filter *botFilter, b2Filter *projectileFilter, sf::SoundBuffer *stepSound)
 			: m_worldPositionFactory(worldPositionFactory)
 			, m_player(player)
 			, m_pathfinder(pathfinder)
 			, m_map(map)
 			, m_world(world)
+			, m_botFilter(botFilter)
 			, m_projectileFilter(projectileFilter)
 			, m_stepSound(stepSound)
 		{
@@ -62,7 +65,7 @@ class SpawnFactory : public IMapObjectFactory
 
 		WorldObject *create(const b2Vec2 &vector, const Direction::Value) const override
 		{
-			WorldPosition *position = m_worldPositionFactory.create(true, vector, TILE_SIZE, TILE_SIZE);
+			WorldPosition *position = m_world->createCircle(vector, TILE_SIZE / 2, b2_dynamicBody, *m_botFilter);
 			LaserPistol *weapon = new LaserPistol(*position, *m_projectileFilter, *m_world, *m_map);
 			HumanoidBot *bot = new HumanoidBot(position, { m_player }, m_pathfinder, *m_stepSound, *m_map);
 			bot->setWeapon(weapon);
@@ -78,6 +81,7 @@ class SpawnFactory : public IMapObjectFactory
 		Map *m_map;
 		World *m_world;
 
+		b2Filter *m_botFilter;
 		b2Filter *m_projectileFilter;
 		sf::SoundBuffer *m_stepSound;
 };

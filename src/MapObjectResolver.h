@@ -23,6 +23,7 @@ class MapObjectResolver
 			, Pathfinder *pathfinder
 			, Map *map
 			, World *world
+			, b2Filter *botFilter
 			, b2Filter *projectileFilter
 			, sf::SoundBuffer *stepSound);
 

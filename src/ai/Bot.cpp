@@ -104,6 +104,11 @@ void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	AnimatedObject::draw(target, states);
 }
 
+int Bot::drawingOrder() const
+{
+	return 1;
+}
+
 bool Bot::update(int delta)
 {
 	if(m_visibleTargets.size() > 0)

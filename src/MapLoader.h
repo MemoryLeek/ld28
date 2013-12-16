@@ -24,7 +24,7 @@ namespace sf
 class MapLoader
 {
 	public:
-		MapLoader(World *world, Pathfinder *pathfinder, Player *player, b2Filter *projectileFilter, sf::SoundBuffer *stepSound);
+		MapLoader(World *world, Pathfinder *pathfinder, Player *player, b2Filter *botFilter, b2Filter *projectileFilter, sf::SoundBuffer *stepSound);
 
 		RoomObject *load(const Room &room, WorldGeneratorContext &context, Map *map);
 
@@ -32,6 +32,7 @@ class MapLoader
 		World *m_world;
 		Pathfinder *m_pathfinder;
 		Player *m_player;
+		b2Filter *m_botFilter;
 		b2Filter *m_projectileFilter;
 		sf::SoundBuffer *m_stepSound;
 };

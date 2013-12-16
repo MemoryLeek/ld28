@@ -21,10 +21,11 @@
 #include "MapObjectResolver.h"
 #include "MapObjectFactory.h"
 
-MapLoader::MapLoader(World *world, Pathfinder *pathfinder, Player *player, b2Filter *projectileFilter, sf::SoundBuffer *stepSound)
+MapLoader::MapLoader(World *world, Pathfinder *pathfinder, Player *player, b2Filter *botFilter, b2Filter *projectileFilter, sf::SoundBuffer *stepSound)
 	: m_world(world)
 	, m_pathfinder(pathfinder)
 	, m_player(player)
+	, m_botFilter(botFilter)
 	, m_projectileFilter(projectileFilter)
 	, m_stepSound(stepSound)
 {
@@ -52,7 +53,7 @@ RoomObject *MapLoader::load(const Room &room, WorldGeneratorContext &context, Ma
 		const int id = mapObject.id();
 
 		const PositionFactory factory(m_world);
-		const MapObjectResolver resolver(factory, m_player, m_pathfinder, map, m_world, m_projectileFilter, m_stepSound);
+		const MapObjectResolver resolver(factory, m_player, m_pathfinder, map, m_world, m_botFilter, m_projectileFilter, m_stepSound);
 		const Direction::Value direction = (Direction::Value)mapObject.direction();
 		const b2Vec2 position(x * TILE_SIZE, y * TILE_SIZE);
 

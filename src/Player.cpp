@@ -70,7 +70,7 @@ bool Player::update(const int delta)
 		setImageIndex(0);
 	}
 
-	if(m_stepTimer > 250)
+	if(m_stepTimer > 300)
 	{
 		m_stepSound.play();
 		m_stepTimer = 0;
