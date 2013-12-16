@@ -46,8 +46,18 @@ void InputHandler::handle(const sf::Event &event)
 					const float x = m_axis[sf::Joystick::X];
 					const float y = m_axis[sf::Joystick::Y];
 
-					if(abs(x) < 40 && abs(y) < 40)
+					if(abs(x) < 20 && abs(y) < 20)
 					{
+						inputMapping
+							.analog()
+							.invokeRelative(x, y);
+					}
+					else if(abs(x) < 50 && abs(y) < 50)
+					{
+						inputMapping
+							.analog()
+							.invokeRelative(x, y);
+
 						inputMapping
 							.forward()
 							.onKeyUp();
