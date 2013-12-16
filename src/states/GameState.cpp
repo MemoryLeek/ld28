@@ -35,7 +35,6 @@ GameState::GameState(sf::RenderWindow *window)
 	, m_fpsCount(0)
 {
 	const b2Vec2 playerPosition(64, 64);
-	const b2Vec2 botPosition(576, 64);
 	const b2Vec2 treasurePosition(256, 320);
 
 	sf::SoundBuffer *stepSound = new sf::SoundBuffer();
@@ -166,13 +165,13 @@ void GameState::update()
 	const sf::View &defaultView = m_window->getDefaultView();
 
 	m_window->setView(cameraView);
-	m_window->clear();
+	m_window->clear(sf::Color(252, 224, 180));
 	m_window->draw(*m_map);
 
 	m_world->DrawDebugData();
 
 	m_window->setView(defaultView);
-	m_window->draw(m_fpsText);
+//	m_window->draw(m_fpsText);
 	m_window->draw(*m_interactionPanel);
 	m_window->draw(*m_healthBar);
 

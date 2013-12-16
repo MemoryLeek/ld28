@@ -28,7 +28,7 @@
 int main(int argc, char *argv[])
 {
 	sf::VideoMode videoMode(800, 600);
-	sf::RenderWindow window(videoMode, "My window");
+	sf::RenderWindow window(videoMode, "Dunkra");
 	
 	DefaultSettingsProvider fallbackProvider;
 	SettingsProvider settingsProvider("settings.dat", &fallbackProvider);

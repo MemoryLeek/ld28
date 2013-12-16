@@ -86,20 +86,20 @@ void Bot::onSensorLeave(const b2Fixture *sensor, WorldObject *other)
 
 void Bot::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	if(!m_path.empty())
-	{
-		std::stack<b2Vec2> path = std::stack<b2Vec2>(m_path);
+//	if(!m_path.empty())
+//	{
+//		std::stack<b2Vec2> path = std::stack<b2Vec2>(m_path);
 
-		sf::VertexArray debugpath(sf::LinesStrip, path.size());
-		for(int i = 0; !path.empty(); i++)
-		{
-			const b2Vec2 &point = path.top();
-			debugpath[i] = sf::Vector2f(point.x, point.y);
-			debugpath[i].color = sf::Color::White;
-			path.pop();
-		}
-		target.draw(debugpath);
-	}
+//		sf::VertexArray debugpath(sf::LinesStrip, path.size());
+//		for(int i = 0; !path.empty(); i++)
+//		{
+//			const b2Vec2 &point = path.top();
+//			debugpath[i] = sf::Vector2f(point.x, point.y);
+//			debugpath[i].color = sf::Color::White;
+//			path.pop();
+//		}
+//		target.draw(debugpath);
+//	}
 
 	AnimatedObject::draw(target, states);
 }
