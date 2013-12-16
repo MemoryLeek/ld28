@@ -69,14 +69,14 @@ GameState::GameState(sf::RenderWindow *window)
 	PhysicsWorldPosition *playerWorldPosition = world->createCircle(playerPosition, 16, b2_dynamicBody, *playerCollisionFilter);
 	PhysicsWorldPosition *treasureWorldPosition = world->createBox(treasurePosition, 32, 32, b2_staticBody);
 
+	m_interactionPanel = new FloatingPanel("Press to interact", window);
+	m_interactionPanel->setVisible(false);
+
 	m_player = new Player(playerWorldPosition, m_interactionPanel, *stepSound);
 
 	Pathfinder *pathfinder = new Pathfinder();
 	MapLoader mapLoader(world, pathfinder, m_player, botProjectileFilter, stepSound);
 	WorldGenerator worldGenerator(&mapLoader, "resources/world.wld");
-
-	m_interactionPanel = new FloatingPanel("Press to interact", window);
-	m_interactionPanel->setVisible(false);
 
 	m_map = worldGenerator.generate();
 
