@@ -39,6 +39,11 @@ void TileObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	target.draw(sprite);
 }
 
+int TileObject::drawingOrder() const
+{
+	return -1;
+}
+
 bool TileObject::update(const int)
 {
 	return true;

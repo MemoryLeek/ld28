@@ -12,33 +12,42 @@ Map::Map()
 
 void Map::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-	for(DrawableObject *drawable : m_objects)
+	for(WorldObject *object : m_objects)
 	{
-		target.draw(*drawable, states);
+		DrawableObject *drawable = dynamic_cast<DrawableObject *>(object);
+
+		if(drawable)
+		{
+			target.draw(*drawable, states);
+		}
 	}
 }
 
 void Map::update(const int delta)
 {
-	const std::list<DrawableObject *> objects = m_objects;
+	const std::list<WorldObject *> objects = m_objects;
 
 	for(WorldObject *object : objects)
 	{
-		const bool alive = object->update(delta);
-
-		if(!alive)
+		if(object)
 		{
-			delete object;
+			const bool alive = object->update(delta);
+
+			if(!alive)
+			{
+				delete object;
+			}
 		}
 	}
 }
 
-void Map::addObject(DrawableObject *worldObject)
+void Map::addObject(WorldObject *worldObject)
 {
 	m_objects.push_back(worldObject);
+	m_objects.sort(&DrawableObject::compare);
 }
 
-void Map::removeObject(DrawableObject *worldObject)
+void Map::removeObject(WorldObject *worldObject)
 {
 	m_objects.remove(worldObject);
 }

@@ -15,6 +15,8 @@ class TileObject : public DrawableObject
 		void onSensorLeave(const b2Fixture *sensor, WorldObject *other) override;
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
+		int drawingOrder() const override;
+
 		bool update(const int delta) override;
 
 	private:

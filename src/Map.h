@@ -18,11 +18,11 @@ class Map : public sf::Drawable
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 		void update(const int delta);
 
-		void addObject(DrawableObject *worldObject);
-		void removeObject(DrawableObject *worldObject);
+		void addObject(WorldObject *worldObject);
+		void removeObject(WorldObject *worldObject);
 
 	private:
-		std::list<DrawableObject *> m_objects;
+		std::list<WorldObject *> m_objects;
 };
 
 #endif // MAP_H

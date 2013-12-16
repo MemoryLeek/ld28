@@ -71,7 +71,7 @@ RoomObject *MapLoader::load(const Room &room, WorldGeneratorContext &context, Ma
 			IMapObjectFactory *mapObjectFactory = resolver.resolve(id);
 			WorldObject *worldObject = mapObjectFactory->create(position, direction);
 
-			roomObject->addObject(worldObject);
+			map->addObject(worldObject);
 		}
 
 		if(!isCollidable)
