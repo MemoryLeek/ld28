@@ -12,9 +12,12 @@ TreasureContainer::TreasureContainer(WorldPosition *worldPosition)
 
 void TreasureContainer::onInteraction(Player &player)
 {
-	player.giveHealth(100);
-	m_empty = true;
-	setImageIndex(1);
+	if(!m_empty)
+	{
+		player.giveHealth(100);
+		m_empty = true;
+		setImageIndex(1);
+	}
 }
 
 bool TreasureContainer::update(const int delta)

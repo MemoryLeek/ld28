@@ -10,7 +10,8 @@ MapObjectResolver::MapObjectResolver(const PositionFactory &positionFactory
 	, Pathfinder *pathfinder
 	, Map *map
 	, World *world
-	, b2Filter *botFilter, b2Filter *projectileFilter
+	, b2Filter *botFilter
+	, b2Filter *projectileFilter
 	, sf::SoundBuffer *stepSound)
 {
 	m_factories =

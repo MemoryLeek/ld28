@@ -83,19 +83,20 @@ bool WorldGeneratorContext::canFitRoom(const Room &first, const Room &second, co
 	const IRoomPlacementStrategy *strategy = m_selector.select(direction);
 	const Coordinate offset = strategy->position(first, second);
 
-	const CoordinateRect rect(offset.first, offset.second, width, height);
-	const Coordinate &topLeft = rect.topLeft();
-	const Coordinate &topRight = rect.topRight();
-	const Coordinate &bottomLeft = rect.bottomLeft();
-	const Coordinate &bottomRight = rect.bottomRight();
+	for(int x = 0; x < width; x++)
+	{
+		for(int y = 0; y < height; y++)
+		{
+			Coordinate coordinate(offset.first + x, offset.second + y);
 
-	const bool canFitRoom =
-		!isTileGenerated(topLeft) &&
-		!isTileGenerated(topRight) &&
-		!isTileGenerated(bottomLeft) &&
-		!isTileGenerated(bottomRight);
+			if(isTileGenerated(coordinate))
+			{
+				return false;
+			}
+		}
+	}
 
-	return canFitRoom;
+	return true;
 }
 
 int WorldGeneratorContext::x() const
